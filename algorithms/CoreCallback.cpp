@@ -22,12 +22,17 @@
  *
  */
 
+#include <algorithm>
+#include <functional>
+
 #include "CoreCallback.h"
 #include "CoreObject.h"
 
+using std::list;
+using std::for_each;
+
 void CoreCallback::init()
 {
-    m_Observed = NULL;
     m_Interrupt = false;
 }
 
@@ -44,30 +49,35 @@ CoreCallback::CoreCallback(CoreObject* _co)
 
 CoreCallback::~CoreCallback()
 {
-    if ( !m_Observed ) return;
-    m_Observed->unsubscribe(this);
+    if ( m_Observed.empty() ) return;
+    // unsubscribe for_each of the
+    for_each(m_Observed.begin(), m_Observed.end(), std::bind2nd( std::mem_fun( &CoreObject::unsubscribe ), this));
 }
 
 void CoreCallback::registerCallback(CoreObject* _co)
 {
     /*
-  * Am I registering to the same CoreObject?
+  * check if the CoreObject is NULL
   */
-    if ( _co == m_Observed ) return;
+    if ( !_co ) return;
 
     /*
-  * check if I am already observing somebody
-  * If that is the case, unregister first and subscribe to the new one later
+  * Am I registering the same CoreObject twice?
   */
-    if ( m_Observed ) m_Observed->unsubscribe(this);
+    std::list<CoreObject*>::iterator it = std::find(m_Observed.begin(), m_Observed.end(), _co);
 
-    m_Observed = _co;
-    if ( m_Observed ) m_Observed->subscribe(this);
+    if ( it != m_Observed.end() ) return;
+
+    /*
+  * Should be fine now
+  */
+    m_Observed.push_back(_co);
+    _co->subscribe(this);
 }
 
-void CoreCallback::unregisterCallback()
+void CoreCallback::unregisterCallback(CoreObject* _co)
 {
-    if ( !m_Observed ) return;
-    m_Observed->unsubscribe(this);
-    m_Observed = NULL;
+    if ( m_Observed.empty() ) return;
+
+    m_Observed.remove(_co);
 }

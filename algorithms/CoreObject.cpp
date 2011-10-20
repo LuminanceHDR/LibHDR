@@ -41,13 +41,13 @@ using std::mem_fun;
 
 CoreObject::~CoreObject()
 {
- /*
-  * In the dstr there is no check of the m_IsNotifyActive because
-  * we want in anycase to notify all the observed!
-  */
+    /*
+     * In the dstr there is no check of the m_IsNotifyActive because
+     * we want in anycase to notify all the observed!
+     */
 
     /* unset all the observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::unregisterCallback ));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind2nd( mem_fun( &CoreCallback::unregisterCallback ), this));
 }
 
 void CoreObject::subscribe(CoreCallback* _cb)

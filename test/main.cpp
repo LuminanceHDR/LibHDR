@@ -23,9 +23,12 @@
  */
 
 #include <iostream>
+#include <boost/thread.hpp>
+
+//#include <windows.h>
 
 #include "CoreCallback.h"
-#include "MockCallback.h"
+#include "ConsoleCallbackMT.h"
 #include "CoreObject.h"
 
 class MockObject: public CoreObject
@@ -42,6 +45,8 @@ public:
         {
             notifyJobNextStep(4);
             if ( isTerminated() ) break;
+
+            //Sleep( 500 );
         }
         notifyStop();
     }
@@ -51,9 +56,19 @@ public:
 int main()
 {
     MockObject obj;
-    MockCallback cb(&obj);
+    ConsoleCallbackMT cb(&obj);
 
-    obj.run();
+    MockObject obj2;
+    cb.registerCallback(&obj2);
+
+    boost::thread t1(boost::bind(&MockObject::run, &obj));
+
+    //Sleep( 200 );
+
+    boost::thread t2(boost::bind(&MockObject::run, &obj2));
+
+    t1.join();
+    t2.join();
 
     return 0;
 }

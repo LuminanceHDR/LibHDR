@@ -25,6 +25,7 @@
 #ifndef LIBHDR_CORECALLBACK
 #define LIBHDR_CORECALLBACK
 
+#include <list>
 #include <string>
 
 class CoreObject; // forward decleration
@@ -32,8 +33,8 @@ class CoreObject; // forward decleration
 class CoreCallback
 {
 private:
-    CoreObject* m_Observed;
-    bool		m_Interrupt;
+    std::list<CoreObject*> m_Observed;
+    bool m_Interrupt;
 
     void init();
 
@@ -43,7 +44,7 @@ public:
     virtual ~CoreCallback();
 
     void registerCallback(CoreObject*);
-    void unregisterCallback();
+    void unregisterCallback(CoreObject*);
 
     bool isTerminated();
     void setTerminated(bool);
