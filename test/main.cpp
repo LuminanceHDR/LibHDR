@@ -27,9 +27,10 @@
 
 //#include <windows.h>
 
-#include "CoreCallback.h"
+#include "core/CoreCallback.h"
+#include "core/CoreObject.h"
+
 #include "ConsoleCallbackMT.h"
-#include "CoreObject.h"
 
 class MockObject: public CoreObject
 {

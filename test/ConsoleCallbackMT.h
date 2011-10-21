@@ -26,7 +26,7 @@
 #include <string>
 #include <boost/thread.hpp>
 
-#include "CoreCallback.h"
+#include "core/CoreCallback.h"
 
 const int PRINT_GRANULARITY = 1;
 

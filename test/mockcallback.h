@@ -24,7 +24,7 @@
 
 #include <iostream>
 #include <string>
-#include "CoreCallback.h"
+#include "core/CoreCallback.h"
 
 const int PRINT_GRANULARITY = 10;
 
