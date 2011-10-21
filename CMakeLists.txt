@@ -7,5 +7,7 @@ add_subdirectory (tmo)
 add_subdirectory (io)
 add_subdirectory (test)
 
+INCLUDE_DIRECTORIES(${LibHDR_SOURCE_DIR})
+
 ADD_LIBRARY(LibHDR SHARED LibHDR.h)
 TARGET_LINK_LIBRARIES(LibHDR core)

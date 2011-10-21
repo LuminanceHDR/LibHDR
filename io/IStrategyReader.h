@@ -35,6 +35,7 @@ private:
 	void setOpen(bool);
 public:
 	IStrategyReader(const FrameReader&); // cstr
+    ~IStrategyReader();
 
 	void open(std::string) = 0;
 	void readFrame() = 0;

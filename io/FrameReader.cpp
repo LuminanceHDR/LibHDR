@@ -22,3 +22,51 @@
  *  
  */
  
+#include "FrameReader.h"
+
+FrameReader::FrameReader()
+{
+    m_ReaderImpl = NULL;
+}
+
+FrameReader::FrameReader(std::string _filename)
+{
+    open(_filename);
+}
+
+FrameReader::FrameReader()
+{
+    if ( m_ReaderImpl ) m_ReaderImpl->close();
+}
+
+void FrameReader::getFrameType(std::string _filename);
+{
+
+}
+
+void FrameReader::open(std::string _filename)
+{
+    /*
+    * check if open already, close and open the new one
+    */
+
+    switch (getFrameType(_filename))
+    {
+    default:
+        {
+        ;
+        }
+        break;
+    }
+}
+
+void FrameReader::close()
+{
+    if ( m_ReaderImpl ) m_ReaderImpl->close();
+}
+
+void FrameReader::isOpen()
+{
+    if ( m_ReaderImpl )  return m_ReaderImpl->isOpen();
+    return false;
+}

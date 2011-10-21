@@ -39,7 +39,7 @@ private:
 
 public:
 	FrameReader();
-	FrameReader(std::string _file_name);
+	FrameReader(std::string);
 	~FrameReader();
 
 	void open(std::string);

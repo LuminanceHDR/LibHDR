@@ -21,4 +21,15 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *  
  */
+
+#include "IStrategyReader.h"
+
+ IStrategyReader::IStrategyReader(const FrameReader& _fr)
+ {
  
+ }
+
+ IStrategyReader::~IStrategyReader()
+ {
+
+ }
