@@ -30,7 +30,7 @@
 
 const int PRINT_GRANULARITY = 1;
 
-class ConsoleCallbackMT: public CoreCallback
+class ConsoleCallbackMT: public LibHDR::CoreCallback
 {
 private:
     static int sm_NumJobActive;
@@ -54,7 +54,7 @@ public:
     {
         init();
     }
-    ConsoleCallbackMT(CoreObject* _obj): CoreCallback(_obj)
+    ConsoleCallbackMT(LibHDR::CoreObject* _obj): CoreCallback(_obj)
     {
         init();
     }

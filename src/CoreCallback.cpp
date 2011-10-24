@@ -28,6 +28,9 @@
 #include "CoreCallback.h"
 #include "CoreObject.h"
 
+namespace LibHDR
+{
+
 using std::list;
 using std::for_each;
 
@@ -81,3 +84,5 @@ void CoreCallback::unregisterCallback(CoreObject* _co)
 
     m_Observed.remove(_co);
 }
+
+} // end namespace LibHDR

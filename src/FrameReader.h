@@ -29,6 +29,12 @@
 
 #include "CoreObject.h"
 
+namespace LibHDR
+{
+
+namespace IO
+{
+
 class IStrategyReader; // forward declaration
 
 class FrameReader: public CoreObject
@@ -49,5 +55,8 @@ public:
 
     bool isOpen();
 };
+
+} // end namespace IO
+} // end namespace LibHDR
 
 #endif // LIBHDR_FRAMEREADER

@@ -28,7 +28,7 @@
 
 const int PRINT_GRANULARITY = 10;
 
-class MockCallback: public CoreCallback
+class MockCallback: public LibHDR::CoreCallback
 {
 private:
     int m_Duration;
@@ -37,7 +37,7 @@ private:
 
 public:
     MockCallback(): CoreCallback() {}
-    MockCallback(CoreObject* _obj): CoreCallback(_obj) {}
+    MockCallback(LibHDR::CoreObject* _obj): CoreCallback(_obj) {}
 
     void startCallback()
     {

@@ -30,6 +30,9 @@
 
 #include "DLLDefines.h"
 
+namespace LibHDR
+{
+
 class CoreObject; // forward decleration
 
 class LIBHDR_API CoreCallback
@@ -69,5 +72,7 @@ inline void CoreCallback::setTerminated(bool _b)
 {
     m_Interrupt = _b;
 }
+
+} // end namespace LibHDR
 
 #endif // LIBHDR_CORECALLBACK

@@ -32,7 +32,7 @@
 
 #include "ConsoleCallbackMT.h"
 
-class MockObject: public CoreObject
+class MockObject: public LibHDR::CoreObject
 {
 public:
     void run()

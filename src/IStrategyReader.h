@@ -27,6 +27,12 @@
 
 #include <string>
 
+namespace LibHDR
+{
+
+namespace IO
+{
+
 class FrameReader; // forward declaration
 
 class IStrategyReader
@@ -47,5 +53,8 @@ public:
 
     bool isOpen();
 };
+
+} // end namespace IO
+} // end namespace LibHDR
 
 #endif // LIBHDR_ISTRATEGYREADER

@@ -25,6 +25,12 @@
 #include "FrameReader.h"
 #include "IStrategyReader.h"
 
+namespace LibHDR
+{
+
+namespace IO
+{
+
 FrameReader::FrameReader()
 {
     m_ReaderImpl = NULL;
@@ -75,3 +81,6 @@ bool FrameReader::isOpen()
     if ( m_ReaderImpl )  return m_ReaderImpl->isOpen();
     return false;
 }
+
+} // end namespace IO
+} // end namespace LibHDR

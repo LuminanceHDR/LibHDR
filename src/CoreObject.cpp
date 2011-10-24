@@ -28,6 +28,9 @@
 #include "CoreObject.h" 
 #include "CoreCallback.h"
 
+namespace LibHDR
+{
+
 using std::for_each;
 using std::bind2nd;
 using std::mem_fun;
@@ -95,3 +98,5 @@ bool CoreObject::isTerminated()
 
     return ( it != m_Callbacks.end() ) ? true : false;
 }
+
+} // end namespace LibHDR

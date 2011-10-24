@@ -29,6 +29,9 @@
 
 #include "DLLDefines.h"
 
+namespace LibHDR
+{
+
 class CoreCallback;
 
 class LIBHDR_API CoreObject
@@ -77,5 +80,7 @@ inline bool CoreObject::isNotifyActive()
 {
     return m_IsNotifyActive;
 }
+
+} // end namespace LibHDR
 
 #endif // LIBHDR_COREOBJECT
