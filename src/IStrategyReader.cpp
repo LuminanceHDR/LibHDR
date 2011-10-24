@@ -23,13 +23,15 @@
  */
 
 #include "IStrategyReader.h"
+#include "FrameReader.h"
 
- IStrategyReader::IStrategyReader(const FrameReader& _fr)
- {
- 
- }
+IStrategyReader::IStrategyReader(const FrameReader& _fr):
+    m_FrameReader(_fr)
+{
 
- IStrategyReader::~IStrategyReader()
- {
+}
 
- }
+IStrategyReader::~IStrategyReader()
+{
+
+}

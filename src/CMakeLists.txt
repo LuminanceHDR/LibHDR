@@ -1,12 +1,16 @@
 SET(LIBHDR_HDRS
-	LibHDR.h
+    LibHDR.h
     DLLDefines.h
     CoreObject.h
-    CoreCallback.h)
+    CoreCallback.h
+    FrameReader.h
+    IStrategyReader.h)
 
 SET(LIBHDR_SRCS
     CoreObject.cpp
-    CoreCallback.cpp)
+    CoreCallback.cpp
+    FrameReader.cpp
+    IStrategyReader.cpp)
 
 # Allow the developer to select if Dynamic or Static libraries are built
 OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)

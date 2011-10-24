@@ -22,4 +22,5 @@
  *  
  */
  
- 
+#include <CoreCallback.h>
+#include <CoreObject.h>
