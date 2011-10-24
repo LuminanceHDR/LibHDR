@@ -27,9 +27,11 @@
 
 #include <list>
 
+#include "DLLDefines.h"
+
 class CoreCallback;
 
-class CoreObject
+class LIBHDR_API CoreObject
 {
 public:
     CoreObject(): m_IsNotifyActive(true) {}

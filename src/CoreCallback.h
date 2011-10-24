@@ -28,9 +28,11 @@
 #include <list>
 #include <string>
 
+#include "DLLDefines.h"
+
 class CoreObject; // forward decleration
 
-class CoreCallback
+class LIBHDR_API CoreCallback
 {
 private:
     std::list<CoreObject*> m_Observed;

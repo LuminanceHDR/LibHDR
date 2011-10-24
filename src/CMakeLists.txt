@@ -1,5 +1,6 @@
 SET(LIBHDR_ALGO_HDRS
 	LibHDR.h
+    DLLDefines.h
     CoreObject.h
     CoreCallback.h)
 
@@ -7,4 +8,14 @@ SET(LIBHDR_ALGO_SRCS
     CoreObject.cpp
     CoreCallback.cpp)
 
-ADD_LIBRARY(LibHDR SHARED ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+# Allow the developer to select if Dynamic or Static libraries are built
+OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+# Set the LIB_TYPE variable to STATIC
+SET (LIB_TYPE STATIC)
+IF (BUILD_SHARED_LIBS)
+  # User wants to build Dynamic Libraries, so change the LIB_TYPE variable to CMake keyword 'SHARED'
+  SET (LIB_TYPE SHARED)
+ENDIF (BUILD_SHARED_LIBS)
+
+ADD_LIBRARY(LibHDR ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+
