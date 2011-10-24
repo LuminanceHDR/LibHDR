@@ -1,10 +1,10 @@
-SET(LIBHDR_ALGO_HDRS
+SET(LIBHDR_HDRS
 	LibHDR.h
     DLLDefines.h
     CoreObject.h
     CoreCallback.h)
 
-SET(LIBHDR_ALGO_SRCS
+SET(LIBHDR_SRCS
     CoreObject.cpp
     CoreCallback.cpp)
 
