@@ -27,8 +27,8 @@
 
 //#include <windows.h>
 
-#include "core/CoreCallback.h"
-#include "core/CoreObject.h"
+#include "CoreCallback.h"
+#include "CoreObject.h"
 
 #include "ConsoleCallbackMT.h"
 
