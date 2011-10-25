@@ -25,4 +25,5 @@
 #include "CoreCallback.h"
 #include "CoreObject.h"
 #include "Array2D.h"
+#include "Tag.h"
 #include "Channel.h"

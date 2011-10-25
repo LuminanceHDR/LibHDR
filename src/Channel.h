@@ -30,7 +30,7 @@
 
 #include "DLLDefines.h"
 #include "array2d.h"
-//#include "tag.h"
+#include "Tag.h"
 
 namespace LibHDR
 {
@@ -38,8 +38,7 @@ namespace LibHDR
     {
     protected:
         std::string m_ChannelName;
-
-        //TagContainer *tags;
+        TagContainer m_Tags;
 
     public:
         Channel(int width, int height, std::string name);

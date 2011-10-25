@@ -1,6 +1,7 @@
 SET(LIBHDR_HDRS
     LibHDR.h
     Array2D.h
+    Tag.h
     Channel.h
     DLLDefines.h
     CoreObject.h
@@ -10,6 +11,7 @@ SET(LIBHDR_HDRS
 
 SET(LIBHDR_SRCS
     Array2D.cpp
+    Tag.cpp
     Channel.cpp
     CoreObject.cpp
     CoreCallback.cpp
