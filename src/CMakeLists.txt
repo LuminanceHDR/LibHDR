@@ -1,5 +1,6 @@
 SET(LIBHDR_HDRS
     LibHDR.h
+    Array2D.h
     DLLDefines.h
     CoreObject.h
     CoreCallback.h
@@ -7,6 +8,7 @@ SET(LIBHDR_HDRS
     IStrategyReader.h)
 
 SET(LIBHDR_SRCS
+    Array2D.cpp
     CoreObject.cpp
     CoreCallback.cpp
     FrameReader.cpp
