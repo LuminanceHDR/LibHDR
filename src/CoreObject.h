@@ -32,7 +32,7 @@
 namespace LibHDR
 {
 
-class CoreCallback;
+class LIBHDR_API CoreCallback;
 
 class LIBHDR_API CoreObject
 {

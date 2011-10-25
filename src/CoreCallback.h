@@ -33,7 +33,7 @@
 namespace LibHDR
 {
 
-class CoreObject; // forward decleration
+class LIBHDR_API CoreObject; // forward decleration
 
 class LIBHDR_API CoreCallback
 {

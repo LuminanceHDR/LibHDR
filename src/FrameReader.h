@@ -27,6 +27,7 @@
 
 #include <string>
 
+#include "DLLDefines.h"
 #include "CoreObject.h"
 
 namespace LibHDR
@@ -35,9 +36,9 @@ namespace LibHDR
 namespace IO
 {
 
-class IStrategyReader; // forward declaration
+class LIBHDR_API IStrategyReader; // forward declaration
 
-class FrameReader: public CoreObject
+class LIBHDR_API FrameReader: public CoreObject
 {
 private:
     IStrategyReader* m_ReaderImpl;

@@ -27,15 +27,17 @@
 
 #include <string>
 
+#include "DLLDefines.h"
+
 namespace LibHDR
 {
 
 namespace IO
 {
 
-class FrameReader; // forward declaration
+class LIBHDR_API FrameReader; // forward declaration
 
-class IStrategyReader
+class LIBHDR_API IStrategyReader
 {
 private:
     const FrameReader& m_FrameReader;
@@ -53,6 +55,12 @@ public:
 
     bool isOpen();
 };
+
+inline bool IStrategyReader::isOpen()
+{
+    return ((m_Status == OPEN)? true : false);
+}
+
 
 } // end namespace IO
 } // end namespace LibHDR

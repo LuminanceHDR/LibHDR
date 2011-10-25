@@ -38,7 +38,7 @@
   #if defined(LibHDR_EXPORTS)
     #define LIBHDR_API __declspec(dllexport)
   #else
-    #define LIBHDR_API __declspec(dllexport)
+    #define LIBHDR_API __declspec(dllimport)
   #endif /* LIBHDR_API */
 #else /* defined (_WIN32) */
  #define LIBHDR_API
