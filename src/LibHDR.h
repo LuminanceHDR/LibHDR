@@ -22,5 +22,7 @@
  *  
  */
  
-#include <CoreCallback.h>
-#include <CoreObject.h>
+#include "CoreCallback.h"
+#include "CoreObject.h"
+#include "Array2D.h"
+#include "Channel.h"
