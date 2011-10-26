@@ -64,6 +64,8 @@ Array2D::Array2D(const Array2D& rhs):
 // Assignment operator
 Array2D& Array2D::operator=(const Array2D& rhs)
 {
+    if (this == &rhs) return *this; // check self-assignment
+
     _mm_free(m_Data);
 
     this->m_Rows = rhs.m_Rows;

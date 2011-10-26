@@ -44,6 +44,8 @@ Channel::Channel(const Channel& rhs):
 // Assignment operator
 Channel& Channel::operator=(const Channel& rhs)
 {
+    if (this == &rhs) return *this; // check self-assignment
+
     this->Array2D::operator=(rhs);
 
     // remove all tags & copy tags from rhs (all done by operator=)
