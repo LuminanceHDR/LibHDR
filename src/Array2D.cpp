@@ -26,6 +26,8 @@
 #include <assert.h>
 #if defined(_MSC_VER)
 #include <malloc.h>
+#else // I assume that, if it is not MSVC, it is GCC
+#include <mm_malloc.h>
 #endif
 
 #include "array2d.h"

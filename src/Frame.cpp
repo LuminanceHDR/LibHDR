@@ -42,7 +42,7 @@ namespace LibHDR
         m_Width(rhs.m_Width),
         m_Height(rhs.m_Height),
         m_Tags(rhs.m_Tags),
-        m_Channels(rhs.m_Channels) // this one makes a mess!
+        m_Channels(rhs.m_Channels)
     { }
     
     // assignment operator
@@ -52,7 +52,7 @@ namespace LibHDR
         m_Width = rhs.m_Width;
         m_Height = rhs.m_Height;
         m_Tags = rhs.m_Tags;
-        m_Channels = rhs.m_Channels; // this one makes a mess!
+        m_Channels = rhs.m_Channels;
 
         return *this;
     }
@@ -60,11 +60,6 @@ namespace LibHDR
     // dtor
     Frame::~Frame()
     {
-        // deallocate Channels from ChannelMap
-        for (ChannelMap::iterator it = m_Channels.begin(); it != m_Channels.end(); it++)
-        {
-            delete it->second;
-        }
         // std::cout << "Frame::~Frame()" << std::endl;
     }
 
@@ -79,7 +74,7 @@ namespace LibHDR
             X = Y = Z = NULL;
             return;
         }
-        X = it->second;
+        X = &it->second;
 
         // find Y
         it = m_Channels.find("Y");
@@ -88,7 +83,7 @@ namespace LibHDR
             X = Y = Z = NULL;
             return;
         }
-        Y = it->second;
+        Y = &it->second;
 
         // find Y
         it = m_Channels.find("Z");
@@ -97,7 +92,7 @@ namespace LibHDR
             X = Y = Z = NULL;
             return;
         }
-        Z = it->second;
+        Z = &it->second;
     }
 
     void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
@@ -113,7 +108,7 @@ namespace LibHDR
         if ( it == m_Channels.end() )
             return NULL;
         else
-            return it->second;
+            return &it->second;
     }
 
     Channel* Frame::createChannel( std::string name )
@@ -122,14 +117,11 @@ namespace LibHDR
 
         if ( it != m_Channels.end() )
         {
-            return it->second;
+            return &it->second;
         }
         else
         {
-            Channel* ch = new Channel( m_Width, m_Height, name );
-            m_Channels.insert( std::pair<std::string, Channel*>(name, ch) );
-
-            return ch;
+            return &(*(m_Channels.insert( ChannelPair(name, Channel( m_Width, m_Height, name )) ).first)).second;
         }
     }
 
