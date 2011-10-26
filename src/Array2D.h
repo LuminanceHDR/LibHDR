@@ -50,7 +50,7 @@ namespace LibHDR
         float* m_Data;
 
     public:
-        Array2D(int cols, int rows);
+        explicit Array2D(int cols, int rows);
         //Array2D(int cols, int rows, float* data);
 
         Array2D& operator=(const Array2D& other);

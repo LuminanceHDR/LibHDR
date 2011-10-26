@@ -41,7 +41,7 @@ namespace LibHDR
         TagContainer m_Tags;
 
     public:
-        Channel(int width, int height, std::string name);
+        explicit Channel(int width, int height, std::string name);
         Channel(const Channel& rhs);
         Channel& operator=(const Channel& rhs);
         virtual ~Channel();
