@@ -31,7 +31,7 @@
 namespace LibHDR
 {
     using namespace std;
-
+    
     // ctor
     Frame::Frame( int width, int height ):
     m_Width( width ), m_Height( height )
@@ -42,17 +42,17 @@ namespace LibHDR
         m_Width(rhs.m_Width),
         m_Height(rhs.m_Height),
         m_Tags(rhs.m_Tags),
-        m_Channels(rhs.m_Channels)
+        m_Channels(rhs.m_Channels) // this one makes a mess!
     { }
     
     // assignment operator
-    // default behaviour
+    // default behaviour... in fact this function can also be removed!
     Frame& Frame::operator=(const Frame& rhs)
     {
         m_Width = rhs.m_Width;
         m_Height = rhs.m_Height;
         m_Tags = rhs.m_Tags;
-        m_Channels = rhs.m_Channels;
+        m_Channels = rhs.m_Channels; // this one makes a mess!
 
         return *this;
     }
@@ -60,20 +60,10 @@ namespace LibHDR
     // dtor
     Frame::~Frame()
     {
-        // I don't like it!!! No way I can like it!
-
-        ChannelMap::iterator it = m_Channels.begin();
-        while ( it != m_Channels.end() )
+        // deallocate Channels from ChannelMap
+        for (ChannelMap::iterator it = m_Channels.begin(); it != m_Channels.end(); it++)
         {
-            Channel *ch = it->second;
-
-            // Nasty trick because hashmap
-            // elements point to string that is
-            // freed by the channel
-            ChannelMap::iterator itToDelete = it;
-
-            it++;
-            m_Channels.erase( itToDelete );
+            delete it->second;
         }
         // std::cout << "Frame::~Frame()" << std::endl;
     }
@@ -132,17 +122,18 @@ namespace LibHDR
 
         if ( it != m_Channels.end() )
         {
-            return it->second; //m_channels[name];
+            return it->second;
         }
         else
         {
-            Channel *ch = new Channel( m_Width, m_Height, name );
+            Channel* ch = new Channel( m_Width, m_Height, name );
             m_Channels.insert( std::pair<std::string, Channel*>(name, ch) );
 
             return ch;
         }
     }
 
+    /*
     void Frame::removeChannel( Channel *ch )
     {
         assert( ch != NULL );
@@ -152,6 +143,6 @@ namespace LibHDR
         m_Channels.erase( it );
         delete ch;
     }
-
+    */
 } // namespace LibHDR
 

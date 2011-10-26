@@ -110,7 +110,7 @@ namespace LibHDR
          * character long.
          * @return existing or newly created channel
          */
-        Channel *createChannel( std::string name );
+        Channel* createChannel( std::string name );
 
         /**
          * Removes a channel. It is safe to remove the channel pointed by
@@ -118,7 +118,8 @@ namespace LibHDR
          *
          * @param channel [in] channel that should be removed.
          */
-        void removeChannel( Channel *ch ); // ?!??!?!?!?!??!???!
+        // ?!??!?!?!?!??!???!
+        //void removeChannel( Channel *ch ); 
 
         /**
          *

@@ -69,6 +69,7 @@ namespace LibHDR
         * Gets name of the channel.
         */
         std::string getName() const;
+        bool isName(std::string) const;
     };
 
     // Inline functions
@@ -97,29 +98,23 @@ namespace LibHDR
         return m_ChannelName;
     }
 
+    inline bool Channel::isName(std::string name) const
+    {
+        return ((m_ChannelName == name)? true : false);
+    }
+
     //------------------------------------------------------------------------------
     // Map of channels
     //------------------------------------------------------------------------------
-    struct string_cmp: public std::binary_function<std::string,std::string,bool>
+    struct compareChannelName: public std::binary_function<const std::string, const std::string, bool>
     {
-        bool operator()(std::string s1, std::string s2) const
+        bool operator()(const std::string s1, const std::string s2) const
         {
             return (s1.compare(s2) < 0);
         }
     };
 
-    typedef std::map<std::string, Channel*, string_cmp> ChannelMap; //, str_cmp> ;
-
-    struct compareChannels : public std::binary_function<const std::string, const std::string,bool>
-    {
-        bool operator()(const Channel& c1, const Channel& c2) const
-        {
-            return ((c1.getName()).compare(c2.getName()) < 0);
-        }
-    };
-
-    typedef std::map<Channel&, compareChannels> ChannelSet;
+    typedef std::map<std::string, Channel*, compareChannelName> ChannelMap;
 }
-
 
 #endif //LIBHDR_CHANNEL
