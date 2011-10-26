@@ -31,6 +31,7 @@
 #include "CoreObject.h"
 
 #include "ConsoleCallbackMT.h"
+#include "Channel.h"
 
 class MockObject: public LibHDR::CoreObject
 {
@@ -56,6 +57,8 @@ public:
 
 int main()
 {
+    LibHDR::Channel ChannelT(1000, 2000, "T");
+
     MockObject obj;
     ConsoleCallbackMT cb(&obj);
 
