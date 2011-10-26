@@ -23,32 +23,39 @@
  */
 
 #include "Channel.h"
-//#include "tag.h"
 
 using namespace std;
 
 namespace LibHDR
 {
-Channel::Channel( int width, int height, std::string name):
+Channel::Channel(int width, int height, std::string name):
     Array2D(width, height),
     m_ChannelName(name)
 {
-    //tags = new TagContainer();
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
+}
+
+// copy constructor
+Channel::Channel(const Channel& rhs):
+    Array2D(rhs),
+    m_Tags(rhs.getTags())
+{ }
+     
+// Assignment operator
+Channel& Channel::operator=(const Channel& rhs)
+{
+    this->Array2D::operator=(rhs);
+
+    // remove all tags & copy tags from rhs (all done by operator=)
+    m_Tags = rhs.getTags();
+
+    return *this;
 }
 
 Channel::~Channel()
 {
     //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 }
-
-// Channel implementation
-/*
-TagContainer* Channel::getTags()
-{
-return tags;
-}
-*/
 
 } // namespace LibHDR
 

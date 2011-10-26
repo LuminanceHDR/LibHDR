@@ -29,55 +29,56 @@
 
 namespace LibHDR
 {
-    typedef std::map<std::string, std::string> TagList;
+    typedef std::map<std::string, std::string> TagContainer;
     typedef std::pair<std::string, std::string> Tag;
 
     //------------------------------------------------------------------------------
     // TagContainer interface allows to read and modify tags. A tag is "name"="value" pair.
     // ------------------------------------------------------------------------------
-    class TagContainer: public std::map<std::string, std::string>
-    {
-    public:
 
-      //TagContainer() { }
-      //~TagContainer() { }
+  //  class TagContainer: public std::map<std::string, std::string>
+  //  {
+  //  public:
 
-      TagList::const_iterator tagsBegin() const;
-      TagList::const_iterator tagsEnd() const;
+  //    //TagContainer() { }
+  //    //~TagContainer() { }
 
-      int getSize() const;
+  //    TagList::const_iterator tagsBegin() const;
+  //    TagList::const_iterator tagsEnd() const;
 
-      void appendTagEOL( const char *tagValue );
-      void appendTag( const std::string &tagValue );
+  //    int getSize() const;
 
-      TagList::iterator findTag( const char *tagName );
+  //    void appendTagEOL( const char *tagValue );
+  //    void appendTag( const std::string &tagValue );
 
-      void setTag( const char *tagName, const char *tagValue );
-      const char *getTag( const char *tagName );
+  //    TagList::iterator findTag( const char *tagName );
 
-     /**
-      * Set or add a string tag of the name tagName.
-      * @param tagName name of the tag to add or set
-      * @param tagValue value of the tag
-      */
-      void setString( const char *tagName, const char *tagValue );
+  //    void setTag( const char *tagName, const char *tagValue );
+  //    const char *getTag( const char *tagName );
 
-     /**
-      * Get a string tag of the name tagName from the TagContainer.
-      * @param tagName name of the tag to retrieve
-      * @return tag value or NULL if tag was not found
-      */
-      const char* getString( const char *tagName );
+  //   /**
+  //    * Set or add a string tag of the name tagName.
+  //    * @param tagName name of the tag to add or set
+  //    * @param tagValue value of the tag
+  //    */
+  //    void setString( const char *tagName, const char *tagValue );
 
-     /**
-      * Removes (if exists) a tag of the name tagName from the TagContainer.
-      * @param tagName name of the tag to remove
-      */
-      void removeTag( const char *tagName );
+  //   /**
+  //    * Get a string tag of the name tagName from the TagContainer.
+  //    * @param tagName name of the tag to retrieve
+  //    * @return tag value or NULL if tag was not found
+  //    */
+  //    const char* getString( const char *tagName );
 
-      void removeAllTags();
+  //   /**
+  //    * Removes (if exists) a tag of the name tagName from the TagContainer.
+  //    * @param tagName name of the tag to remove
+  //    */
+  //    void removeTag( const char *tagName );
 
-  };
+  //    void removeAllTags();
+
+  //};
 
 
    /**

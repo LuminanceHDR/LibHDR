@@ -42,14 +42,16 @@ namespace LibHDR
 
     public:
         Channel(int width, int height, std::string name);
-
+        Channel(const Channel& rhs);
+        Channel& operator=(const Channel& rhs);
         virtual ~Channel();
 
         /**
         * Returns TagContainer that can be used to access or modify
         * tags associated with this Channel object.
         */
-        //TagContainer *getTags();
+        TagContainer& getTags();
+        const TagContainer& getTags() const;
 
         /**
         * Gets width of the channel (in pixels).
@@ -70,6 +72,16 @@ namespace LibHDR
     };
 
     // Inline functions
+    inline TagContainer& Channel::getTags()
+    {
+        return m_Tags;
+    }
+
+    inline const TagContainer& Channel::getTags() const
+    {
+        return m_Tags;
+    }
+
     inline int Channel::getWidth() const
     {
         return Array2D::getCols();
@@ -78,6 +90,11 @@ namespace LibHDR
     inline int Channel::getHeight() const
     {
         return Array2D::getRows();
+    }
+
+    inline std::string Channel::getName() const
+    {
+        return m_ChannelName;
     }
 
     //------------------------------------------------------------------------------
@@ -93,7 +110,7 @@ namespace LibHDR
 
     typedef std::map<std::string, Channel*, string_cmp> ChannelMap; //, str_cmp> ;
 
-    struct compareChannels: public std::binary_function<std::string,std::string,bool>
+    struct compareChannels : public std::binary_function<const std::string, const std::string,bool>
     {
         bool operator()(const Channel& c1, const Channel& c2) const
         {
