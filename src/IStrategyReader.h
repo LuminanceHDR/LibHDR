@@ -28,6 +28,7 @@
 #include <string>
 
 #include "DLLDefines.h"
+#include "Frame.h"
 
 namespace LibHDR
 {
@@ -39,7 +40,7 @@ class LIBHDR_API FrameReader; // forward declaration
 
 class LIBHDR_API IStrategyReader
 {
-private:
+protected:
     const FrameReader& m_FrameReader;
 
     enum {OPEN, CLOSE} m_Status;
@@ -47,10 +48,10 @@ private:
     void setOpen(bool);
 public:
     IStrategyReader(const FrameReader&); // cstr
-    ~IStrategyReader();
+    virtual ~IStrategyReader();
 
     virtual void open(std::string) = 0;
-    virtual void readFrame() = 0;
+    virtual Frame* readFrame() = 0;
     virtual void close() = 0;
 
     bool isOpen();

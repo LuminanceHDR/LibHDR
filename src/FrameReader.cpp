@@ -71,6 +71,11 @@ void FrameReader::open(std::string _filename)
 //    }
 }
 
+Frame* FrameReader::readFrame()
+{
+    return NULL;
+}
+
 void FrameReader::close()
 {
     if ( m_ReaderImpl ) m_ReaderImpl->close();

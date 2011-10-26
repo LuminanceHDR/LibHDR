@@ -29,6 +29,7 @@
 
 #include "DLLDefines.h"
 #include "CoreObject.h"
+#include "Frame.h"
 
 namespace LibHDR
 {
@@ -51,7 +52,7 @@ public:
     ~FrameReader();
 
     void open(std::string);
-    void readFrame(); // should be returning a Image*
+    Frame* readFrame();
     void close();
 
     bool isOpen();
