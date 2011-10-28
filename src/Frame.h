@@ -92,11 +92,11 @@ namespace LibHDR
         /**
          * Gets a named channel.
          *
-         * @param name [in] name of the channel. Name must be 8 or less
-         * character long.
+         * @param name [in] name of the channel.
          * @return channel or NULL if the channel does not exist
          */
         Channel* getChannel( std::string name );
+        const Channel* getChannel( std::string name ) const;
 
         /**
          * Creates a named channel. If the channel already exists, returns
@@ -106,20 +106,18 @@ namespace LibHDR
          * frame. The channels should not changes for the subsequent
          * frames of a sequence.
          *
-         * @param name [in] name of the channel. Name must be 8 or less
-         * character long.
+         * @param name [in] name of the channel.
          * @return existing or newly created channel
          */
         Channel* createChannel( std::string name );
 
         /**
-         * Removes a channel. It is safe to remove the channel pointed by
-         * the ChannelIterator.
+         * Removes a channel. If a channel with name "name" does not exist, 
+         * function returns without doing anything
          *
-         * @param channel [in] channel that should be removed.
+         * @param name [in] name of the channel that should be removed.
          */
-        // ?!??!?!?!?!??!???!
-        //void removeChannel( Channel *ch ); 
+        void removeChannel( std::string name );
 
         /**
          *

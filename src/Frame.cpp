@@ -102,13 +102,19 @@ namespace LibHDR
         Z = createChannel("Z");
     }
 
-    Channel* Frame::getChannel( std::string name )
+    const Channel* Frame::getChannel( std::string name ) const
     {
-        ChannelMap::iterator it = m_Channels.find(name);
+        ChannelMap::const_iterator it = m_Channels.find(name);
         if ( it == m_Channels.end() )
             return NULL;
         else
             return &it->second;
+    }
+
+    Channel* Frame::getChannel( std::string name )
+    {
+        // Effective C++: Item 3
+        return const_cast<Channel*>(static_cast<const Frame&>(*this).getChannel(name));
     }
 
     Channel* Frame::createChannel( std::string name )
@@ -125,16 +131,10 @@ namespace LibHDR
         }
     }
 
-    /*
-    void Frame::removeChannel( Channel *ch )
+    void Frame::removeChannel( std::string name )
     {
-        assert( ch != NULL );
-        ChannelMap::iterator it = m_Channels.find( ch->getName() );
-        assert( it != m_Channels.end() && it->second == ch );
-
-        m_Channels.erase( it );
-        delete ch;
+        m_Channels.erase(name);
     }
-    */
+    
 } // namespace LibHDR
 

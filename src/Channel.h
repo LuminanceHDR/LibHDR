@@ -114,8 +114,8 @@ namespace LibHDR
         }
     };
 
-    typedef std::map<std::string, Channel, compareChannelName> ChannelMap;
-    typedef std::pair<std::string, Channel> ChannelPair;
+    typedef std::map<const std::string, Channel, compareChannelName> ChannelMap;
+    typedef std::pair<const std::string, Channel> ChannelPair;
 }
 
 #endif //LIBHDR_CHANNEL
