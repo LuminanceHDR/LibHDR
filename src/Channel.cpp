@@ -38,6 +38,7 @@ Channel::Channel(int width, int height, std::string name):
 // copy constructor
 Channel::Channel(const Channel& rhs):
     Array2D(rhs),
+    m_ChannelName(rhs.m_ChannelName),
     m_Tags(rhs.getTags())
 { }
      
@@ -46,7 +47,10 @@ Channel& Channel::operator=(const Channel& rhs)
 {
     if (this == &rhs) return *this; // check self-assignment
 
+    // Base class
     this->Array2D::operator=(rhs);
+
+    m_ChannelName = rhs.m_ChannelName;
 
     // remove all tags & copy tags from rhs (all done by operator=)
     m_Tags = rhs.getTags();

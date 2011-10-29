@@ -123,7 +123,7 @@ namespace LibHDR
 namespace std
 {
 /*
-  * Specialization of std::swap for Array2D
+  * Specialization of std::swap for Channel
   */
 template<>
 void swap<LibHDR::Channel>(LibHDR::Channel& a, LibHDR::Channel& b);
