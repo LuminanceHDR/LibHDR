@@ -31,8 +31,8 @@ namespace LibHDR
 namespace IO
 {
 
-IStrategyReader::IStrategyReader(const FrameReader& _fr):
-    m_FrameReader(_fr)
+IStrategyReader::IStrategyReader(const CoreObject& _fr):
+    m_Obj(_fr)
 {
 
 }

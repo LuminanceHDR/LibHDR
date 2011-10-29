@@ -27,7 +27,9 @@
 
 #include <string>
 
+#include "IOCommon.h"
 #include "DLLDefines.h"
+#include "CoreObject.h"
 #include "Frame.h"
 
 namespace LibHDR
@@ -35,19 +37,17 @@ namespace LibHDR
 
 namespace IO
 {
-
-class LIBHDR_API FrameReader; // forward declaration
-
+    
 class LIBHDR_API IStrategyReader
 {
 protected:
-    const FrameReader& m_FrameReader;
+    const CoreObject& m_Obj;
 
-    enum {OPEN, CLOSE} m_Status;
+    IOStatus m_Status;
 
     void setOpen(bool);
 public:
-    IStrategyReader(const FrameReader&); // cstr
+    IStrategyReader(const CoreObject&); // cstr
     virtual ~IStrategyReader();
 
     virtual void open(std::string) = 0;
