@@ -37,7 +37,7 @@ int main()
     list_frames.push_back(Ref);
 
     LibHDR::Channel* r = Ref.createChannel("R");
-    float* r__ = r->getRawData();
+    //float* r__ = r->getRawData();
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
         (*r)(idx) = 1.0f;
@@ -45,7 +45,7 @@ int main()
     }
 
     LibHDR::Channel* g = Ref.createChannel("G");
-    float* g__ = g->getRawData();
+    //float* g__ = g->getRawData();
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
         (*g)(idx) = 1.0f;
@@ -53,7 +53,7 @@ int main()
     }
 
     LibHDR::Channel* b = Ref.createChannel("B");
-    float* b__ = b->getRawData();
+    //float* b__ = b->getRawData();
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
         (*b)(idx) = 1.0f;
@@ -76,7 +76,7 @@ int main()
         LibHDR::Frame& frame = *it;
 
         LibHDR::Channel* r = frame.createChannel("A");
-        float* r__ = r->getRawData();
+        //float* r__ = r->getRawData();
 
         for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
         {
