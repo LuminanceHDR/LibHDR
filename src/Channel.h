@@ -46,6 +46,8 @@ namespace LibHDR
         Channel& operator=(const Channel& rhs);
         virtual ~Channel();
 
+        void swap(Channel&);
+
         /**
         * Returns TagContainer that can be used to access or modify
         * tags associated with this Channel object.
@@ -116,6 +118,15 @@ namespace LibHDR
 
     typedef std::map<const std::string, Channel, compareChannelName> ChannelMap;
     typedef std::pair<const std::string, Channel> ChannelPair;
+}
+
+namespace std
+{
+/*
+  * Specialization of std::swap for Array2D
+  */
+template<>
+void swap<LibHDR::Channel>(LibHDR::Channel& a, LibHDR::Channel& b);
 }
 
 #endif //LIBHDR_CHANNEL

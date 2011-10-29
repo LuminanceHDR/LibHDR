@@ -59,6 +59,26 @@ Channel::~Channel()
     //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 }
 
+void Channel::swap(Channel& other)
+{
+    using std::swap;
+
+    // Base class swap
+    Array2D::swap(other);
+
+    // Channel data member specialization
+    m_ChannelName.swap(other.m_ChannelName);
+    m_Tags.swap(other.m_Tags);
+}
+
 } // namespace LibHDR
 
+namespace std
+{
+template<>
+void swap<LibHDR::Channel>(LibHDR::Channel& a, LibHDR::Channel& b)
+{
+    a.swap(b);
+}
+}
 
