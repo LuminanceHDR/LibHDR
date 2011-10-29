@@ -130,7 +130,6 @@ namespace LibHDR
     Channel* Frame::createChannel( std::string name )
     {
         ChannelMap::iterator it = m_Channels.find(name);
-
         if ( it != m_Channels.end() )
         {
             return &it->second;
@@ -144,6 +143,12 @@ namespace LibHDR
     void Frame::removeChannel( std::string name )
     {
         m_Channels.erase(name);
+    }
+
+    bool Frame::isChannel( std::string name ) const
+    {
+        ChannelMap::const_iterator it = m_Channels.find(name);
+        return ( it != m_Channels.end() )? true: false;
     }
     
 } // namespace LibHDR

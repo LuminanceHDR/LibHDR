@@ -122,6 +122,13 @@ namespace LibHDR
         void removeChannel( std::string name );
 
         /**
+         * Check if a Channel with name "name" is present
+         *
+         * @param name [in] name of the channel that should be removed.
+         */
+        bool isChannel( std::string name ) const;
+
+        /**
          *
          * Returns STL Map of Channels.
          *
