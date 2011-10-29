@@ -121,4 +121,23 @@ void Array2D::reset(const float value)
     //VEX_vset(this->m_data, value, this->m_rows*this->m_cols);
 }
 
+void Array2D::swap(Array2D& other)
+{
+    using std::swap;
+
+    swap(m_Rows, other.m_Rows);
+    swap(m_Cols, other.m_Cols);
+    swap(m_Elems, other.m_Elems);
+    swap(m_Data, other.m_Data);
+}
+
 } // namespace LibHDR
+
+namespace std
+{
+template<>
+void swap<LibHDR::Array2D>(LibHDR::Array2D& a, LibHDR::Array2D& b)
+{
+    a.swap(b);
+}
+}

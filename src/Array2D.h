@@ -63,6 +63,11 @@ namespace LibHDR
         virtual ~Array2D();
 
         /**
+          * Swap Array2D
+          */
+        void swap(Array2D&);
+
+        /**
          * Access an element of the array for reading and
          * writing. Whether the given row and column are checked against
          * array bounds depends on an implementing class.
@@ -206,6 +211,15 @@ namespace LibHDR
 #endif
         return m_Data[index];
     }
+} // namespace LibHDR
+
+namespace std
+{
+/*
+  * Specialization of std::swap for Array2D
+  */
+template<>
+void swap<LibHDR::Array2D>(LibHDR::Array2D& a, LibHDR::Array2D& b);
 }
 
 #endif // LIBHDR_ARRAY2D
