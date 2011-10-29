@@ -81,28 +81,31 @@ Array2D& Array2D::operator=(const Array2D& rhs)
 {
     if (this == &rhs) return *this; // check self-assignment
 
+    if (m_Elems != rhs.m_Elems)
+    {
 #if defined(_MSC_VER)
-    float* temp_pointer = (float*)_aligned_malloc(rhs.m_Elems*sizeof(float), 16);
+        float* temp_pointer = (float*)_aligned_malloc(rhs.m_Elems*sizeof(float), 16);
 #else
-    float* temp_pointer = (float*)_mm_malloc(rhs.m_Elems*sizeof(float), 16);
+        float* temp_pointer = (float*)_mm_malloc(rhs.m_Elems*sizeof(float), 16);
 #endif
 
-    // Allocation failed, so I throw an exception
-    if (temp_pointer == NULL) throw std::bad_alloc();
+        // Allocation failed, so I throw an exception
+        if (temp_pointer == NULL) throw std::bad_alloc();
 
 #if defined(_MSC_VER)
-    _aligned_free(this->m_Data);
+        _aligned_free(m_Data);
 #else
-    _mm_free(this->m_Data);
+        _mm_free(m_Data);
 #endif
 
-    this->m_Data = temp_pointer;
+        m_Data = temp_pointer;
+        m_Elems = rhs.m_Elems;
+    }
     /* Only after being sure the allocation is OK, I can update the data structure */
-    this->m_Rows = rhs.m_Rows;
-    this->m_Cols = rhs.m_Cols;
-    this->m_Elems = rhs.m_Elems;
+    m_Rows = rhs.m_Rows;
+    m_Cols = rhs.m_Cols;
 
-    memcpy(this->m_Data, rhs.m_Data, rhs.m_Elems*sizeof(float));
+    memcpy(m_Data, rhs.m_Data, rhs.m_Elems*sizeof(float));
 
     return *this;
 }
