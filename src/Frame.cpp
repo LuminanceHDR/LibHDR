@@ -63,6 +63,16 @@ namespace LibHDR
         // std::cout << "Frame::~Frame()" << std::endl;
     }
 
+    void Frame::swap(Frame& other)
+    {
+        using std::swap;
+
+        swap(m_Width, other.m_Width);
+        swap(m_Height, other.m_Height);
+        swap(m_Tags, other.m_Tags);
+        swap(m_Channels, other.m_Channels);
+    }
+
     void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
     {
         ChannelMap::iterator it;
@@ -137,4 +147,13 @@ namespace LibHDR
     }
     
 } // namespace LibHDR
+
+namespace std
+{
+template<>
+void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b)
+{
+    a.swap(b);
+}
+}
 

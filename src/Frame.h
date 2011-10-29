@@ -55,6 +55,8 @@ namespace LibHDR
         Frame& operator=(const Frame&);
         virtual ~Frame();
 
+        void swap(Frame&);
+
         /**
          * Gets width of the channels (in pixels).
          */
@@ -165,6 +167,15 @@ namespace LibHDR
     {
         return m_Tags;
     }
+}
+
+namespace std
+{
+/*
+  * Specialization of std::swap for Frame
+  */
+template<>
+void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b);
 }
 
 #endif // LIBHDR_FRAME
