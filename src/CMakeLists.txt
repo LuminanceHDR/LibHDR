@@ -8,7 +8,11 @@ SET(LIBHDR_HDRS
     CoreObject.h
     CoreCallback.h
     FrameReader.h
-    IStrategyReader.h)
+    IStrategyReader.h
+    PFSCommon.h
+    PFSReader.h
+    IOCommon.h
+    IOExceptions.h)
 
 SET(LIBHDR_SRCS
     Array2D.cpp
@@ -18,7 +22,9 @@ SET(LIBHDR_SRCS
     CoreObject.cpp
     CoreCallback.cpp
     FrameReader.cpp
-    IStrategyReader.cpp)
+    IStrategyReader.cpp
+    PFSCommon.cpp
+    PFSReader.cpp)
 
 # Allow the developer to select if Dynamic or Static libraries are built
 OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
