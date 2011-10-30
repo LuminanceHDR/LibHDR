@@ -35,78 +35,78 @@
 
 namespace LibHDR
 {
-    class LIBHDR_API Channel : public Array2D
-    {
-    protected:
-        std::string m_ChannelName;
-        TagContainer m_Tags;
+class LIBHDR_API Channel : public Array2D
+{
+protected:
+    std::string m_ChannelName;
+    TagContainer m_Tags;
 
-    public:
-        explicit Channel(int width, int height, std::string name);
-        Channel(const Channel& rhs);
-        Channel& operator=(const Channel& rhs);
-        virtual ~Channel();
+public:
+    explicit Channel(int width, int height, std::string name);
+    Channel(const Channel& rhs);
+    Channel& operator=(const Channel& rhs);
+    virtual ~Channel();
 
-        void swap(Channel&);
+    void swap(Channel&);
 
-        /**
-        * Returns TagContainer that can be used to access or modify
-        * tags associated with this Channel object.
-        */
-        TagContainer& getTags();
-        const TagContainer& getTags() const;
+    /**
+     * Returns TagContainer that can be used to access or modify
+     * tags associated with this Channel object.
+     */
+    TagContainer& getTags();
+    const TagContainer& getTags() const;
 
-        /**
-        * Gets width of the channel (in pixels).
-        * This is a synonym for Array2D::getCols().
-        */
-        int getWidth() const;
+    /**
+     * Gets width of the channel (in pixels).
+     * This is a synonym for Array2D::getCols().
+     */
+    int getWidth() const;
 
-        /**
-        * Gets height of the channel (in pixels).
-        * This is a synonym for Array2D::getRows().
-        */
-        int getHeight() const;
+    /**
+     * Gets height of the channel (in pixels).
+     * This is a synonym for Array2D::getRows().
+     */
+    int getHeight() const;
 
-        /**
-        * Gets name of the channel.
-        */
-        std::string getName() const;
-        bool isName(std::string) const;
-    };
+    /**
+     * Gets name of the channel.
+     */
+    std::string getName() const;
+    bool isName(std::string) const;
+};
 
-    // Inline functions
-    inline TagContainer& Channel::getTags()
-    {
-        return m_Tags;
-    }
+// Inline functions
+inline TagContainer& Channel::getTags()
+{
+    return m_Tags;
+}
 
-    inline const TagContainer& Channel::getTags() const
-    {
-        return m_Tags;
-    }
+inline const TagContainer& Channel::getTags() const
+{
+    return m_Tags;
+}
 
-    inline int Channel::getWidth() const
-    {
-        return Array2D::getCols();
-    }
+inline int Channel::getWidth() const
+{
+    return Array2D::getCols();
+}
 
-    inline int Channel::getHeight() const
-    {
-        return Array2D::getRows();
-    }
+inline int Channel::getHeight() const
+{
+    return Array2D::getRows();
+}
 
-    inline std::string Channel::getName() const
-    {
-        return m_ChannelName;
-    }
+inline std::string Channel::getName() const
+{
+    return m_ChannelName;
+}
 
-    inline bool Channel::isName(std::string name) const
-    {
-        return ((m_ChannelName == name)? true : false);
-    }
+inline bool Channel::isName(std::string name) const
+{
+    return ((m_ChannelName == name)? true : false);
+}
 
-    typedef std::list<Channel> ChannelList;
+typedef std::list<Channel> ChannelList;
 }
 
 namespace std

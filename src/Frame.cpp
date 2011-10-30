@@ -33,130 +33,124 @@
 
 namespace LibHDR
 {
-    using namespace std;
-    
-    // ctor
-    Frame::Frame( int width, int height ):
+using namespace std;
+
+// ctor
+Frame::Frame( int width, int height ):
     m_Width( width ), m_Height( height )
-    { }
+{ }
 
-    // copy ctor
-    Frame::Frame(const Frame& rhs):
-        m_Width(rhs.m_Width),
-        m_Height(rhs.m_Height),
-        m_Tags(rhs.m_Tags),
-        m_Channels(rhs.m_Channels)
-    { }
-    
-    // assignment operator
-    // default behaviour... in fact this function can also be removed!
-    Frame& Frame::operator=(const Frame& rhs)
+// copy ctor
+Frame::Frame(const Frame& rhs):
+    m_Width(rhs.m_Width),
+    m_Height(rhs.m_Height),
+    m_Tags(rhs.m_Tags),
+    m_Channels(rhs.m_Channels)
+{ }
+
+// assignment operator
+// default behaviour... in fact this function can also be removed!
+Frame& Frame::operator=(const Frame& rhs)
+{
+    m_Width = rhs.m_Width;
+    m_Height = rhs.m_Height;
+    m_Tags = rhs.m_Tags;
+    m_Channels = rhs.m_Channels;
+
+    return *this;
+}
+
+// dtor
+Frame::~Frame()
+{
+    // std::cout << "Frame::~Frame()" << std::endl;
+}
+
+void Frame::swap(Frame& other)
+{
+    using std::swap;
+
+    swap(m_Width, other.m_Width);
+    swap(m_Height, other.m_Height);
+    swap(m_Tags, other.m_Tags);
+    swap(m_Channels, other.m_Channels);
+}
+
+/*
+void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+{
+    ChannelList::iterator it;
+
+    // find X
+    it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "X"));
+    if ( it == m_Channels.end() )
     {
-        m_Width = rhs.m_Width;
-        m_Height = rhs.m_Height;
-        m_Tags = rhs.m_Tags;
-        m_Channels = rhs.m_Channels;
-
-        return *this;
+        X = Y = Z = NULL;
+        return;
     }
+    X = &(*it);
 
-    // dtor
-    Frame::~Frame()
+    // find Y
+    it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "Y"));
+    if ( it == m_Channels.end() )
     {
-        // std::cout << "Frame::~Frame()" << std::endl;
+        X = Y = Z = NULL;
+        return;
     }
+    Y = &(*it);
 
-    void Frame::swap(Frame& other)
+    // find Y
+    it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "Z"));
+    if ( it == m_Channels.end() )
     {
-        using std::swap;
-
-        swap(m_Width, other.m_Width);
-        swap(m_Height, other.m_Height);
-        swap(m_Tags, other.m_Tags);
-        swap(m_Channels, other.m_Channels);
+        X = Y = Z = NULL;
+        return;
     }
+    Z = &(*it);
+}
 
-    /*
-    void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
-    {
-        ChannelList::iterator it;
+void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
+{
+    X = createChannel("X");
+    Y = createChannel("Y");
+    Z = createChannel("Z");
+}
+*/
 
-        // find X
-        it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "X"));
-        if ( it == m_Channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        X = &(*it);
+const Channel& Frame::getChannel( std::string name ) const
+{
+    ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
+    if ( it == m_Channels.end() )
+        throw ChannelNotFound(name); // throw
+    else
+        return *it;
+}
 
-        // find Y
-        it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "Y"));
-        if ( it == m_Channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        Y = &(*it);
+Channel& Frame::getChannel( std::string name )
+{
+    // Effective C++: Item 3
+    return const_cast<Channel&>(static_cast<const Frame&>(*this).getChannel(name));
+}
 
-        // find Y
-        it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), "Z"));
-        if ( it == m_Channels.end() )
-        {
-            X = Y = Z = NULL;
-            return;
-        }
-        Z = &(*it);
-    }
-    */
+Channel& Frame::createChannel( std::string name )
+{
+    ChannelList::iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
+    if ( it != m_Channels.end() )
+        return *it;
+    else
+        return *(m_Channels.insert(m_Channels.end(), Channel( m_Width, m_Height, name )));
+}
 
-    /*
-    void Frame::createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )
-    {
-        X = createChannel("X");
-        Y = createChannel("Y");
-        Z = createChannel("Z");
-    }
-    */
+void Frame::removeChannel( std::string name )
+{
+    m_Channels.remove_if( std::bind2nd( std::mem_fun_ref( &Channel::isName ), name) );
+}
 
-    const Channel& Frame::getChannel( std::string name ) const
-    {
-        ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
-        if ( it == m_Channels.end() )
-            throw ChannelNotFound(name); // throw
-        else
-            return *it;
-    }
-
-    Channel& Frame::getChannel( std::string name )
-    {
-        // Effective C++: Item 3
-        return const_cast<Channel&>(static_cast<const Frame&>(*this).getChannel(name));
-    }
-
-    Channel& Frame::createChannel( std::string name )
-    {
-        ChannelList::iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
-        if ( it != m_Channels.end() )
-        {
-            return *it;
-        }
-        else
-        {
-            return *(m_Channels.insert(m_Channels.end(), Channel( m_Width, m_Height, name )));
-        }
-    }
-    
-    void Frame::removeChannel( std::string name )
-    {
-        m_Channels.remove_if( std::bind2nd( std::mem_fun_ref( &Channel::isName ), name) );
-    }
-
-    bool Frame::isChannel( std::string name ) const
-    {
-        ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
-        return ( it != m_Channels.end() )? true: false;
-    }
+bool Frame::isChannel( std::string name ) const
+{
+    ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
+    return ( it != m_Channels.end() )? true: false;
+}
     
 } // namespace LibHDR
 
