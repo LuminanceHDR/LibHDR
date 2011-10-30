@@ -31,6 +31,7 @@
 #include "DLLDefines.h"
 #include "Channel.h"
 #include "Tag.h"
+#include "FrameException.h"
 
 namespace LibHDR
 {
@@ -47,7 +48,7 @@ namespace LibHDR
         int             m_Height;
 
         TagContainer    m_Tags;
-        ChannelMap      m_Channels;
+        ChannelList     m_Channels;
 
     public:
         Frame(int width, int height);
@@ -77,7 +78,13 @@ namespace LibHDR
          * @param Y [out] a pointer to store Y channel in
          * @param Z [out] a pointer to store Z channel in
          */
-        void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
+        /*
+         * DEPRECATED
+         *
+         * Returning pointer to Channel(s) will not give safety integrity
+         * on the internal std::list of Channels
+         */
+        //void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
 
         /**
          * Creates color channels in XYZ color space. If such channels
@@ -89,7 +96,13 @@ namespace LibHDR
          * @param Y [out] a pointer to store Y channel in
          * @param Z [out] a pointer to store Z channel in
          */
-        void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
+        /*
+         * DEPRECATED
+         *
+         * Returning pointer to Channel(s) will not give safety integrity
+         * on the internal std::list of Channels
+         */
+        //void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
 
         /**
          * Gets a named channel.
@@ -97,8 +110,8 @@ namespace LibHDR
          * @param name [in] name of the channel.
          * @return channel or NULL if the channel does not exist
          */
-        Channel* getChannel( std::string name );
-        const Channel* getChannel( std::string name ) const;
+        Channel& getChannel( std::string name );
+        const Channel& getChannel( std::string name ) const;
 
         /**
          * Creates a named channel. If the channel already exists, returns
@@ -111,7 +124,7 @@ namespace LibHDR
          * @param name [in] name of the channel.
          * @return existing or newly created channel
          */
-        Channel* createChannel( std::string name );
+        Channel& createChannel( std::string name );
 
         /**
          * Removes a channel. If a channel with name "name" does not exist, 
@@ -133,8 +146,8 @@ namespace LibHDR
          * Returns STL Map of Channels.
          *
          */
-        ChannelMap& getChannels();
-        const ChannelMap& getChannels() const;
+        ChannelList& getChannels();
+        const ChannelList& getChannels() const;
 
         /**
          * Returns reference to TagContainer that can be used
@@ -155,12 +168,12 @@ namespace LibHDR
         return m_Height;
     }
 
-    inline ChannelMap& Frame::getChannels()
+    inline ChannelList& Frame::getChannels()
     {
         return m_Channels;
     }
 
-    inline const ChannelMap& Frame::getChannels() const
+    inline const ChannelList& Frame::getChannels() const
     {
         return m_Channels;
     }

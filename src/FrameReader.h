@@ -37,13 +37,15 @@ namespace LibHDR
 namespace IO
 {
 
+enum InputFileFormat { PFS, TIFF, HDR, RGBE, EXR };
+
 class LIBHDR_API IStrategyReader; // forward declaration
 
 class LIBHDR_API FrameReader: public CoreObject
 {
 private:
     IStrategyReader* m_ReaderImpl;
-
+    InputFileFormat m_FileFormat;
     void getFrameType(std::string);	// should be returning the frame type
 
 public:

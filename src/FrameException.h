@@ -22,8 +22,9 @@
  *
  */
 
-#ifndef LIBHDR_IOEXCEPTION
-#define LIBHDR_IOEXCEPTION
+
+#ifndef LIBHDR_FRAMEEXCEPTION
+#define LIBHDR_FRAMEEXCEPTION
 
 #include <string>
 #include <exception>
@@ -31,43 +32,15 @@
 
 namespace LibHDR
 {
-namespace IO
+
+class ChannelNotFound: public std::runtime_error
 {
-    class OpenException: public std::runtime_error
-    {
-    public:
-        OpenException(const std::string& msg = ""):
-        std::runtime_error(msg)
-        {}
-    };
-    
-    class CloseException: public std::runtime_error
-    {
-    public:
-        CloseException(const std::string& msg = ""):
-        std::runtime_error(msg)
-        {}
-    };
-    
-    class ReadException: public std::runtime_error
-    {
-    public:
-        ReadException(const std::string& msg = ""):
-        std::runtime_error(msg)
-        {}
-    };
-    
-    class WriteException: public std::runtime_error
-    {
-    public:
-        WriteException(const std::string& msg = ""):
-        std::runtime_error(msg)
-        {}
-    }; 
-    
-} // namespace IO
+public:
+    ChannelNotFound(const std::string& msg = ""):
+        std::runtime_error("Channel " + msg + " not found")
+    {}
+};
+
 } // namespace LibHDR
 
-
-#endif
-
+#endif // LIBHDR_FRAMEEXCEPTION

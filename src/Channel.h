@@ -27,6 +27,7 @@
 
 #include <string>
 #include <map>
+#include <list>
 
 #include "DLLDefines.h"
 #include "array2d.h"
@@ -105,19 +106,7 @@ namespace LibHDR
         return ((m_ChannelName == name)? true : false);
     }
 
-    //------------------------------------------------------------------------------
-    // Map of channels
-    //------------------------------------------------------------------------------
-    struct compareChannelName: public std::binary_function<const std::string, const std::string, bool>
-    {
-        bool operator()(const std::string s1, const std::string s2) const
-        {
-            return (s1.compare(s2) < 0);
-        }
-    };
-
-    typedef std::map<const std::string, Channel, compareChannelName> ChannelMap;
-    typedef std::pair<const std::string, Channel> ChannelPair;
+    typedef std::list<Channel> ChannelList;
 }
 
 namespace std

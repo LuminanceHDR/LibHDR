@@ -4,6 +4,7 @@ SET(LIBHDR_HDRS
     Tag.h
     Channel.h
     Frame.h
+    FrameException.h
     DLLDefines.h
     CoreObject.h
     CoreCallback.h

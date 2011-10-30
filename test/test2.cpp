@@ -26,8 +26,8 @@
 #include "Frame.h"
 #include <list>
 
-#define WIDTH 4000
-#define HEIGTH 3000
+#define WIDTH 3000
+#define HEIGTH 2000
 
 int main()
 {
@@ -36,34 +36,28 @@ int main()
     LibHDR::Frame Ref(WIDTH, HEIGTH);
     list_frames.push_back(Ref);
 
-    LibHDR::Channel* r = Ref.createChannel("R");
-    //float* r__ = r->getRawData();
+    LibHDR::Channel& r = Ref.createChannel("R");
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
-        (*r)(idx) = 1.0f;
-        //r__[idx] = 1.0f;
+        r(idx) = 1.0f;
     }
 
-    LibHDR::Channel* g = Ref.createChannel("G");
-    //float* g__ = g->getRawData();
+    LibHDR::Channel& g = Ref.createChannel("G");
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
-        (*g)(idx) = 1.0f;
-        //g__[idx] = 1.0f;
+        g(idx) = 1.0f;
     }
 
-    LibHDR::Channel* b = Ref.createChannel("B");
-    //float* b__ = b->getRawData();
+    LibHDR::Channel& b = Ref.createChannel("B");
     for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
     {
-        (*b)(idx) = 1.0f;
-        //b__[idx] = 1.0f;
+        b(idx) = 1.0f;
     }
 
     LibHDR::Frame Ref2 = Ref;
     list_frames.push_back(Ref2);
 
-    for (int i=2; i; i--)
+    for (int i=5; i; i--)
     {
         list_frames.push_back(LibHDR::Frame(Ref));
     }
@@ -74,16 +68,31 @@ int main()
          it++)
     {
         LibHDR::Frame& frame = *it;
-
-        LibHDR::Channel* r = frame.createChannel("A");
-        //float* r__ = r->getRawData();
+        LibHDR::Channel& r = frame.createChannel("A");
 
         for (int idx = 0; idx < WIDTH*HEIGTH; idx++)
         {
-            (*r)(idx) = 1.0f;
-            //r__[idx] = 1.0f;
+            r(idx) = 1.0f;
         }
     }
 
+    
+    /*
+     * This piece of code crash, because only Frame
+     * is in charge of removing a Channel from its data structure
+     *
+     * To avoid this problem, Frame should return a reference to
+     * a Channel, not a pointer
+     *
+     */
+    
+    /*
+    LibHDR::Frame Ref(WIDTH, HEIGTH);
+    LibHDR::Channel* ch = Ref.createChannel("X");
+    
+    delete ch;
+     */
+    
+    
     return 0;
 }
