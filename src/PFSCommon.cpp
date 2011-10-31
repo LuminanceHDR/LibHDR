@@ -27,6 +27,10 @@ namespace LibHDR
 {
 namespace IO
 {
+const char* PFSFILEID = "PFS1\x0a";
+const char* PFSEOL = "\x0a";
+const char* PFSEOLCH = "\x0a";
+const char* PFSENDH = "ENDH";
 
 PFSCommon::PFSCommon()
 {}

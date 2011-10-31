@@ -31,10 +31,10 @@ namespace LibHDR
 {
 namespace IO
 {
-const char* PFSFILEID = "PFS1\x0a";
-const char* PFSEOL = "\x0a";
-const char* PFSEOLCH = "\x0a";
-const char* PFSENDH = "ENDH";
+extern const char* PFSFILEID;
+extern const char* PFSEOL;
+extern const char* PFSEOLCH;
+extern const char* PFSENDH;
 
 class LIBHDR_API PFSCommon
 {
