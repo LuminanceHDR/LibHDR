@@ -4,7 +4,7 @@ SET(LIBHDR_HDRS
     Tag.h
     Channel.h
     Frame.h
-    FrameException.h
+    FrameExceptions.h
     DLLDefines.h
     CoreObject.h
     CoreCallback.h
@@ -20,6 +20,7 @@ SET(LIBHDR_SRCS
     Tag.cpp
     Channel.cpp
     Frame.cpp
+    FrameExceptions.cpp
     CoreObject.cpp
     CoreCallback.cpp
     FrameReader.cpp

@@ -31,7 +31,7 @@
 #include "DLLDefines.h"
 #include "Channel.h"
 #include "Tag.h"
-#include "FrameException.h"
+#include "FrameExceptions.h"
 
 namespace LibHDR
 {

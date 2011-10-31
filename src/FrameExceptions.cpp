@@ -22,25 +22,14 @@
  *
  */
 
-
-#ifndef LIBHDR_FRAMEEXCEPTION
-#define LIBHDR_FRAMEEXCEPTION
-
-#include <string>
-#include <exception>
-#include <stdexcept>
+#include "FrameExceptions.h"
 
 namespace LibHDR
 {
 
-class ChannelNotFound: public std::runtime_error
-{
-public:
-    ChannelNotFound(const std::string& msg = ""):
-        std::runtime_error("Channel " + msg + " not found")
-    {}
-};
+ChannelNotFound::ChannelNotFound(const std::string& channel_name):
+std::runtime_error("PFS: Channel " + channel_name + " not found")
+{}
 
 } // namespace LibHDR
 
-#endif // LIBHDR_FRAMEEXCEPTION
