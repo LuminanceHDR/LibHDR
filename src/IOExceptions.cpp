@@ -22,45 +22,28 @@
  *
  */
 
-#ifndef LIBHDR_IOEXCEPTION
-#define LIBHDR_IOEXCEPTION
-
-#include <string>
-#include <exception>
-#include <stdexcept>
+#include "IOExceptions.h"
 
 namespace LibHDR
 {
 namespace IO
 {
 
-class OpenException: public std::runtime_error
-{
-public:
-    OpenException(const std::string& msg = "");
-};
+OpenException::OpenException(const std::string& msg):
+std::runtime_error(msg)
+{}
 
-class CloseException: public std::runtime_error
-{
-public:
-    CloseException(const std::string& msg = "");
-};
+CloseException::CloseException(const std::string& msg):
+std::runtime_error(msg)
+{}
 
-class ReadException: public std::runtime_error
-{
-public:
-    ReadException(const std::string& msg = "");
-};
+ReadException::ReadException(const std::string& msg):
+std::runtime_error(msg)
+{}
 
-class WriteException: public std::runtime_error
-{
-public:
-    WriteException(const std::string& msg = "");
-};
+WriteException::WriteException(const std::string& msg):
+std::runtime_error(msg)
+{}
     
 } // namespace IO
 } // namespace LibHDR
-
-
-#endif
-
