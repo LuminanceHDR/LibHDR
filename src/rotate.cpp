@@ -36,7 +36,7 @@ namespace LibHDR
         Frame* _frame = new Frame(_height, _width); 
 
         for (ChannelList::const_iterator it = frame.getChannels().begin();
-            it != frame.getChannels().begin();
+            it != frame.getChannels().end();
             it++)
         {
             Channel& _channel = _frame->createChannel((*it).getName());
@@ -63,7 +63,7 @@ namespace LibHDR
                 {
                     for (int i = 0; i < in.getCols(); i++)
                     {
-                        out((i+1)*out.getCols() - 1 - j) = in(j*in.getCols() + i);
+                        out((i+1)*out.getCols() - 1 - j) = in(j *in.getCols() + i);
                     }
                 }
                 break;
@@ -75,7 +75,7 @@ namespace LibHDR
                 {
                     for (int i = 0; i < in.getCols(); i++)
                     {
-                        out[(in.getCols() - i - 1)*out.getCols() + j] = in[j*in.getCols() + i];
+                        out((in.getCols() - i - 1)*out.getCols() + j) = in(j*in.getCols() + i);
                     }
                 }
             }
