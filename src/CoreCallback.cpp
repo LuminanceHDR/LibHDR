@@ -30,23 +30,16 @@
 
 namespace LibHDR
 {
-
 using std::list;
 using std::for_each;
 
-void CoreCallback::init()
-{
-    m_Interrupt = false;
-}
+CoreCallback::CoreCallback():
+    m_Interrupt(false)
+{}
 
-CoreCallback::CoreCallback()
+CoreCallback::CoreCallback(CoreObject* _co):
+    m_Interrupt(false)
 {
-    init();
-}
-
-CoreCallback::CoreCallback(CoreObject* _co)
-{
-    init();
     registerCallback(_co);
 }
 
@@ -60,20 +53,20 @@ CoreCallback::~CoreCallback()
 void CoreCallback::registerCallback(CoreObject* _co)
 {
     /*
-  * check if the CoreObject is NULL
-  */
+    * check if the CoreObject is NULL
+    */
     if ( !_co ) return;
 
     /*
-  * Am I registering the same CoreObject twice?
-  */
+    * Am I registering the same CoreObject twice?
+    */
     std::list<CoreObject*>::iterator it = std::find(m_Observed.begin(), m_Observed.end(), _co);
 
     if ( it != m_Observed.end() ) return;
 
     /*
-  * Should be fine now
-  */
+    * Should be fine now
+    */
     m_Observed.push_back(_co);
     _co->subscribe(this);
 }

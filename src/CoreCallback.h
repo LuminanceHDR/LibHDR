@@ -41,8 +41,6 @@ private:
     std::list<CoreObject*> m_Observed;
     bool m_Interrupt;
 
-    void init();
-
 public:
     CoreCallback();
     CoreCallback(CoreObject*);
