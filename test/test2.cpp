@@ -23,8 +23,10 @@
  */
 
 #include <iostream>
-#include "Frame.h"
 #include <list>
+
+#include "Frame.h"
+#include "rotate.h"
 
 #define WIDTH 3000
 #define HEIGTH 2000
@@ -62,6 +64,7 @@ int main()
         list_frames.push_back(LibHDR::Frame(Ref));
     }
 
+    std::list<LibHDR::Frame*> rotated;
     // for each frame I create 1 more channels:
     for (std::list<LibHDR::Frame>::iterator it = list_frames.begin();
          it != list_frames.end();
@@ -74,8 +77,16 @@ int main()
         {
             r(idx) = 1.0f;
         }
+
+        rotated.push_back(LibHDR::getRotatedFrame(frame, LibHDR::CLOCKWISE));
     }
 
+    for (std::list<LibHDR::Frame*>::iterator it = rotated.begin();
+         it != rotated.end();
+         it++)
+    {
+        delete (*it);
+    }
     
     /*
      * This piece of code crash, because only Frame
