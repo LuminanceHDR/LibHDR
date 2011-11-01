@@ -13,7 +13,8 @@ SET(LIBHDR_HDRS
     PFSCommon.h
     PFSReader.h
     IOCommon.h
-    IOExceptions.h)
+    IOExceptions.h
+    rotate.h)
 
 SET(LIBHDR_SRCS
     Array2D.cpp
@@ -27,7 +28,8 @@ SET(LIBHDR_SRCS
     IFrameReader.cpp
     PFSCommon.cpp
     PFSReader.cpp
-    IOExceptions.cpp)
+    IOExceptions.cpp
+    rotate.cpp)
 
 # Allow the developer to select if Dynamic or Static libraries are built
 OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
