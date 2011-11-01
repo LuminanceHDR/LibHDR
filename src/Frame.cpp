@@ -152,7 +152,17 @@ bool Frame::isChannel( std::string name ) const
     ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
     return ( it != m_Channels.end() )? true: false;
 }
-    
+
+void Frame::cloneTags(const Frame& other)
+{
+    this->m_Tags = other.m_Tags;
+}
+
+void swap(Frame& a, Frame& b)
+{
+    a.swap(b);
+}
+
 } // namespace LibHDR
 
 namespace std

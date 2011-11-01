@@ -134,6 +134,11 @@ void Array2D::swap(Array2D& other)
     swap(m_Data, other.m_Data);
 }
 
+void swap(Array2D& a, Array2D& b)
+{
+    a.swap(b);
+}
+
 } // namespace LibHDR
 
 namespace std

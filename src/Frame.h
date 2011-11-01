@@ -155,6 +155,11 @@ public:
      */
     TagContainer& getTags();
     const TagContainer& getTags() const;
+
+    /**
+     * Clones "other"'s tags into current object
+     */
+    void cloneTags(const Frame& other);
 };
 
 // Inline functions
@@ -187,6 +192,8 @@ inline const TagContainer& Frame::getTags() const
 {
     return m_Tags;
 }
+
+void swap(Frame& a, Frame& b);
 } // namespace LibHDR
 
 namespace std

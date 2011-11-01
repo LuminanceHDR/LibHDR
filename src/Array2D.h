@@ -43,7 +43,7 @@ namespace LibHDR
  */
 class LIBHDR_API Array2D
 {
-protected:
+private:
     int m_Rows;
     int m_Cols;
     int m_Elems;
@@ -212,15 +212,19 @@ inline const float& Array2D::operator()( int index ) const
     return m_Data[index];
 }
 
+void swap(Array2D& a, Array2D& b);
+
 } // namespace LibHDR
 
-namespace std
-{
-/*
-  * Specialization of std::swap for Array2D
-  */
-template<>
-void swap<LibHDR::Array2D>(LibHDR::Array2D& a, LibHDR::Array2D& b);
-}
+//namespace std
+//{
+///*
+// * Specialization of std::swap for Array2D
+// */
+//
+//template<>
+//void swap<LibHDR::Array2D>(LibHDR::Array2D& a, LibHDR::Array2D& b);
+//
+//} // namespace std
 
 #endif // LIBHDR_ARRAY2D

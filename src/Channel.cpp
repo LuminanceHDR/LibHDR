@@ -68,11 +68,21 @@ void Channel::swap(Channel& other)
     using std::swap;
 
     // Base class swap
-    Array2D::swap(other);
+    this->Array2D::swap(other);
 
     // Channel data member specialization
     m_ChannelName.swap(other.m_ChannelName);
     m_Tags.swap(other.m_Tags);
+}
+
+void Channel::cloneTags(const Channel& other)
+{
+    this->m_Tags = other.m_Tags;
+}
+
+void swap(Channel& a, Channel& b)
+{
+    a.swap(b);
 }
 
 } // namespace LibHDR

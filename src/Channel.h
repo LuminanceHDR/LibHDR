@@ -37,7 +37,7 @@ namespace LibHDR
 {
 class LIBHDR_API Channel : public Array2D
 {
-protected:
+private:
     std::string m_ChannelName;
     TagContainer m_Tags;
 
@@ -55,6 +55,11 @@ public:
      */
     TagContainer& getTags();
     const TagContainer& getTags() const;
+
+    /**
+     * Clones "other"'s tags into current object
+     */
+    void cloneTags(const Channel& other);
 
     /**
      * Gets width of the channel (in pixels).
@@ -105,6 +110,8 @@ inline bool Channel::isName(std::string name) const
 {
     return ((m_ChannelName == name)? true : false);
 }
+
+void swap(Channel& a, Channel& b);
 
 typedef std::list<Channel> ChannelList;
 }
