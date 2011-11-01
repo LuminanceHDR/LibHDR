@@ -37,7 +37,8 @@ using namespace std;
 
 // ctor
 Frame::Frame( int width, int height ):
-    m_Width( width ), m_Height( height )
+    m_Width( width ), 
+    m_Height( height )
 { }
 
 // copy ctor

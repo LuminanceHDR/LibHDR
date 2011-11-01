@@ -8,8 +8,8 @@ SET(LIBHDR_HDRS
     DLLDefines.h
     CoreObject.h
     CoreCallback.h
-    FrameReader.h
-    IStrategyReader.h
+    FrameReaderFactory.h
+    IFrameReader.h
     PFSCommon.h
     PFSReader.h
     IOCommon.h
@@ -23,8 +23,8 @@ SET(LIBHDR_SRCS
     FrameExceptions.cpp
     CoreObject.cpp
     CoreCallback.cpp
-    FrameReader.cpp
-    IStrategyReader.cpp
+    FrameReaderFactory.cpp
+    IFrameReader.cpp
     PFSCommon.cpp
     PFSReader.cpp
     IOExceptions.cpp)

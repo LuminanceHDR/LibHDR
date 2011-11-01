@@ -17,13 +17,17 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- * 
+ *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  
+ *
  */
 
-#include "IStrategyReader.h"
-#include "FrameReader.h"
+#ifndef LIBHDR_FRAMEREADER
+#define LIBHDR_FRAMEREADER
+
+#include <string>
+
+#include "DLLDefines.h"
 
 namespace LibHDR
 {
@@ -31,16 +35,23 @@ namespace LibHDR
 namespace IO
 {
 
-IStrategyReader::IStrategyReader(const CoreObject& _fr):
-    m_Obj(_fr)
+enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR };
+
+class IFrameReader; // forward declaration
+
+class LIBHDR_API FrameReaderFactory
 {
+private:
+    
+public:
+    FrameReaderFactory();
+    ~FrameReaderFactory();
 
-}
-
-IStrategyReader::~IStrategyReader()
-{
-
-}
+    // should be returning the proper frame reader for the _filename
+    IFrameReader* getFrameReader(std::string);	
+};
 
 } // end namespace IO
 } // end namespace LibHDR
+
+#endif // LIBHDR_FRAMEREADER

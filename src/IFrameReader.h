@@ -22,11 +22,12 @@
  *
  */
 
-#ifndef LIBHDR_FRAMEREADER
-#define LIBHDR_FRAMEREADER
+#ifndef LIBHDR_ISTRATEGYREADER
+#define LIBHDR_ISTRATEGYREADER
 
 #include <string>
 
+#include "IOCommon.h"
 #include "DLLDefines.h"
 #include "CoreObject.h"
 #include "Frame.h"
@@ -37,30 +38,20 @@ namespace LibHDR
 namespace IO
 {
 
-enum InputFileFormat { PFS, TIFF, HDR, RGBE, EXR };
-
-class LIBHDR_API IStrategyReader; // forward declaration
-
-class LIBHDR_API FrameReader: public CoreObject
+class LIBHDR_API IFrameReader: public CoreObject
 {
-private:
-    IStrategyReader* m_ReaderImpl;
-    InputFileFormat m_FileFormat;
-    void getFrameType(std::string);	// should be returning the frame type
-
 public:
-    FrameReader();
-    FrameReader(std::string);
-    ~FrameReader();
+    IFrameReader(); // cstr
+    virtual ~IFrameReader();
 
-    void open(std::string);
-    Frame* readFrame();
-    void close();
+    virtual void open(std::string) = 0;
+    virtual Frame* readFrame() = 0;
+    virtual void close() = 0;
 
-    bool isOpen();
+    virtual bool isOpen() = 0;
 };
 
 } // end namespace IO
 } // end namespace LibHDR
 
-#endif // LIBHDR_FRAMEREADER
+#endif // LIBHDR_ISTRATEGYREADER

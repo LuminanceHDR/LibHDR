@@ -22,8 +22,7 @@
  *
  */
 
-#include "FrameReader.h"
-#include "IStrategyReader.h"
+#include "FrameReaderFactory.h"
 
 namespace LibHDR
 {
@@ -31,60 +30,15 @@ namespace LibHDR
 namespace IO
 {
 
-FrameReader::FrameReader()
-{
-    m_ReaderImpl = NULL;
-}
+FrameReaderFactory::FrameReaderFactory()
+{ }
 
-FrameReader::FrameReader(std::string _filename)
-{
-    open(_filename);
-}
+FrameReaderFactory::~FrameReaderFactory()
+{}
 
-FrameReader::~FrameReader()
-{
-    if ( m_ReaderImpl )
-    {
-        m_ReaderImpl->close();
-        delete m_ReaderImpl;
-    }
-}
-
-void FrameReader::getFrameType(std::string _filename)
-{
-
-}
-
-void FrameReader::open(std::string _filename)
-{
-    /*
-    * check if open already, close and open the new one
-    */
-
-//    switch (getFrameType(_filename))
-//    {
-//    default:
-//    {
-//        ;
-//    }
-//        break;
-//    }
-}
-
-Frame* FrameReader::readFrame()
+IFrameReader* FrameReaderFactory::getFrameReader(std::string _filename)
 {
     return NULL;
-}
-
-void FrameReader::close()
-{
-    if ( m_ReaderImpl ) m_ReaderImpl->close();
-}
-
-bool FrameReader::isOpen()
-{
-    if ( m_ReaderImpl )  return m_ReaderImpl->isOpen();
-    return false;
 }
 
 } // end namespace IO

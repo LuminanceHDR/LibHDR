@@ -30,8 +30,7 @@
 #include <stdio.h>
 
 #include "DLLDefines.h"
-#include "IStrategyReader.h"
-#include "CoreObject.h"
+#include "IFrameReader.h"
 #include "PFSCommon.h"
 
 namespace LibHDR
@@ -39,16 +38,18 @@ namespace LibHDR
 namespace IO
 {
 
-class LIBHDR_API PFSReader: public IStrategyReader, public PFSCommon
+class LIBHDR_API PFSReader: public IFrameReader, public PFSCommon
 {
 public:
-    PFSReader(const CoreObject& _fr);
-    PFSReader(const CoreObject& _fr, std::string _filename);
+    PFSReader();
+    PFSReader(std::string _filename);
     ~PFSReader();
 
     void open(std::string _filename);
     void close();
     Frame* readFrame();
+
+    bool isOpen();
 };
 
 } // namespace IO

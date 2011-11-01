@@ -17,53 +17,24 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
+ * 
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
+ *  
  */
 
-#ifndef LIBHDR_ISTRATEGYREADER
-#define LIBHDR_ISTRATEGYREADER
-
-#include <string>
-
-#include "IOCommon.h"
-#include "DLLDefines.h"
-#include "CoreObject.h"
-#include "Frame.h"
+#include "IFrameReader.h"
 
 namespace LibHDR
 {
 
 namespace IO
 {
-    
-class LIBHDR_API IStrategyReader
-{
-protected:
-    const CoreObject& m_Obj;
 
-    IOStatus m_Status;
+IFrameReader::IFrameReader()
+{}
 
-    void setOpen(bool);
-public:
-    IStrategyReader(const CoreObject&); // cstr
-    virtual ~IStrategyReader();
-
-    virtual void open(std::string) = 0;
-    virtual Frame* readFrame() = 0;
-    virtual void close() = 0;
-
-    bool isOpen();
-};
-
-inline bool IStrategyReader::isOpen()
-{
-    return ((m_Status == OPEN)? true : false);
-}
-
+IFrameReader::~IFrameReader()
+{}
 
 } // end namespace IO
 } // end namespace LibHDR
-
-#endif // LIBHDR_ISTRATEGYREADER

@@ -34,19 +34,19 @@ namespace IO
 {
 
 
-PFSReader::PFSReader(const CoreObject& _fr):
-IStrategyReader(_fr)
+PFSReader::PFSReader()
 {}
 
-PFSReader::PFSReader(const CoreObject& _fr, std::string _filename):
-IStrategyReader(_fr)
+PFSReader::PFSReader(std::string _filename)
 {}
 
 PFSReader::~PFSReader()
 {}
 
 void PFSReader::open(std::string _filename)
-{}
+{
+
+}
 
 Frame* PFSReader::readFrame()
 {
@@ -54,7 +54,14 @@ Frame* PFSReader::readFrame()
 }
     
 void PFSReader::close()
-{}
+{
+
+}
+
+bool PFSReader::isOpen()
+{
+    return false;
+}
 
     
 } // namespace IO
