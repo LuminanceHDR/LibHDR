@@ -27,11 +27,11 @@
 
 //#include <windows.h>
 
-#include "CoreCallback.h"
-#include "CoreObject.h"
+#include "LibHDR/CoreCallback.h"
+#include "LibHDR/CoreObject.h"
+#include "LibHDR/Channel.h"
 
 #include "ConsoleCallbackMT.h"
-#include "Channel.h"
 
 class MockObject: public LibHDR::CoreObject
 {

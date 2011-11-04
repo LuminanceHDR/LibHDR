@@ -26,7 +26,7 @@
 #include <string>
 #include <boost/thread.hpp>
 
-#include "CoreCallback.h"
+#include "LibHDR/CoreCallback.h"
 
 const int PRINT_GRANULARITY = 1;
 

@@ -1,8 +1,8 @@
 /**
  * This file is a part of LibHDR package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -16,43 +16,25 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Original work by Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
+ * ----------------------------------------------------------------------
  *
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
 
-#ifndef LIBHDR_PFSREADER
-#define LIBHDR_PFSREADER
-
-#include <string>
-#include <stdio.h>
-
-#include "DLLDefines.h"
-#include "IFrameReader.h"
-#include "PFSCommon.h"
+#ifndef LIBHDR_IOCOMMON
+#define LIBHDR_IOCOMMON
 
 namespace LibHDR
 {
 namespace IO
 {
+    enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
+    //enum OutputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
 
-class LIBHDR_API PFSReader: public IFrameReader, public PFSCommon
-{
-public:
-    PFSReader();
-    PFSReader(std::string _filename);
-    ~PFSReader();
-
-    void open(std::string _filename);
-    void close();
-    Frame* readFrame();
-
-    bool isOpen();
-};
-
+    enum IOStatus {OPEN, CLOSE}; 
+    
 } // namespace IO
 } // namespace LibHDR
 
-#endif // LIBHDR_PFSREADER
+#endif

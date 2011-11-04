@@ -35,8 +35,6 @@ namespace LibHDR
 namespace IO
 {
 
-enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR };
-
 class IFrameReader; // forward declaration
 
 class LIBHDR_API FrameReaderFactory

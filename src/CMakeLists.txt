@@ -1,35 +1,37 @@
 SET(LIBHDR_HDRS
-    LibHDR.h
-    Array2D.h
-    Tag.h
-    Channel.h
-    Frame.h
-    FrameExceptions.h
     DLLDefines.h
-    CoreObject.h
-    CoreCallback.h
-    FrameReaderFactory.h
-    IFrameReader.h
-    PFSCommon.h
-    PFSReader.h
-    IOCommon.h
-    IOExceptions.h
-    rotate.h)
+    LibHDR.h
+    LibHDR/Array2D.h
+    LibHDR/Tag.h
+    LibHDR/Channel.h
+    LibHDR/Frame.h
+    LibHDR/FrameExceptions.h
+    LibHDR/CoreObject.h
+    LibHDR/CoreCallback.h
+    LibHDR/IO/FrameReaderFactory.h
+    LibHDR/IO/IFrameReader.h
+    LibHDR/IO/PFSCommon.h
+    LibHDR/IO/PFSReader.h
+    LibHDR/IO/IOCommon.h
+    LibHDR/IO/IOExceptions.h
+    LibHDR/rotate.h)
 
 SET(LIBHDR_SRCS
-    Array2D.cpp
-    Tag.cpp
-    Channel.cpp
-    Frame.cpp
-    FrameExceptions.cpp
-    CoreObject.cpp
-    CoreCallback.cpp
-    FrameReaderFactory.cpp
-    IFrameReader.cpp
-    PFSCommon.cpp
-    PFSReader.cpp
-    IOExceptions.cpp
-    rotate.cpp)
+    LibHDR/Array2D.cpp
+    LibHDR/Tag.cpp
+    LibHDR/Channel.cpp
+    LibHDR/Frame.cpp
+    LibHDR/FrameExceptions.cpp
+    LibHDR/CoreObject.cpp
+    LibHDR/CoreCallback.cpp
+    LibHDR/IO/FrameReaderFactory.cpp
+    LibHDR/IO/IFrameReader.cpp
+    LibHDR/IO/PFSCommon.cpp
+    LibHDR/IO/PFSReader.cpp
+    LibHDR/IO/IOExceptions.cpp
+    LibHDR/rotate.cpp)
+
+include_directories("${CMAKE_SOURCE_DIR}/src")
 
 # Allow the developer to select if Dynamic or Static libraries are built
 OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)

@@ -29,8 +29,8 @@
 
 #include "IOCommon.h"
 #include "DLLDefines.h"
-#include "CoreObject.h"
-#include "Frame.h"
+#include "LibHDR/CoreObject.h"
+#include "LibHDR/Frame.h"
 
 namespace LibHDR
 {
