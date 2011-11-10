@@ -76,8 +76,8 @@ public:
      * is usually the case), to access its elements, you have to use
      * somewhat strange syntax: (*array)(row, column).
      *
-     * @param col number of a column (x) within the range [0,getCols()-1]
-     * @param row number of a row (y) within the range [0,getRows()-1]
+     * @param cols number of a column (x) within the range [0,getCols()-1]
+     * @param rows number of a row (y) within the range [0,getRows()-1]
      */
     float& operator()( int cols, int rows );
 
@@ -90,8 +90,8 @@ public:
      * is usually the case), to access its elements, you have to use
      * somewhat strange syntax: (*array)(row, column).
      *
-     * @param col number of a column (x) within the range [0,getCols()-1]
-     * @param row number of a row (y) within the range [0,getRows()-1]
+     * @param cols number of a column (x) within the range [0,getCols()-1]
+     * @param rows number of a row (y) within the range [0,getRows()-1]
      */
     const float& operator()( int cols, int rows ) const;
 
