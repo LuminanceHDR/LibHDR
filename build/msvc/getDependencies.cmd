@@ -2,14 +2,8 @@
 SETLOCAL
 call setenv.cmd
 
-
-REM !!!!! Not yet finished !!!!
-goto end
-
-
 REM For accessing the https repo 
 SET GIT_SSL_NO_VERIFY=1
-rem SET GIT_CURL_VERBOSE=1
 
 devenv /? > NUL
 IF ERRORLEVEL 1 (
@@ -56,7 +50,6 @@ GOTO error_end
 
 :cygwin_ok
 
-
 IF NOT DEFINED Configuration (
 	set Configuration=Release
 )
@@ -95,32 +88,47 @@ IF NOT EXIST %TEMP_DIR% (
 
 IF NOT EXIST %TEMP_DIR%\boost_1_47_0.tar.gz (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_47_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.47.0/boost_1_47_0.tar.gz/download
+	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/boost_1_47_0.tar.gz
+
 )
 
 IF NOT EXIST boost_1_47_0 (
-	%CYGWIN_DIR%\bin\p7zip.exe -d %TEMP_DIR%/boost_1_47_0.7z
+	echo.Extracting boost. Be patient!
+
+	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/boost_1_47_0.tar
 
 	pushd boost_1_47_0
-	rem nmake /f Makefile.msvc
+	bootstrap.bat
+	popd
+	
+	pushd boost_1_47_0
+	IF %Platform% EQU Win32 (
+		IF %Configuration% EQU Release (
+			b2.exe toolset=msvc variant=release
+		) ELSE (
+			b2.exe toolset=msvc variant=debug
+		)
+	) ELSE (
+		IF %Configuration% EQU Release (
+			b2.exe toolset=msvc variant=release address-model=64
+		) ELSE (
+			b2.exe toolset=msvc variant=debug address-model=64
+		)
+	)
 	popd
 )
+
 REM Set Boost-directory as ENV variable (needed for CMake)
 pushd boost_1_47_0
 SET BOOST_ROOT=%CD%
 popd
 
-
-rem bootstrap.bat
-rem b2 toolset=msvc variant=debug
-rem b2 toolset=msvc variant=release
-rem b2 toolset=msvc variant=release address-model=64
-
 IF NOT EXIST libhdr (
 	%CYGWIN_DIR%\bin\git.exe clone https://code.google.com/p/libhdr/ libhdr
 ) ELSE (
 	pushd libhdr
-	REM %CYGWIN_DIR%\bin\git.exe fetch
-	REM %CYGWIN_DIR%\bin\git.exe rebase refs/remotes/origin/master
+	%CYGWIN_DIR%\bin\git.exe fetch
+	CYGWIN_DIR%\bin\git.exe pull
 	popd
 )
 
@@ -136,6 +144,7 @@ IF EXIST libhdr.build\LibHDR.sln (
 	pushd libhdr.build
 	devenv LibHDR.sln /Upgrade
 	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project LibHDR
+	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project Docs
 	popd
 )
 
