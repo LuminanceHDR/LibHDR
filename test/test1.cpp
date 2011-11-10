@@ -33,6 +33,9 @@
 
 #include "ConsoleCallbackMT.h"
 
+//! Namespace for containing various test classes
+namespace LibHDRTest
+{
 class MockObject: public LibHDR::CoreObject
 {
 public:
@@ -53,8 +56,9 @@ public:
         notifyStop();
     }
 };
+} // namespace LibHDRTest
 
-
+using namespace LibHDRTest;
 int main()
 {
     LibHDR::Channel ChannelT(1000, 2000, "T");

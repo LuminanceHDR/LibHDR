@@ -28,7 +28,7 @@
 #include <list>
 
 #include "DLLDefines.h"
-
+//! Library namespace
 namespace LibHDR
 {
 

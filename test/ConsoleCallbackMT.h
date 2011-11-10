@@ -28,6 +28,9 @@
 
 #include "LibHDR/CoreCallback.h"
 
+namespace LibHDRTest
+{
+
 const int PRINT_GRANULARITY = 1;
 
 class ConsoleCallbackMT: public LibHDR::CoreCallback
@@ -110,3 +113,5 @@ public:
 };
 
 int ConsoleCallbackMT::sm_NumJobActive = 0;
+} // namespace LibHDRTest
+

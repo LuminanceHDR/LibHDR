@@ -26,7 +26,10 @@
 #include <string>
 #include "CoreCallback.h"
 
-const int PRINT_GRANULARITY = 10;
+namespace LibHDRTest
+{
+
+	const int PRINT_GRANULARITY = 10;
 
 class MockCallback: public LibHDR::CoreCallback
 {
@@ -77,3 +80,4 @@ public:
 
     void setCallbackMessage(std::string) {}
 };
+} // namespace LibHDRTest
