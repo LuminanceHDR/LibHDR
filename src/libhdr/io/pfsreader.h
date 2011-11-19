@@ -23,47 +23,36 @@
  *
  */
 
-#include "PFSReader.h"
-#include "IOExceptions.h"
+#ifndef LIBHDR_PFSREADER
+#define LIBHDR_PFSREADER
 
-#include <iostream>
+#include <string>
+#include <stdio.h>
+
+#include "libhdr_dlldefines.h"
+#include "libhdr/io/iframereader.h"
+#include "libhdr/io/pfscommon.h"
 
 namespace LibHDR
 {
 namespace IO
 {
 
-
-PFSReader::PFSReader()
-{}
-
-PFSReader::PFSReader(std::string _filename)
-{}
-
-PFSReader::~PFSReader()
-{}
-
-void PFSReader::open(std::string _filename)
+class LIBHDR_API PFSReader: public IFrameReader //, public PFSCommon
 {
+public:
+    PFSReader();
+    PFSReader(std::string _filename);
+    ~PFSReader();
 
-}
+    void open(std::string _filename);
+    void close();
+    Frame* readFrame();
 
-Frame* PFSReader::readFrame()
-{
-    return NULL;
-}
-    
-void PFSReader::close()
-{
+    bool isOpen();
+};
 
-}
-
-bool PFSReader::isOpen()
-{
-    return false;
-}
-
-    
 } // namespace IO
 } // namespace LibHDR
 
+#endif // LIBHDR_PFSREADER

@@ -25,8 +25,8 @@
 #include <iostream>
 #include <list>
 
-#include "LibHDR/Frame.h"
-#include "LibHDR/rotate.h"
+#include <libhdr/frame.h>
+#include <libhdr/rotate.h>
 
 #define WIDTH 3000
 #define HEIGTH 2000

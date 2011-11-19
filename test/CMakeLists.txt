@@ -13,8 +13,8 @@ LINK_DIRECTORIES(${LibHDR_SOURCE_DIR}/src)
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
 SET(LIBHDR_TEST1
-    MockCallback.h
-    ConsoleCallbackMT.h
+    mockcallback.h
+    consolecallbackmt.h
     test1.cpp)
 
 ADD_EXECUTABLE(test1 ${LIBHDR_TEST1})

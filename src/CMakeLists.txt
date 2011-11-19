@@ -1,35 +1,35 @@
 SET(LIBHDR_HDRS
-    DLLDefines.h
-    LibHDR.h
-    LibHDR/Array2D.h
-    LibHDR/Tag.h
-    LibHDR/Channel.h
-    LibHDR/Frame.h
-    LibHDR/FrameExceptions.h
-    LibHDR/CoreObject.h
-    LibHDR/CoreCallback.h
-    LibHDR/IO/FrameReaderFactory.h
-    LibHDR/IO/IFrameReader.h
-    LibHDR/IO/PFSCommon.h
-    LibHDR/IO/PFSReader.h
-    LibHDR/IO/IOCommon.h
-    LibHDR/IO/IOExceptions.h
-    LibHDR/rotate.h)
+    libhdr_dlldefines.h
+    libhdr.h
+    libhdr/array2d.h
+    libhdr/tag.h
+    libhdr/channel.h
+    libhdr/frame.h
+    libhdr/frameexceptions.h
+    libhdr/coreobject.h
+    libhdr/corecallback.h
+    libhdr/io/framereaderfactory.h
+    libhdr/io/iframereader.h
+    libhdr/io/pfscommon.h
+    libhdr/io/pfsreader.h
+    libhdr/io/iocommon.h
+    libhdr/io/ioexceptions.h
+    libhdr/rotate.h)
 
 SET(LIBHDR_SRCS
-    LibHDR/Array2D.cpp
-    LibHDR/Tag.cpp
-    LibHDR/Channel.cpp
-    LibHDR/Frame.cpp
-    LibHDR/FrameExceptions.cpp
-    LibHDR/CoreObject.cpp
-    LibHDR/CoreCallback.cpp
-    LibHDR/IO/FrameReaderFactory.cpp
-    LibHDR/IO/IFrameReader.cpp
-    LibHDR/IO/PFSCommon.cpp
-    LibHDR/IO/PFSReader.cpp
-    LibHDR/IO/IOExceptions.cpp
-    LibHDR/rotate.cpp)
+    libhdr/array2d.cpp
+    libhdr/tag.cpp
+    libhdr/channel.cpp
+    libhdr/frame.cpp
+    libhdr/frameexceptions.cpp
+    libhdr/coreobject.cpp
+    libhdr/corecallback.cpp
+    libhdr/io/framereaderfactory.cpp
+    libhdr/io/iframereader.cpp
+    libhdr/io/pfscommon.cpp
+    libhdr/io/pfsreader.cpp
+    libhdr/io/ioexceptions.cpp
+    libhdr/rotate.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 

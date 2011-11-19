@@ -28,10 +28,10 @@
 
 #include <string>
 
-#include "DLLDefines.h"
-#include "Channel.h"
-#include "Tag.h"
-#include "FrameExceptions.h"
+#include "libhdr_dlldefines.h"
+#include "libhdr/channel.h"
+#include "libhdr/tag.h"
+#include "libhdr/frameexceptions.h"
 
 namespace LibHDR
 {

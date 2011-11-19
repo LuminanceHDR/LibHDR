@@ -19,30 +19,69 @@
  * ----------------------------------------------------------------------
  *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *
  */
 
-#ifndef LIBHDR_PFSCOMMON_H
-#define LIBHDR_PFSCOMMON_H
+#ifndef LIBHDR_COREOBJECT
+#define LIBHDR_COREOBJECT
 
-#include "DLLDefines.h"
-#include "IOCommon.h"
+#include <list>
 
+#include "libhdr_dlldefines.h"
+
+//! Library namespace
 namespace LibHDR
 {
-namespace IO
-{
-extern const char* PFSFILEID;
-extern const char* PFSEOL;
-extern const char* PFSEOLCH;
-extern const char* PFSENDH;
 
-class LIBHDR_API PFSCommon
+class CoreCallback;
+
+class LIBHDR_API CoreObject
 {
 public:
-    PFSCommon();
+    CoreObject(): m_IsNotifyActive(true) {}
+    virtual ~CoreObject();
+
+    void subscribe(CoreCallback*);
+    void unsubscribe(CoreCallback*);
+
+    void notifyStart();
+    void notifyJobLength(int);
+    void notifyJobNextStep(int inc = 1); // Thanks, Steve!
+    void notifyStop();
+    void notifyMessage();
+
+    bool isTerminated();
+
+    void disableNotify();
+    void enableNotify();
+    void setNotify(bool);
+    bool isNotifyActive();
+
+private:
+    std::list<CoreCallback*> m_Callbacks;
+    bool m_IsNotifyActive;
 };
 
-}
+inline void CoreObject::disableNotify()
+{
+    m_IsNotifyActive = false;
 }
 
-#endif // LIBHDR_PFSCOMMON_H
+inline void CoreObject::enableNotify()
+{
+    m_IsNotifyActive = true;
+}
+
+inline void CoreObject::setNotify(bool _b)
+{
+    m_IsNotifyActive = _b;
+}
+
+inline bool CoreObject::isNotifyActive()
+{
+    return m_IsNotifyActive;
+}
+
+} // end namespace LibHDR
+
+#endif // LIBHDR_COREOBJECT

@@ -27,11 +27,11 @@
 
 //#include <windows.h>
 
-#include "LibHDR/CoreCallback.h"
-#include "LibHDR/CoreObject.h"
-#include "LibHDR/Channel.h"
+#include <libhdr/corecallback.h>
+#include <libhdr/coreobject.h>
+#include <libhdr/channel.h>
 
-#include "ConsoleCallbackMT.h"
+#include "consolecallbackmt.h"
 
 //! Namespace for containing various test classes
 namespace LibHDRTest

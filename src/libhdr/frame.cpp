@@ -29,7 +29,7 @@
 #include <string>
 //#include <map>
 
-#include "Frame.h"
+#include "libhdr/frame.h"
 
 namespace LibHDR
 {

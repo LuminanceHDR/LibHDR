@@ -28,7 +28,7 @@
 
 #include <cassert>
 
-#include "DLLDefines.h"
+#include "libhdr_dlldefines.h"
 
 namespace LibHDR
 { 

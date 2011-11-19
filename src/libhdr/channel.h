@@ -29,9 +29,9 @@
 #include <map>
 #include <list>
 
-#include "DLLDefines.h"
-#include "array2d.h"
-#include "Tag.h"
+#include "libhdr_dlldefines.h"
+#include "libhdr/array2d.h"
+#include "libhdr/tag.h"
 
 namespace LibHDR
 {

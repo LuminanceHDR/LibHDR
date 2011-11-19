@@ -22,65 +22,36 @@
  *
  */
 
-#ifndef LIBHDR_COREOBJECT
-#define LIBHDR_COREOBJECT
+#ifndef LIBHDR_ISTRATEGYREADER
+#define LIBHDR_ISTRATEGYREADER
 
-#include <list>
+#include <string>
 
-#include "DLLDefines.h"
-//! Library namespace
+#include "libhdr_dlldefines.h"
+#include "libhdr/io/iocommon.h"
+#include "libhdr/coreobject.h"
+#include "libhdr/frame.h"
+
 namespace LibHDR
 {
 
-class CoreCallback;
+namespace IO
+{
 
-class LIBHDR_API CoreObject
+class LIBHDR_API IFrameReader: public CoreObject
 {
 public:
-    CoreObject(): m_IsNotifyActive(true) {}
-    virtual ~CoreObject();
+    IFrameReader(); // cstr
+    virtual ~IFrameReader();
 
-    void subscribe(CoreCallback*);
-    void unsubscribe(CoreCallback*);
+    virtual void open(std::string) = 0;
+    virtual Frame* readFrame() = 0;
+    virtual void close() = 0;
 
-    void notifyStart();
-    void notifyJobLength(int);
-    void notifyJobNextStep(int inc = 1); // Thanks, Steve!
-    void notifyStop();
-    void notifyMessage();
-
-    bool isTerminated();
-
-    void disableNotify();
-    void enableNotify();
-    void setNotify(bool);
-    bool isNotifyActive();
-
-private:
-    std::list<CoreCallback*> m_Callbacks;
-    bool m_IsNotifyActive;
+    virtual bool isOpen() = 0;
 };
 
-inline void CoreObject::disableNotify()
-{
-    m_IsNotifyActive = false;
-}
-
-inline void CoreObject::enableNotify()
-{
-    m_IsNotifyActive = true;
-}
-
-inline void CoreObject::setNotify(bool _b)
-{
-    m_IsNotifyActive = _b;
-}
-
-inline bool CoreObject::isNotifyActive()
-{
-    return m_IsNotifyActive;
-}
-
+} // end namespace IO
 } // end namespace LibHDR
 
-#endif // LIBHDR_COREOBJECT
+#endif // LIBHDR_ISTRATEGYREADER

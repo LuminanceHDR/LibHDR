@@ -22,24 +22,14 @@
  *
  */
 
-#include "FrameReaderFactory.h"
+#include "libhdr/frameexceptions.h"
 
 namespace LibHDR
 {
 
-namespace IO
-{
-
-FrameReaderFactory::FrameReaderFactory()
-{ }
-
-FrameReaderFactory::~FrameReaderFactory()
+ChannelNotFound::ChannelNotFound(const std::string& channel_name):
+std::runtime_error("PFS: Channel " + channel_name + " not found")
 {}
 
-IFrameReader* FrameReaderFactory::getFrameReader(std::string _filename)
-{
-    return NULL;
-}
+} // namespace LibHDR
 
-} // end namespace IO
-} // end namespace LibHDR

@@ -21,7 +21,7 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
-#include "Tag.h"
+#include "libhdr/tag.h"
 
 #include <list>
 #include <stdio.h>

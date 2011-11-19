@@ -26,7 +26,7 @@
 #include <string>
 #include <boost/thread.hpp>
 
-#include "LibHDR/CoreCallback.h"
+#include <libhdr/corecallback.h>
 
 namespace LibHDRTest
 {

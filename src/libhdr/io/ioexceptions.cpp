@@ -22,34 +22,28 @@
  *
  */
 
-#ifndef LIBHDR_FRAMEREADER
-#define LIBHDR_FRAMEREADER
-
-#include <string>
-
-#include "DLLDefines.h"
+#include "libhdr/io/ioexceptions.h"
 
 namespace LibHDR
 {
-
 namespace IO
 {
 
-class IFrameReader; // forward declaration
+OpenException::OpenException(const std::string& msg):
+std::runtime_error(msg)
+{}
 
-class LIBHDR_API FrameReaderFactory
-{
-private:
+CloseException::CloseException(const std::string& msg):
+std::runtime_error(msg)
+{}
+
+ReadException::ReadException(const std::string& msg):
+std::runtime_error(msg)
+{}
+
+WriteException::WriteException(const std::string& msg):
+std::runtime_error(msg)
+{}
     
-public:
-    FrameReaderFactory();
-    ~FrameReaderFactory();
-
-    // should be returning the proper frame reader for the _filename
-    IFrameReader* getFrameReader(std::string);	
-};
-
-} // end namespace IO
-} // end namespace LibHDR
-
-#endif // LIBHDR_FRAMEREADER
+} // namespace IO
+} // namespace LibHDR

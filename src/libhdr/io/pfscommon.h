@@ -17,14 +17,32 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- * 
+ *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  
  */
- 
-#include "CoreCallback.h"
-#include "CoreObject.h"
-#include "Array2D.h"
-#include "Tag.h"
-#include "Channel.h"
-#include "Frame.h"
+
+#ifndef LIBHDR_PFSCOMMON_H
+#define LIBHDR_PFSCOMMON_H
+
+#include "libhdr_dlldefines.h"
+#include "libhdr/io/iocommon.h"
+
+namespace LibHDR
+{
+namespace IO
+{
+extern const char* PFSFILEID;
+extern const char* PFSEOL;
+extern const char* PFSEOLCH;
+extern const char* PFSENDH;
+
+class LIBHDR_API PFSCommon
+{
+public:
+    PFSCommon();
+};
+
+}
+}
+
+#endif // LIBHDR_PFSCOMMON_H

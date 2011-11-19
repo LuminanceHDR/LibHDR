@@ -24,12 +24,12 @@
 
 #include <iostream>
 #include <string>
-#include "CoreCallback.h"
+#include <libhdr/corecallback.h>
 
 namespace LibHDRTest
 {
 
-	const int PRINT_GRANULARITY = 10;
+const int PRINT_GRANULARITY = 10;
 
 class MockCallback: public LibHDR::CoreCallback
 {

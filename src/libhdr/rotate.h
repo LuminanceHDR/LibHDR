@@ -1,8 +1,8 @@
 /**
  * This file is a part of LibHDR package.
- * ----------------------------------------------------------------------
+ * ---------------------------------------------------------------------- 
  * Copyright (C) 2011 Davide Anastasia
- *
+ * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -16,25 +16,26 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ----------------------------------------------------------------------
- *
+ * ---------------------------------------------------------------------- 
+ * 
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *
  */
 
-#include "PFSCommon.h"
+#ifndef LIBHDR_ROTATE_H
+#define LIBHDR_ROTATE_H
+
+#include "libhdr/array2d.h"
+#include "libhdr/frame.h"
 
 namespace LibHDR
 {
-namespace IO
-{
-const char* PFSFILEID = "PFS1\x0a";
-const char* PFSEOL = "\x0a";
-const char* PFSEOLCH = "\x0a";
-const char* PFSENDH = "ENDH";
+    enum RotationMode { CLOCKWISE, COUNTERCLOCKWISE };
 
-PFSCommon::PFSCommon()
-{}
+    void rotateArray2D(const Array2D& in, Array2D& out, RotationMode mode);
 
-} // namespace IO
-} // namespace LibHDR
+    Frame* getRotatedFrame(const Frame& frame, RotationMode mode);
+    void rotateFrame(Frame& frame, RotationMode mode);
+}
 
+#endif 

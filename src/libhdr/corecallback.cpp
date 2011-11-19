@@ -25,8 +25,8 @@
 #include <algorithm>
 #include <functional>
 
-#include "CoreCallback.h"
-#include "CoreObject.h"
+#include "libhdr/corecallback.h"
+#include "libhdr/coreobject.h"
 
 namespace LibHDR
 {

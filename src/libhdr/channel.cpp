@@ -22,7 +22,7 @@
  *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
 
-#include "Channel.h"
+#include "libhdr/channel.h"
 
 using namespace std;
 

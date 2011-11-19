@@ -30,7 +30,7 @@
 #include <mm_malloc.h>
 #endif
 
-#include "array2d.h"
+#include "libhdr/array2d.h"
 
 namespace LibHDR
 {  
