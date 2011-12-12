@@ -30,8 +30,13 @@
 #include <libhdr/corecallback.h>
 #include <libhdr/coreobject.h>
 #include <libhdr/channel.h>
+#include <libhdr/matrix.h>
 
 #include "consolecallbackmt.h"
+
+
+
+//template class Matrix<int>;
 
 //! Namespace for containing various test classes
 namespace LibHDRTest
@@ -61,7 +66,7 @@ public:
 using namespace LibHDRTest;
 int main()
 {
-    LibHDR::Channel ChannelT(1000, 2000, "T");
+    //LibHDR::Channel ChannelT(1000, 2000, "T");
 
     MockObject obj;
     ConsoleCallbackMT cb(&obj);

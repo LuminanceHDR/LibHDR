@@ -1,6 +1,7 @@
 SET(LIBHDR_HDRS
     libhdr_dlldefines.h
     libhdr.h
+    libhdr/matrix.h
     libhdr/array2d.h
     libhdr/tag.h
     libhdr/channel.h

@@ -48,10 +48,10 @@ void PFSReader::open(std::string _filename)
 
 }
 
-Frame* PFSReader::readFrame()
-{
-    return NULL;
-}
+//Frame* PFSReader::readFrame()
+//{
+//    return NULL;
+//}
     
 void PFSReader::close()
 {

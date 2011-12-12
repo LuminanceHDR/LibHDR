@@ -30,12 +30,12 @@
 
 namespace LibHDR
 {
-    enum RotationMode { CLOCKWISE, COUNTERCLOCKWISE };
+    //enum RotationMode { CLOCKWISE, COUNTERCLOCKWISE };
 
-    void rotateArray2D(const Array2D& in, Array2D& out, RotationMode mode);
+    //void rotateArray2D(const Array2D& in, Array2D& out, RotationMode mode);
 
-    Frame* getRotatedFrame(const Frame& frame, RotationMode mode);
-    void rotateFrame(Frame& frame, RotationMode mode);
+    //Frame* getRotatedFrame(const Frame& frame, RotationMode mode);
+    //void rotateFrame(Frame& frame, RotationMode mode);
 }
 
 #endif 

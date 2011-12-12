@@ -29,9 +29,8 @@
 
 namespace LibHDR
 {
-/**
- * TagContainer interface allows to read and modify tags. A tag is "name"="value" pair.
- */
+
+//! \brief TagContainer interface allows to read and modify tags. A tag is "name"="value" pair.
 typedef std::map<std::string, std::string> TagContainer;
 typedef std::pair<std::string, std::string> Tag;
 

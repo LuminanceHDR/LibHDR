@@ -47,7 +47,7 @@ public:
 
     void open(std::string _filename);
     void close();
-    Frame* readFrame();
+    //Frame* readFrame();
 
     bool isOpen();
 };

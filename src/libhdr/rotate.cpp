@@ -27,6 +27,7 @@
 namespace LibHDR
 {
 
+/*
     Frame* getRotatedFrame(const Frame& frame, RotationMode mode)
     { 
         int _width = frame.getWidth();
@@ -88,5 +89,5 @@ namespace LibHDR
         Frame* _rotated = getRotatedFrame(_frame, _mode);
         _frame.swap(*_rotated);
     }
-
+*/
 }

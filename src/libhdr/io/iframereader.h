@@ -45,7 +45,7 @@ public:
     virtual ~IFrameReader();
 
     virtual void open(std::string) = 0;
-    virtual Frame* readFrame() = 0;
+    //virtual Frame* readFrame() = 0;
     virtual void close() = 0;
 
     virtual bool isOpen() = 0;
