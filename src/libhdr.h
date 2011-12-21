@@ -22,9 +22,9 @@
  *  
  */
  
-#include "corecallback.h"
-#include "coreobject.h"
-#include "array2d.h"
-#include "tag.h"
-#include "channel.h"
-#include "frame.h"
+#include <libhdr/corecallback.h>
+#include <libhdr/coreobject.h>
+#include <libhdr/array2d.h>
+#include <libhdr/tag.h>
+#include <libhdr/channel.h>
+#include <libhdr/frame.h>
