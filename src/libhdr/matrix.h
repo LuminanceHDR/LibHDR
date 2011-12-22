@@ -23,19 +23,16 @@
 #ifndef LIBHDR_MATRIX_H
 #define LIBHDR_MATRIX_H
 
-#include <new>
-#include <iostream>
-#include <iomanip>
-#include <pmmintrin.h>
-#include <cstring>
-#include <cassert>
-#include <sstream>
+#include <boost/intrusive_ptr.hpp>
 
 namespace LibHDR
 {
 
+// Forward declaration
+template <typename Type>
+class MatrixData;
 
-//! \class
+//! \class Matrix
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 template <typename Type>
 class Matrix
@@ -59,122 +56,15 @@ public:
     int getCols() const;
     int getElems() const;
 
-    Type* data();
-    const Type* data() const;
+    float* data();
+    const float* data() const;
 
-    void* raw_data();
-    const void* raw_data() const;
+protected:
+    void detach();
 
 private:
-    int m_Rows;
-    int m_Cols;
-    int m_Elems;
-
-    void* m_Data;
+    boost::intrusive_ptr< MatrixData<Type> > d;
 };
-
-template<typename Type>
-Matrix<Type>::Matrix(int rows, int cols):
-    m_Rows(rows),
-    m_Cols(cols),
-    m_Elems(rows*cols),
-    m_Data(_mm_malloc(rows*cols*sizeof(Type), 16))
-{
-    memset(m_Data, 0, rows*cols*sizeof(Type));
-}
-
-template<typename Type>
-Matrix<Type>::Matrix(const Matrix<Type> &other):
-    m_Rows(other.m_Rows),
-    m_Cols(other.m_Cols),
-    m_Elems(other.m_Rows*other.m_Cols),
-    m_Data(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16))
-{
-    memcpy(m_Data, other.m_Data, other.m_Rows*other.m_Cols*sizeof(Type));
-}
-
-template<typename Type>
-Matrix<Type>::~Matrix()
-{
-    _mm_free(m_Data);
-}
-
-template<typename Type>
-int Matrix<Type>::getRows() const
-{
-    return m_Rows;
-}
-
-template<typename Type>
-int Matrix<Type>::getCols() const
-{
-    return m_Cols;
-}
-
-template<typename Type>
-int Matrix<Type>::getElems() const
-{
-    return m_Elems;
-}
-
-template<typename Type>
-inline Type& Matrix<Type>::operator()(int pos)
-{
-    return ((Type*)m_Data)[ pos ];
-}
-
-template<typename Type>
-inline const Type& Matrix<Type>::operator()(int pos) const
-{
-    return ((Type*)m_Data)[ pos ];
-}
-
-template<typename Type>
-inline Type& Matrix<Type>::operator()(int row, int col)
-{
-    return ((Type*)m_Data)[ row*m_Cols + col ];
-}
-
-template<typename Type>
-inline const Type& Matrix<Type>::operator()(int row, int col) const
-{
-    return ((Type*)m_Data)[ row*m_Cols + col ];
-}
-
-template<typename Type>
-Type* Matrix<Type>::data()
-{
-    return (Type*)m_Data;
-}
-
-template<typename Type>
-const Type* Matrix<Type>::data() const
-{
-    return (Type*)m_Data;
-}
-
-template<typename Type>
-void* Matrix<Type>::raw_data()
-{
-    return m_Data;
-}
-
-template<typename Type>
-const void* Matrix<Type>::raw_data() const
-{
-    return m_Data;
-}
-
-template<typename Type>
-void Matrix<Type>::swap(Matrix<Type>& other)
-{
-    using std::swap;
-
-    swap(m_Rows, other.m_Rows);
-    swap(m_Cols, other.m_Cols);
-    swap(m_Elems, other.m_Elems);
-    swap(m_Data, other.m_Data);
-}
 
 //template<typename In, typename Out>
 //void copyMatrix(const Matrix<In>& mat_in, Matrix<Out>& mat_out)
@@ -223,6 +113,8 @@ void Matrix<Type>::swap(Matrix<Type>& other)
 //    out << ss.str();
 //    return out;
 //}
+
+//typedef Matrix<float> Channel;
 
 } // end namespace LibHDR
 
