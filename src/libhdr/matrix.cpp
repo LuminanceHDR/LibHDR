@@ -23,7 +23,8 @@
 #include "libhdr/matrix.h"
 
 #include <pmmintrin.h>
-
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/locks.hpp>
 
 namespace LibHDR
 {
@@ -39,9 +40,11 @@ public:
     int m_Elems;
     float* m_Data;
 
+private:
     // hold the number of references for this instance
     // it must be set to zero during construction (or copy construction) of a new MatrixData
     int m_ReferenceCounter;
+    boost::mutex m_Mutex;
 
 public:
     // ctor
@@ -73,9 +76,26 @@ public:
     }
 
 public:
-    void add_ref();
-    int release_ref();
-    int num_ref();
+    inline void add_ref()
+    {
+        boost::mutex::scoped_lock l(m_Mutex);
+
+        ++m_ReferenceCounter;
+    }
+
+    inline int release_ref()
+    {
+        boost::mutex::scoped_lock l(m_Mutex);
+
+        return --m_ReferenceCounter;
+    }
+
+    inline int num_ref()
+    {
+        boost::mutex::scoped_lock l(m_Mutex);
+
+        return m_ReferenceCounter;
+    }
 };
 
 }
@@ -109,7 +129,7 @@ Matrix<Type>::~Matrix()
 template<typename Type>
 void Matrix<Type>::detach()
 {
-    if ( d->m_ReferenceCounter > 1 )
+    if ( d->num_ref() > 1 )
     {
         // perform deep copy of the pointed element
         d.reset( new MatrixData<Type>(*d) );
@@ -189,18 +209,18 @@ template class Matrix<float>;
 
 namespace boost
 {
+
 template <typename Type>
 inline void intrusive_ptr_add_ref(LibHDR::MatrixData<Type> * p)
 {
-    // increment reference count of object *p
-    ++(p->m_ReferenceCounter);
+    p->add_ref();
 }
 
 template <typename Type>
 inline void intrusive_ptr_release(LibHDR::MatrixData<Type> * p)
 {
-    // decrement reference count, and delete object when reference count reaches 0
-    if (--(p->m_ReferenceCounter) == 0)
+    if (p->release_ref() == 0)
         delete p;
 }
+
 } // namespace boost
