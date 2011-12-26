@@ -34,48 +34,59 @@ using std::list;
 using std::for_each;
 
 CoreCallback::CoreCallback():
+    m_Observed(NULL),
     m_Interrupt(false)
 {}
 
-CoreCallback::CoreCallback(CoreObject* _co):
+CoreCallback::CoreCallback(CoreObject* co):
+    m_Observed(NULL),
     m_Interrupt(false)
 {
-    registerCallback(_co);
+    registerCallback(co);
 }
 
 CoreCallback::~CoreCallback()
 {
-    if ( m_Observed.empty() ) return;
-    // unsubscribe for_each of the
-    for_each(m_Observed.begin(), m_Observed.end(), std::bind2nd( std::mem_fun( &CoreObject::unsubscribe ), this));
+    if ( m_Observed != NULL )
+        m_Observed->unsubscribe(this);
 }
 
-void CoreCallback::registerCallback(CoreObject* _co)
+void CoreCallback::registerCallback(CoreObject* co)
 {
-    /*
-    * check if the CoreObject is NULL
-    */
-    if ( !_co ) return;
+    CoreObject* current_callback = m_Observed;
 
-    /*
-    * Am I registering the same CoreObject twice?
-    */
-    std::list<CoreObject*>::iterator it = std::find(m_Observed.begin(), m_Observed.end(), _co);
+    // registering again the same callback?
+    if ( co == current_callback ) return;
 
-    if ( it != m_Observed.end() ) return;
+    // check if the CoreObject is NULL
+    // if true, unsubscribe from current
+    if ( !co ) unregisterCallback();
 
-    /*
-    * Should be fine now
-    */
-    m_Observed.push_back(_co);
-    _co->subscribe(this);
+    // Am I registering the same CoreObject twice?
+    //std::list<CoreObject*>::iterator it = std::find(m_Observed.begin(), m_Observed.end(), co);
+    //if ( it != m_Observed.end() ) return;
+
+    // Should be fine now
+    m_Observed = co;
+    co->subscribe(this);
 }
 
-void CoreCallback::unregisterCallback(CoreObject* _co)
+void CoreCallback::unregisterCallback()
 {
-    if ( m_Observed.empty() ) return;
+    if ( m_Observed != NULL )
+        m_Observed->unsubscribe(this);
 
-    m_Observed.remove(_co);
+    m_Observed = NULL;
+}
+
+bool CoreCallback::isTerminated()
+{
+    return m_Interrupt;
+}
+
+void CoreCallback::setTerminated(bool b)
+{
+    m_Interrupt = b;
 }
 
 } // end namespace LibHDR

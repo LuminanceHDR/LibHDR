@@ -35,22 +35,19 @@ using std::for_each;
 using std::bind2nd;
 using std::mem_fun;
 
-/*
- * cstr is defined inline in the class definition
- *
- *
- * CoreObject::CoreObject() { }
- */
+CoreObject::CoreObject():
+    m_IsNotifyActive(true)
+{}
 
 CoreObject::~CoreObject()
 {
     /*
      * In the dstr there is no check of the m_IsNotifyActive because
-     * we want in anycase to notify all the observed!
+     * we want in anycase to notify all the observers!
      */
 
     /* unset all the observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind2nd( mem_fun( &CoreCallback::unregisterCallback ), this));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::unregisterCallback ) );
 }
 
 void CoreObject::subscribe(CoreCallback* _cb)
@@ -91,12 +88,39 @@ void CoreObject::notifyStop()
     for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::stopCallback ));
 }
 
+void CoreObject::notifyMessage(std::string& message)
+{
+    // TODO: to implement
+    if ( !m_IsNotifyActive ) return;
+
+}
+
 bool CoreObject::isTerminated()
 {
     /* look for an callback with the termination status active */
     std::list<CoreCallback*>::iterator it = std::find_if (m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::isTerminated ));
 
     return ( it != m_Callbacks.end() ) ? true : false;
+}
+
+void CoreObject::disableNotify()
+{
+    m_IsNotifyActive = false;
+}
+
+void CoreObject::enableNotify()
+{
+    m_IsNotifyActive = true;
+}
+
+void CoreObject::setNotify(bool status)
+{
+    m_IsNotifyActive = status;
+}
+
+bool CoreObject::isNotifyActive()
+{
+    return m_IsNotifyActive;
 }
 
 } // end namespace LibHDR

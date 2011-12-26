@@ -18,8 +18,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
 #ifndef LIBHDR_CORECALLBACK
@@ -35,19 +33,19 @@ namespace LibHDR
 
 class CoreObject; // forward decleration
 
+//! \class CoreCallback
+//! \brief Observes and receives notify from CoreObject objects.
+//! \author Davide Anastasia <davideanastasia@gmail.com>
+//! \since 0.0
 class LIBHDR_API CoreCallback
 {
-private:
-    std::list<CoreObject*> m_Observed;
-    bool m_Interrupt;
-
 public:
     CoreCallback();
     CoreCallback(CoreObject*);
     virtual ~CoreCallback();
 
     void registerCallback(CoreObject*);
-    void unregisterCallback(CoreObject*);
+    void unregisterCallback();
 
     bool isTerminated();
     void setTerminated(bool);
@@ -58,18 +56,12 @@ public:
     virtual void setCallbackLength(int) = 0;
     virtual void setCallbackNextStep(int) = 0;
 
-    virtual void setCallbackMessage(std::string) = 0;
+    virtual void setCallbackMessage(std::string& message) = 0;
+
+private:
+    CoreObject* m_Observed;
+    bool m_Interrupt;
 };
-
-inline bool CoreCallback::isTerminated()
-{
-    return m_Interrupt;
-}
-
-inline void CoreCallback::setTerminated(bool _b)
-{
-    m_Interrupt = _b;
-}
 
 } // end namespace LibHDR
 

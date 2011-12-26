@@ -18,8 +18,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
 #ifndef LIBHDR_COREOBJECT
@@ -35,52 +33,60 @@ namespace LibHDR
 
 class CoreCallback;
 
+
+//! \class CoreObject
+//! \brief CoreObject is the base class for all the operations that require a long computational time
+//! and need to notify other object of their progress
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \since 0.0
 class LIBHDR_API CoreObject
 {
 public:
-    CoreObject(): m_IsNotifyActive(true) {}
+    //! \brief CoreObject ctor
+    CoreObject();
+
+    //! \brief CoreObject ctor
     virtual ~CoreObject();
 
+    //! \brief subscribe a new observer to CoreObject, notified every time a new event raises
     void subscribe(CoreCallback*);
+
+    //! \brief unsubscribe current observer from CoreObject
     void unsubscribe(CoreCallback*);
 
+    //! \brief notify all the observer of the start of a new operation
     void notifyStart();
+    //! \brief notify all the observer the length of a new operation
     void notifyJobLength(int);
-    void notifyJobNextStep(int inc = 1); // Thanks, Steve!
+    //! \brief notify all the observer that a certain number of increment have been completed
+    //! \param[in] inc number of increments completed
+    void notifyJobNextStep(int inc = 1);
+    //! \brief notify all the observer that the operation has been fully completed
     void notifyStop();
-    void notifyMessage();
 
+    //! \brief send a message to all the observer
+    void notifyMessage(std::string& message);
+
+    //! \brief check if one of the observer received a termination signal
     bool isTerminated();
 
+    //! \brief disable notifications
     void disableNotify();
+
+    //! \brief enable notifications
     void enableNotify();
-    void setNotify(bool);
+
+    //! \brief turn on/off notifications
+    //! \param[in] b status of the notifications: true for on, false for off
+    void setNotify(bool b);
+
+    //! \brief check if notifications are active
     bool isNotifyActive();
 
 private:
     std::list<CoreCallback*> m_Callbacks;
     bool m_IsNotifyActive;
 };
-
-inline void CoreObject::disableNotify()
-{
-    m_IsNotifyActive = false;
-}
-
-inline void CoreObject::enableNotify()
-{
-    m_IsNotifyActive = true;
-}
-
-inline void CoreObject::setNotify(bool _b)
-{
-    m_IsNotifyActive = _b;
-}
-
-inline bool CoreObject::isNotifyActive()
-{
-    return m_IsNotifyActive;
-}
 
 } // end namespace LibHDR
 
