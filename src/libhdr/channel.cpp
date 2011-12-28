@@ -26,9 +26,9 @@ using namespace std;
 
 namespace LibHDR
 {
-Channel::Channel(int width, int height, ChannelName channel_name):
+Channel::Channel(int width, int height, ChannelType channel_type):
     MatrixOfFloats(width, height),
-    m_ChannelName(channel_name)
+    m_ChannelName(channel_type)
 {
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
 }
@@ -45,7 +45,7 @@ Channel& Channel::operator=(const Channel& rhs)
     if (this == &rhs) return *this; // check self-assignment
 
     // Base class
-    this->MatrixOfFloats::operator=(rhs);
+    MatrixOfFloats::operator=(rhs);
 
     m_ChannelName = rhs.m_ChannelName;
 
@@ -62,7 +62,7 @@ void Channel::swap(Channel& other)
     using std::swap;
 
     // Base class swap
-    this->MatrixOfFloats::swap(other);
+    MatrixOfFloats::swap(other);
 
     // Channel data member specialization
     swap(m_ChannelName, other.m_ChannelName);
@@ -83,14 +83,14 @@ int Channel::getHeight() const
     return MatrixOfFloats::getRows();
 }
 
-Channel::ChannelName Channel::getName() const
+Channel::ChannelType Channel::getName() const
 {
     return m_ChannelName;
 }
 
-bool Channel::isName(Channel::ChannelName channel_name) const
+bool Channel::isName(Channel::ChannelType channel_type) const
 {
-    return ((m_ChannelName == channel_name)? true : false);
+    return ((m_ChannelName == channel_type)? true : false);
 }
 
 } // namespace LibHDR

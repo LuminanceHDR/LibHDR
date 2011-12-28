@@ -30,7 +30,7 @@ namespace LibHDR
 class LIBHDR_API Channel : public MatrixOfFloats
 {
 public:
-    enum ChannelName
+    enum ChannelType
     {
         RED_CHANNEL,
         GREEN_CHANNEL,
@@ -45,10 +45,10 @@ public:
     };
 
 private:
-    ChannelName m_ChannelName;
+    ChannelType m_ChannelName;
 
 public:
-    Channel(int width, int height, ChannelName channel_name = UNKNOWN);
+    Channel(int width, int height, ChannelType channel_type = UNKNOWN);
     Channel(const Channel& rhs);
     Channel& operator=(const Channel& rhs);
     virtual ~Channel();
@@ -62,9 +62,9 @@ public:
     int getHeight() const;
 
     //! \brief Return name of the channel
-    ChannelName getName() const;
+    ChannelType getName() const;
     //! \brief Check if the name is the one specified
-    bool isName(ChannelName channel_name) const;
+    bool isName(ChannelType channel_type) const;
 };
 
 //! \brief Swap Channel a with Channel b
