@@ -17,103 +17,58 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
  
 #ifndef LIBHDR_CHANNEL
 #define LIBHDR_CHANNEL
 
-#include <string>
-#include <map>
-#include <list>
-
 #include "libhdr_dlldefines.h"
-#include "libhdr/array2d.h"
-#include "libhdr/tag.h"
+#include "libhdr/matrix.h"
 
 namespace LibHDR
 {
-class LIBHDR_API Channel : public Array2D
+class LIBHDR_API Channel : public MatrixOfFloats
 {
+public:
+    enum ChannelName
+    {
+        RED_CHANNEL,
+        GREEN_CHANNEL,
+        BLUE_CHANNEL,
+        ALPHA_CHANNEL,
+        X_CHANNEL,
+        Y_CHANNEL,
+        Z_CHANNEL,
+        u_CHANNEL,
+        v_CHANNEL,
+        UNKNOWN
+    };
+
 private:
-    std::string m_ChannelName;
-    TagContainer m_Tags;
+    ChannelName m_ChannelName;
 
 public:
-    explicit Channel(int width, int height, std::string name);
+    Channel(int width, int height, ChannelName channel_name = UNKNOWN);
     Channel(const Channel& rhs);
     Channel& operator=(const Channel& rhs);
     virtual ~Channel();
 
     void swap(Channel&);
 
-    /**
-     * Returns TagContainer that can be used to access or modify
-     * tags associated with this Channel object.
-     */
-    TagContainer& getTags();
-    const TagContainer& getTags() const;
-
-    /**
-     * Clones "other"'s tags into current object
-     */
-    void cloneTags(const Channel& other);
-
-    /**
-     * Gets width of the channel (in pixels).
-     * This is a synonym for Array2D::getCols().
-     */
+    //! \brief Gets width of the channel (in pixels).
     int getWidth() const;
 
-    /**
-     * Gets height of the channel (in pixels).
-     * This is a synonym for Array2D::getRows().
-     */
+    //! \brief Gets height of the channel (in pixels).
     int getHeight() const;
 
-    /**
-     * Gets name of the channel.
-     */
-    std::string getName() const;
-    bool isName(std::string) const;
+    //! \brief Return name of the channel
+    ChannelName getName() const;
+    //! \brief Check if the name is the one specified
+    bool isName(ChannelName channel_name) const;
 };
 
-// Inline functions
-inline TagContainer& Channel::getTags()
-{
-    return m_Tags;
-}
-
-inline const TagContainer& Channel::getTags() const
-{
-    return m_Tags;
-}
-
-inline int Channel::getWidth() const
-{
-    return Array2D::getCols();
-}
-
-inline int Channel::getHeight() const
-{
-    return Array2D::getRows();
-}
-
-inline std::string Channel::getName() const
-{
-    return m_ChannelName;
-}
-
-inline bool Channel::isName(std::string name) const
-{
-    return ((m_ChannelName == name)? true : false);
-}
-
+//! \brief Swap Channel a with Channel b
 void swap(Channel& a, Channel& b);
-
-typedef std::list<Channel> ChannelList;
 }
 
 namespace std

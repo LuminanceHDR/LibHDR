@@ -114,7 +114,8 @@ private:
 //    return out;
 //}
 
-//typedef Matrix<float> Channel;
+typedef Matrix<float> MatrixOfFloats;
+typedef Matrix<float[4]> MatrixOfPixels;
 
 } // end namespace LibHDR
 

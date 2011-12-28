@@ -4,7 +4,7 @@ SET(LIBHDR_HDRS
     libhdr/matrix.h
 #    libhdr/array2d.h
 #    libhdr/tag.h
-#    libhdr/channel.h
+    libhdr/channel.h
 #    libhdr/frame.h
 #    libhdr/frameexceptions.h
     libhdr/coreobject.h
@@ -22,7 +22,7 @@ SET(LIBHDR_SRCS
     libhdr/matrix.cpp
 #    libhdr/array2d.cpp
 #    libhdr/tag.cpp
-#    libhdr/channel.cpp
+    libhdr/channel.cpp
 #    libhdr/frame.cpp
 #    libhdr/frameexceptions.cpp
     libhdr/coreobject.cpp

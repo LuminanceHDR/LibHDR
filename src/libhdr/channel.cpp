@@ -18,8 +18,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
 
 #include "libhdr/channel.h"
@@ -28,18 +26,17 @@ using namespace std;
 
 namespace LibHDR
 {
-Channel::Channel(int width, int height, std::string name):
-    Array2D(width, height),
-    m_ChannelName(name)
+Channel::Channel(int width, int height, ChannelName channel_name):
+    MatrixOfFloats(width, height),
+    m_ChannelName(channel_name)
 {
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
 }
 
 // copy constructor
 Channel::Channel(const Channel& rhs):
-    Array2D(rhs),
-    m_ChannelName(rhs.m_ChannelName),
-    m_Tags(rhs.getTags())
+    MatrixOfFloats(rhs),
+    m_ChannelName(rhs.m_ChannelName)
 { }
      
 // Assignment operator
@@ -48,12 +45,9 @@ Channel& Channel::operator=(const Channel& rhs)
     if (this == &rhs) return *this; // check self-assignment
 
     // Base class
-    this->Array2D::operator=(rhs);
+    this->MatrixOfFloats::operator=(rhs);
 
     m_ChannelName = rhs.m_ChannelName;
-
-    // remove all tags & copy tags from rhs (all done by operator=)
-    m_Tags = rhs.getTags();
 
     return *this;
 }
@@ -68,21 +62,35 @@ void Channel::swap(Channel& other)
     using std::swap;
 
     // Base class swap
-    this->Array2D::swap(other);
+    this->MatrixOfFloats::swap(other);
 
     // Channel data member specialization
-    m_ChannelName.swap(other.m_ChannelName);
-    m_Tags.swap(other.m_Tags);
-}
-
-void Channel::cloneTags(const Channel& other)
-{
-    this->m_Tags = other.m_Tags;
+    swap(m_ChannelName, other.m_ChannelName);
 }
 
 void swap(Channel& a, Channel& b)
 {
     a.swap(b);
+}
+
+int Channel::getWidth() const
+{
+    return MatrixOfFloats::getCols();
+}
+
+int Channel::getHeight() const
+{
+    return MatrixOfFloats::getRows();
+}
+
+Channel::ChannelName Channel::getName() const
+{
+    return m_ChannelName;
+}
+
+bool Channel::isName(Channel::ChannelName channel_name) const
+{
+    return ((m_ChannelName == channel_name)? true : false);
 }
 
 } // namespace LibHDR
