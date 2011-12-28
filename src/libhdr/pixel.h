@@ -22,16 +22,23 @@
 #ifndef LIBHDR_PIXEL
 #define LIBHDR_PIXEL
 
+#ifdef _WIN32
+#define ALIGN_CLASS __declspec(align(16))
+#else
+#define ALIGN_CLASS
+#endif
+
+#include "libhdr_dlldefines.h"
+
 #include <iostream>
 #include <pmmintrin.h>
 
 namespace LibHDR
 {
 
-class Pixel
+class LIBHDR_API ALIGN_CLASS Pixel
 {
 public:
-    //__declspec(align(16))
     union
     {
          float f32[4];
