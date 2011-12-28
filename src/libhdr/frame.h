@@ -36,7 +36,15 @@ namespace LibHDR
 class Frame: public MatrixOfPixels
 {
 public:
-    Frame(int width, int height);
+    enum FrameType
+    {
+        FRAME_SRGB,
+        FRAME_XYZ,
+        UNKNOWN
+    };
+
+public:
+    Frame(int width, int height, FrameType frame_type = FRAME_SRGB);
     Frame(const Frame&);
     Frame& operator=(const Frame&);
     virtual ~Frame();
@@ -69,6 +77,7 @@ public:
 
 private:
     TagContainer    m_Tags;
+    FrameType       m_FrameType;
 };
 
 //! \brief generic swap of Frame(s)

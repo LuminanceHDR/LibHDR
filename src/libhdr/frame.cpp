@@ -36,14 +36,16 @@ namespace LibHDR
 using namespace std;
 
 // ctor
-Frame::Frame( int width, int height ):
-    MatrixOfPixels(height, width)
+Frame::Frame( int width, int height, FrameType frame_type):
+    MatrixOfPixels(height, width),
+    m_FrameType(frame_type)
 { }
 
 // copy ctor
 Frame::Frame(const Frame& rhs):
     MatrixOfPixels(rhs),
-    m_Tags(rhs.m_Tags)
+    m_Tags(rhs.m_Tags),
+    m_FrameType(rhs.m_FrameType)
 { }
 
 // assignment operator
@@ -56,6 +58,7 @@ Frame& Frame::operator=(const Frame& rhs)
     this->MatrixOfPixels::operator=(rhs);
 
     m_Tags = rhs.m_Tags;
+    m_FrameType = rhs.m_FrameType;
 
     return *this;
 }
@@ -75,6 +78,7 @@ void Frame::swap(Frame& other)
 
     // Channel data member specialization
     m_Tags.swap(other.m_Tags);
+    swap(m_FrameType, other.m_FrameType);
 }
 
 //const Channel& Frame::getChannel( std::string name ) const
