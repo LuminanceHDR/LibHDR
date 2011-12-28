@@ -17,9 +17,6 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  *   
  */
 
@@ -34,20 +31,18 @@
 
 namespace LibHDR
 {
-//! \class Template class representing a single frame. Every frame contains also additional information in tags
+//! \class Class representing a single frame. Every frame contains also additional information in tags
 //! \author Davide Anastasia <davide.anastasia@users.sourceforge.net>
-
-template <typename Type>
-class Frame: public Matrix<Type>
+class Frame: public MatrixOfPixels
 {
 public:
     Frame(int width, int height);
-    Frame(const Frame<Type>&);
-    Frame& operator=(const Frame<Type>&);
+    Frame(const Frame&);
+    Frame& operator=(const Frame&);
     virtual ~Frame();
 
     //! \brief Swap Frame(s)
-    void swap(Frame<Type>&);
+    void swap(Frame&);
 
     //! \brief Gets width of the channels (in pixels).
     int getWidth() const;
@@ -77,16 +72,15 @@ private:
 };
 
 //! \brief generic swap of Frame(s)
-//template <typename Type>
-//void swap(Frame<& a, Frame& b);
+void swap(Frame& a, Frame& b);
 } // namespace LibHDR
 
 namespace std
 {
 
 //! \brief Specialization of std::swap for Frame
-//template<>
-//void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b);
+template<>
+void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b);
 }
 
 #endif // LIBHDR_FRAME

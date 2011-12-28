@@ -36,28 +36,24 @@ namespace LibHDR
 using namespace std;
 
 // ctor
-template <typename Type>
-Frame<Type>::Frame( int width, int height ):
-    Matrix<Type>(height, width)
+Frame::Frame( int width, int height ):
+    MatrixOfPixels(height, width)
 { }
 
 // copy ctor
-template <typename Type>
-Frame<Type>::Frame(const Frame<Type>& rhs):
-    Matrix<Type>(rhs),
+Frame::Frame(const Frame& rhs):
+    MatrixOfPixels(rhs),
     m_Tags(rhs.m_Tags)
 { }
 
 // assignment operator
-// default behaviour... in fact this function can also be removed!
-template <typename Type>
-Frame<Type>& Frame<Type>::operator=(const Frame<Type>& rhs)
+Frame& Frame::operator=(const Frame& rhs)
 {
     // check self-assignment
     if (this == &rhs) return *this;
 
     // Base class
-    this->Matrix<Type>::operator=(rhs);
+    this->MatrixOfPixels::operator=(rhs);
 
     m_Tags = rhs.m_Tags;
 
@@ -65,19 +61,17 @@ Frame<Type>& Frame<Type>::operator=(const Frame<Type>& rhs)
 }
 
 // dtor
-template <typename Type>
-Frame<Type>::~Frame()
+Frame::~Frame()
 {
     // std::cout << "Frame::~Frame()" << std::endl;
 }
 
-template <typename Type>
-void Frame<Type>::swap(Frame<Type>& other)
+void Frame::swap(Frame& other)
 {
     using std::swap;
 
     // Base class swap
-    this->Matrix<Type>::swap(other);
+    this->MatrixOfPixels::swap(other);
 
     // Channel data member specialization
     m_Tags.swap(other.m_Tags);
@@ -98,53 +92,44 @@ void Frame<Type>::swap(Frame<Type>& other)
 //    return const_cast<Channel&>(static_cast<const Frame&>(*this).getChannel(name));
 //}
 
-template <typename Type>
-void Frame<Type>::cloneTags(const Frame<Type>& other)
+void Frame::cloneTags(const Frame& other)
 {
     this->m_Tags = other.m_Tags;
 }
 
-template <typename Type>
-int Frame<Type>::getWidth() const
+int Frame::getWidth() const
 {
-    return this->getCols();
+    return MatrixOfPixels::getCols();
 }
 
-template <typename Type>
-int Frame<Type>::getHeight() const
+int Frame::getHeight() const
 {
-    return this->getRows();
+    return MatrixOfPixels::getRows();
 }
 
-template <typename Type>
-TagContainer& Frame<Type>::getTags()
+TagContainer& Frame::getTags()
 {
     return m_Tags;
 }
 
-template <typename Type>
-const TagContainer& Frame<Type>::getTags() const
+const TagContainer& Frame::getTags() const
 {
     return m_Tags;
 }
 
-template <typename Type>
-void swap(Frame<Type>& a, Frame<Type>& b)
+void swap(Frame& a, Frame& b)
 {
     a.swap(b);
 }
-
-//! \brief explicit instantiation of class Frame
-template class Frame<float>;
 
 } // namespace LibHDR
 
 namespace std
 {
-//template<>
-//void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b)
-//{
-//    a.swap(b);
-//}
+template<>
+void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b)
+{
+    a.swap(b);
+}
 }
 

@@ -25,6 +25,8 @@
 
 #include <boost/intrusive_ptr.hpp>
 
+#include "libhdr/pixel.h"
+
 namespace LibHDR
 {
 
@@ -115,7 +117,7 @@ private:
 //}
 
 typedef Matrix<float> MatrixOfFloats;
-typedef Matrix<float[4]> MatrixOfPixels;
+typedef Matrix<Pixel> MatrixOfPixels;
 
 } // end namespace LibHDR
 

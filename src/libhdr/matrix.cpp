@@ -204,6 +204,7 @@ void Matrix<Type>::swap(Matrix<Type>& other)
 }
 
 template class Matrix<float>;
+template class Matrix<Pixel>;
 
 } // end namespace LibHDR
 
