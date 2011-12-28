@@ -36,7 +36,7 @@ namespace LibHDR
 using namespace std;
 
 // ctor
-Frame::Frame( int width, int height, FrameType frame_type):
+Frame::Frame(int width, int height, FrameType frame_type):
     MatrixOfPixels(height, width),
     m_FrameType(frame_type)
 { }
@@ -55,7 +55,7 @@ Frame& Frame::operator=(const Frame& rhs)
     if (this == &rhs) return *this;
 
     // Base class
-    this->MatrixOfPixels::operator=(rhs);
+    MatrixOfPixels::operator=(rhs);
 
     m_Tags = rhs.m_Tags;
     m_FrameType = rhs.m_FrameType;
@@ -74,7 +74,7 @@ void Frame::swap(Frame& other)
     using std::swap;
 
     // Base class swap
-    this->MatrixOfPixels::swap(other);
+    MatrixOfPixels::swap(other);
 
     // Channel data member specialization
     m_Tags.swap(other.m_Tags);
