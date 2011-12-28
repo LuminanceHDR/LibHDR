@@ -54,14 +54,26 @@ public:
     Type& operator()(int row, int col);
     const Type& operator()(int row, int col) const;
 
+    //! \brief returns the number of rows of the current Matrix
     int getRows() const;
+    //! \brief returns the number of cols of the current Matrix
     int getCols() const;
+    //! \brief returns the number of elements of the current Matrix
     int getElems() const;
 
+    //! \brief returns a pointer to the underlying buffer of data
+    //! \note it performs a deep copy
     float* data();
+    //! \brief returns a pointer to the underlying buffer of data
+    //! \note it does not perform a deep copy
     const float* data() const;
 
+    //! \brief returns a const pointer to the underlying buffer of data
+    //! \note it never perform a deep copy
+    const float* constData() const;
+
 protected:
+    //! \brief Based on the number of references to the underlying data, performs a deep copy
     void detach();
 
 private:

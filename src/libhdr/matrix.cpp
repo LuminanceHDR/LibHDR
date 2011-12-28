@@ -123,13 +123,19 @@ Matrix<Type>::Matrix(const Matrix<Type> &other):
 {}
 
 template<typename Type>
+Matrix<Type>& Matrix<Type>::operator=(const Matrix<Type> &other)
+{
+    d = other.d;
+}
+
+template<typename Type>
 Matrix<Type>::~Matrix()
 {}
 
 template<typename Type>
 void Matrix<Type>::detach()
 {
-    if ( d->num_ref() > 1 )
+    if ( d->num_ref() != 1 )
     {
         // perform deep copy of the pointed element
         d.reset( new MatrixData<Type>(*d) );
@@ -190,6 +196,12 @@ float* Matrix<Type>::data()
 
 template<typename Type>
 const float* Matrix<Type>::data() const
+{
+    return d->m_Data;
+}
+
+template<typename Type>
+const float* Matrix<Type>::constData() const
 {
     return d->m_Data;
 }
