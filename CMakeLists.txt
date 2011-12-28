@@ -3,15 +3,15 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 IF(WIN32)
 FIND_PACKAGE(Boost REQUIRED)
-SET(Boost_USE_STATIC_LIBS   ON)
+SET(Boost_USE_STATIC_LIBS   OFF)
 SET(Boost_USE_MULTITHREADED ON)
 ELSE()
 FIND_PACKAGE(Boost COMPONENTS thread REQUIRED)
 ENDIF()
 
+ENABLE_TESTING()
+
 add_subdirectory (src)
 add_subdirectory (test)
 
 add_subdirectory (doc)
-
-ENABLE_TESTING()
