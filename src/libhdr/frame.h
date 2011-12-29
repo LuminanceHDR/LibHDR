@@ -31,7 +31,8 @@
 
 namespace LibHDR
 {
-//! \class Class representing a single frame. Every frame contains also additional information in tags
+//! \class Frame
+//! \brief Class representing a single frame. Every frame contains also additional information in tags
 //! \author Davide Anastasia <davide.anastasia@users.sourceforge.net>
 class Frame: public MatrixOfPixels
 {
@@ -58,9 +59,9 @@ public:
     //! \brief Gets height of the channels (in pixels).
     int getHeight() const;
 
-    //! \brief Gets a named channel
-    //! \param name [in] name of the channel.
-    //! \return channel or NULL if the channel does not exist
+    ////! \brief Gets a named channel
+    ////! \param name [in] name of the channel.
+    ////! \return channel or NULL if the channel does not exist
     //Channel& getChannel( std::string name );
     //const Channel& getChannel( std::string name ) const;
 

@@ -40,12 +40,18 @@ template <typename Type>
 class Matrix
 {
 public:
+    //! \brief constructor
     Matrix(int rows, int cols);
+
+    //! \brief Virtual destructor.
     virtual ~Matrix();
 
+    //! \brief copy constructor
     Matrix(const Matrix<Type> &other);
+    //! \brief assignment operator
     Matrix& operator=(const Matrix<Type>& rhs);
 
+    //! \brief Swap
     void swap(Matrix<Type>& other);
 
     Type& operator()(int pos);
