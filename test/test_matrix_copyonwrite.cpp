@@ -200,6 +200,7 @@ int main(int argc, char *argv[])
         return 0;
     }
         break;
+
     default:
         std::cout << "funziona";
         return 0;

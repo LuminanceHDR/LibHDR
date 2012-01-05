@@ -19,3 +19,4 @@ ADD_TEST(test_copy_on_write_no_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copy
 ADD_TEST(test_copy_on_write_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 2)
 ADD_TEST(test_copy_on_write_function_parameter_no_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 3)
 ADD_TEST(test_copy_on_write_leak_and_performance_check ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 4)
+
