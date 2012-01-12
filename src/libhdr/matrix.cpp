@@ -126,6 +126,8 @@ template<typename Type>
 Matrix<Type>& Matrix<Type>::operator=(const Matrix<Type> &other)
 {
     d = other.d;
+    
+    return *this;
 }
 
 template<typename Type>
