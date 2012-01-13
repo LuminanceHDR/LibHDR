@@ -20,6 +20,9 @@
  *
  */
 
+#ifndef LIBHDR_MATRIX_CPP
+#define LIBHDR_MATRIX_CPP
+
 #include "libhdr/matrix.h"
 
 #include <pmmintrin.h>
@@ -126,6 +129,8 @@ template<typename Type>
 Matrix<Type>& Matrix<Type>::operator=(const Matrix<Type> &other)
 {
     d = other.d;
+
+    return *this;
 }
 
 template<typename Type>
@@ -215,9 +220,6 @@ void Matrix<Type>::swap(Matrix<Type>& other)
     d.swap(other.d);
 }
 
-template class Matrix<float>;
-template class Matrix<Pixel>;
-
 } // end namespace LibHDR
 
 namespace boost
@@ -237,3 +239,5 @@ inline void intrusive_ptr_release(LibHDR::MatrixData<Type> * p)
 }
 
 } // namespace boost
+
+#endif
