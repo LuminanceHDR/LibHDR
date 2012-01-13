@@ -27,6 +27,8 @@
 
 namespace LibHDR
 {
+typedef Matrix<float> MatrixOfFloats;
+
 class LIBHDR_API Channel : public MatrixOfFloats
 {
 public:

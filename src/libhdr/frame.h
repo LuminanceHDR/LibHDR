@@ -28,13 +28,16 @@
 #include "libhdr_dlldefines.h"
 #include "libhdr/matrix.h"
 #include "libhdr/tag.h"
+#include "libhdr/pixel.h"
 
 namespace LibHDR
 {
+typedef Matrix<Pixel> MatrixOfPixels;
+
 //! \class Frame
 //! \brief Class representing a single frame. Every frame contains also additional information in tags
 //! \author Davide Anastasia <davide.anastasia@users.sourceforge.net>
-class Frame: public MatrixOfPixels
+class LIBHDR_API Frame: public MatrixOfPixels
 {
 public:
     enum FrameType

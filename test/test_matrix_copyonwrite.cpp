@@ -25,6 +25,7 @@
 #include <iostream>
 #include <sstream>
 #include <list>
+#include <new>
 
 #include <libhdr/frame.h>
 #include <libhdr/rotate.h>
@@ -164,40 +165,46 @@ int main(int argc, char *argv[])
         break;
     case 4:
     {
-        // test copy-on-write
-        std::cout << "Test copy-on-write: allocation of 25 frames of 6mpix (3000x2000)" << std::endl;
-        std::cout << "This test should be used to check for memory leaks with any profiling tool "
-                  << "and to measure the speed of the deep copy" << std::endl;
+        try {
+            // test copy-on-write
+            std::cout << "Test copy-on-write: allocation of 10 frames of 6mpix (3000x2000)" << std::endl;
+            std::cout << "This test should be used to check for memory leaks with any profiling tool "
+                << "and to measure the speed of the deep copy" << std::endl;
 
-        bool test = true;
+            bool test = true;
 
-        std::list<LibHDR::Frame> list_of_frames;
+            std::list<LibHDR::Frame> list_of_frames;
 
-        LibHDR::Frame frame(3000, 2000);
-        const float* dt = frame.constData();
+            LibHDR::Frame frame(3000, 2000);
+            const float* dt = frame.constData();
 
-        for (int idx = 0; idx < 25; idx++)
-        {
-            std::list<LibHDR::Frame>::iterator it = list_of_frames.insert(list_of_frames.end(), frame);
-            float* data = (*it).data(); // this line forces the code to make a deep copy
+            for (int idx = 0; idx < 10; idx++)
+            {
+                std::list<LibHDR::Frame>::iterator it = list_of_frames.insert(list_of_frames.end(), frame);
+                float* data = (*it).data(); // this line forces the code to make a deep copy
 
-            if ( dt == data ) test = false; // it must NOT be the same, because of the deep copy
-        }
+                if ( dt == data ) test = false; // it must NOT be the same, because of the deep copy
+            }
 
-        if ( test )
-        {
-            std::cout << "Ok" << std::endl;
+            if ( test )
+            {
+                std::cout << "Ok" << std::endl;
+                return 0;
+            }
+            else
+            {
+                std::cout << "Failed" << std::endl;
+                return 1;
+            }
+
+            std::cout << "Ok " << std::endl;
             return 0;
-        }
-        else
+
+        } catch ( std::bad_alloc& ba )
         {
-            std::cout << "Failed" << std::endl;
+            std::cerr << "bad_alloc caught: " << ba.what() << std::endl;
             return 1;
         }
-
-
-        std::cout << "Ok " << std::endl;
-        return 0;
     }
         break;
 
