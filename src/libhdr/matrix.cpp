@@ -28,6 +28,7 @@
 #include <pmmintrin.h>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/locks.hpp>
+#include <new>
 
 namespace LibHDR
 {
@@ -58,7 +59,9 @@ public:
         m_Data( static_cast<float*>(_mm_malloc(rows*cols*sizeof(Type), 16)) ),
         m_ReferenceCounter(0)
     {
-        //memset(m_Data, 0, rows*cols*sizeof(Type));
+        if ( m_Data == NULL )
+            // _mm_malloc could not allocate the memory, so I throw and exception
+            throw std::bad_alloc();
     }
 
     // copy ctor
@@ -69,6 +72,10 @@ public:
         m_Data( static_cast<float*>(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16)) ),
         m_ReferenceCounter(0)
     {
+        if ( m_Data == NULL )
+            // _mm_malloc could not allocate the memory, so I throw and exception
+            throw std::bad_alloc();
+
         memcpy(m_Data, other.m_Data, other.m_Rows*other.m_Cols*sizeof(Type));
     }
 
