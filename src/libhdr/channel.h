@@ -27,6 +27,8 @@
 
 namespace LibHDR
 {
+class Frame; // forward declaration
+
 typedef Matrix<float> MatrixOfFloats;
 
 class LIBHDR_API Channel : public MatrixOfFloats
@@ -41,13 +43,11 @@ public:
         X_CHANNEL,
         Y_CHANNEL,
         Z_CHANNEL,
+        y_CHANNEL,
         u_CHANNEL,
         v_CHANNEL,
         UNKNOWN
     };
-
-private:
-    ChannelType m_ChannelName;
 
 public:
     Channel(int width, int height, ChannelType channel_type = UNKNOWN);
@@ -57,16 +57,37 @@ public:
 
     void swap(Channel&);
 
-    //! \brief Gets width of the channel (in pixels).
+    //! \brief Gets width of the Channel (in pixels).
     int getWidth() const;
 
-    //! \brief Gets height of the channel (in pixels).
+    //! \brief Gets height of the Channel (in pixels).
     int getHeight() const;
 
-    //! \brief Return name of the channel
+    //! \brief Return name of the Channel
     ChannelType getName() const;
     //! \brief Check if the name is the one specified
     bool isName(ChannelType channel_type) const;
+
+    //! \return return if the Channel is synchronized with a frame
+    bool isSynchronized();
+    //! \brief set the synchronization mode between this Channel and the Frame it belongs to (if any)
+    void setSynchronization(bool);
+    //! \brief Explictly synchronize this Channel with the Frame it belongs to
+    //! synchronization copies the content of this Channel into the corrisponding position of the pointed Frame
+    void synchronize();
+
+    //! \brief set the Frame this Channel will belong to
+    void setFrame(Frame* frame);
+    //! \brief return a pointer to the Frame this Channel belong to
+    //! \return NULL if this Channel does not belong to any Frame
+    Frame* hasFrame();
+    //! \brief reset the pointed Frame
+    void unsetFrame();
+
+private:
+    ChannelType m_ChannelName;
+    bool m_IsSynchronized;
+    Frame* m_FatherFrame;
 };
 
 //! \brief Swap Channel a with Channel b

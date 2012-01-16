@@ -30,8 +30,12 @@
 #include "libhdr/tag.h"
 #include "libhdr/pixel.h"
 
+
+
 namespace LibHDR
 {
+class Channel;  // forward declaration
+
 typedef Matrix<Pixel> MatrixOfPixels;
 
 //! \class Frame

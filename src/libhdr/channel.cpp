@@ -28,7 +28,9 @@ namespace LibHDR
 {
 Channel::Channel(int width, int height, ChannelType channel_type):
     MatrixOfFloats(width, height),
-    m_ChannelName(channel_type)
+    m_ChannelName(channel_type),
+    m_IsSynchronized(false),
+    m_FatherFrame(NULL)
 {
     //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
 }
@@ -36,7 +38,9 @@ Channel::Channel(int width, int height, ChannelType channel_type):
 // copy constructor
 Channel::Channel(const Channel& rhs):
     MatrixOfFloats(rhs),
-    m_ChannelName(rhs.m_ChannelName)
+    m_ChannelName(rhs.m_ChannelName),
+    m_IsSynchronized(false),
+    m_FatherFrame(NULL)
 { }
      
 // Assignment operator
@@ -48,12 +52,14 @@ Channel& Channel::operator=(const Channel& rhs)
     MatrixOfFloats::operator=(rhs);
 
     m_ChannelName = rhs.m_ChannelName;
+    // TODO: finalize the assignment operator to take into accout the presence of the synchronization command
 
     return *this;
 }
 
 Channel::~Channel()
 {
+    if ( m_IsSynchronized ) this->synchronize();
     //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 }
 
@@ -66,6 +72,8 @@ void Channel::swap(Channel& other)
 
     // Channel data member specialization
     swap(m_ChannelName, other.m_ChannelName);
+    swap(m_FatherFrame, other.m_FatherFrame);
+    swap(m_IsSynchronized, other.m_IsSynchronized);
 }
 
 void swap(Channel& a, Channel& b)
@@ -92,6 +100,43 @@ bool Channel::isName(Channel::ChannelType channel_type) const
 {
     return ((m_ChannelName == channel_type)? true : false);
 }
+
+bool Channel::isSynchronized()
+{
+    return m_IsSynchronized;
+}
+
+void Channel::setSynchronization(bool b)
+{
+    m_IsSynchronized = b;
+}
+
+void Channel::synchronize()
+{
+    // this function writes into the the pointed Frame the values into this Channel
+
+}
+
+void Channel::setFrame(Frame* frame)
+{
+    //bool status = frame->bindChannel(this);
+    //if (
+
+}
+
+Frame* Channel::hasFrame()
+{
+    return m_FatherFrame;
+}
+
+void Channel::unsetFrame()
+{
+    if ( m_FatherFrame == NULL ) return;
+
+    // else 
+    // unsubscribe frame from its Father and then set internal structure to zero
+}
+
 
 } // namespace LibHDR
 
