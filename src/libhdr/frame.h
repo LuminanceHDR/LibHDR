@@ -46,13 +46,16 @@ class LIBHDR_API Frame: public MatrixOfPixels
 public:
     enum FrameType
     {
-        FRAME_SRGB,
-        FRAME_XYZ,
+        RGB,
+        sRGB,
+        XYZ,
+        YUV,
+        Yxy,
         UNKNOWN
     };
 
 public:
-    Frame(int width, int height, FrameType frame_type = FRAME_SRGB);
+    Frame(int width, int height, FrameType frame_type = RGB);
     Frame(const Frame&);
     Frame& operator=(const Frame&);
     virtual ~Frame();

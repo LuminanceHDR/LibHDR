@@ -28,7 +28,7 @@ namespace LibHDR
 {
 Channel::Channel(int width, int height, ChannelType channel_type):
     MatrixOfFloats(width, height),
-    m_ChannelName(channel_type),
+    m_ChannelType(channel_type),
     m_IsSynchronized(false),
     m_FatherFrame(NULL)
 {
@@ -38,7 +38,7 @@ Channel::Channel(int width, int height, ChannelType channel_type):
 // copy constructor
 Channel::Channel(const Channel& rhs):
     MatrixOfFloats(rhs),
-    m_ChannelName(rhs.m_ChannelName),
+    m_ChannelType(rhs.m_ChannelType),
     m_IsSynchronized(false),
     m_FatherFrame(NULL)
 { }
@@ -51,7 +51,7 @@ Channel& Channel::operator=(const Channel& rhs)
     // Base class
     MatrixOfFloats::operator=(rhs);
 
-    m_ChannelName = rhs.m_ChannelName;
+    m_ChannelType = rhs.m_ChannelType;
     // TODO: finalize the assignment operator to take into accout the presence of the synchronization command
 
     return *this;
@@ -71,7 +71,7 @@ void Channel::swap(Channel& other)
     MatrixOfFloats::swap(other);
 
     // Channel data member specialization
-    swap(m_ChannelName, other.m_ChannelName);
+    swap(m_ChannelType, other.m_ChannelType);
     swap(m_FatherFrame, other.m_FatherFrame);
     swap(m_IsSynchronized, other.m_IsSynchronized);
 }
@@ -91,14 +91,19 @@ int Channel::getHeight() const
     return MatrixOfFloats::getRows();
 }
 
-Channel::ChannelType Channel::getName() const
+Channel::ChannelType Channel::getType() const
 {
-    return m_ChannelName;
+    return m_ChannelType;
 }
 
-bool Channel::isName(Channel::ChannelType channel_type) const
+bool Channel::isType(Channel::ChannelType channel_type) const
 {
-    return ((m_ChannelName == channel_type)? true : false);
+    return ((m_ChannelType == channel_type)? true : false);
+}
+
+void Channel::setType(Channel::ChannelType channel_type)
+{
+    m_ChannelType = channel_type;
 }
 
 bool Channel::isSynchronized()

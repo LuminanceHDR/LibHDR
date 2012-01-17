@@ -36,16 +36,22 @@ class LIBHDR_API Channel : public MatrixOfFloats
 public:
     enum ChannelType
     {
-        RED_CHANNEL,
-        GREEN_CHANNEL,
-        BLUE_CHANNEL,
-        ALPHA_CHANNEL,
-        X_CHANNEL,
-        Y_CHANNEL,
-        Z_CHANNEL,
-        y_CHANNEL,
-        u_CHANNEL,
-        v_CHANNEL,
+        ALPHA,
+        R_RGB,
+        G_RGB,
+        B_RGB,
+        R_sRGB,
+        G_sRGB,
+        B_sRGB,
+        X_XYZ,
+        Y_XYZ,
+        Z_XYZ,
+        Y_YUV,
+        U_YUV,
+        V_YUV,
+        Y_Yxy,
+        x_Yxy,
+        y_Yxy,
         UNKNOWN
     };
 
@@ -64,9 +70,11 @@ public:
     int getHeight() const;
 
     //! \brief Return name of the Channel
-    ChannelType getName() const;
+    ChannelType getType() const;
     //! \brief Check if the name is the one specified
-    bool isName(ChannelType channel_type) const;
+    bool isType(ChannelType channel_type) const;
+    //! \brief Set Channel Type
+    void setType(ChannelType channel_type);
 
     //! \return return if the Channel is synchronized with a frame
     bool isSynchronized();
@@ -85,7 +93,7 @@ public:
     void unsetFrame();
 
 private:
-    ChannelType m_ChannelName;
+    ChannelType m_ChannelType;
     bool m_IsSynchronized;
     Frame* m_FatherFrame;
 };
