@@ -17,6 +17,7 @@ SET(LIBHDR_HDRS
 #    libhdr/io/iocommon.h
 #    libhdr/io/ioexceptions.h
 #    libhdr/rotate.h
+    libhdr/template/objectfactory.h
 )
 
 SET(LIBHDR_SRCS
