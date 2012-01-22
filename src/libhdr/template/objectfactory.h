@@ -25,10 +25,16 @@
 
 #include <map>
 
+namespace LibHDR
+{
+namespace Template
+{
+
 //! \class ObjectFactory
 //! \author Davide Anastasia
 //! \since 0.0
 //! \note Implementation inspired by http://www.artima.com/cppsource/subscription_problem.html
+//! and the Loki library described in "Modern C++ Design" by Andrei Alexandrescu
 template <typename AbstractProduct,
           typename IdentifierType,
           typename ProductCreator = AbstractProduct * (*)()>
@@ -56,5 +62,8 @@ private:
     typedef std::map<IdentifierType, ProductCreator> Associations;
     Associations associations_;
 };
+
+}
+}
 
 #endif
