@@ -10,7 +10,6 @@ SET(LIBHDR_HDRS
 #    libhdr/frameexceptions.h
     libhdr/coreobject.h
     libhdr/corecallback.h
-#    libhdr/io/framereaderfactory.h
 #    libhdr/io/iframereader.h
 #    libhdr/io/pfscommon.h
 #    libhdr/io/pfsreader.h
@@ -18,6 +17,9 @@ SET(LIBHDR_HDRS
 #    libhdr/io/ioexceptions.h
 #    libhdr/rotate.h
     libhdr/template/objectfactory.h
+    libhdr/template/singleton.h
+    libhdr/settings.h
+    
 )
 
 SET(LIBHDR_SRCS
@@ -30,7 +32,6 @@ SET(LIBHDR_SRCS
 #    libhdr/frameexceptions.cpp
     libhdr/coreobject.cpp
     libhdr/corecallback.cpp
-#    libhdr/io/framereaderfactory.cpp
 #    libhdr/io/iframereader.cpp
 #    libhdr/io/pfscommon.cpp
 #    libhdr/io/pfsreader.cpp
@@ -52,8 +53,9 @@ IF (BUILD_SHARED_LIBS)
   SET (LIB_TYPE SHARED)
 ENDIF (BUILD_SHARED_LIBS)
 
-ADD_LIBRARY(LibHDR ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+#ADD_SUBDIRECTORY(io)
 
-TARGET_LINK_LIBRARIES(LibHDR LibHDR ${Boost_LIBRARIES})
+ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+TARGET_LINK_LIBRARIES(${LIB_NAME} ${Boost_LIBRARIES})
 
 

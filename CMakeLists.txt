@@ -11,6 +11,12 @@ ENDIF()
 
 ENABLE_TESTING()
 
+IF(WIN32)
+SET(LIB_NAME libhdr)
+ELSE()
+SET(LIB_NAME hdr)
+ENDIF()
+
 add_subdirectory (src)
 add_subdirectory (test)
 
