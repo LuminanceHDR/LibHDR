@@ -10,7 +10,7 @@ SET(LIBHDR_HDRS
 #    libhdr/frameexceptions.h
     libhdr/coreobject.h
     libhdr/corecallback.h
-#    libhdr/io/iframereader.h
+    libhdr/io/iframereader.h
 #    libhdr/io/pfscommon.h
 #    libhdr/io/pfsreader.h
 #    libhdr/io/iocommon.h
@@ -32,7 +32,7 @@ SET(LIBHDR_SRCS
 #    libhdr/frameexceptions.cpp
     libhdr/coreobject.cpp
     libhdr/corecallback.cpp
-#    libhdr/io/iframereader.cpp
+    libhdr/io/iframereader.cpp
 #    libhdr/io/pfscommon.cpp
 #    libhdr/io/pfsreader.cpp
 #    libhdr/io/ioexceptions.cpp

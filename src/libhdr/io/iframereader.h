@@ -32,6 +32,9 @@
 #include "libhdr/coreobject.h"
 #include "libhdr/frame.h"
 
+#include "libhdr/template/objectfactory.h"
+#include "libhdr/template/singleton.h"
+
 namespace LibHDR
 {
 
@@ -50,6 +53,8 @@ public:
 
     virtual bool isOpen() = 0;
 };
+
+typedef Template::Singleton< Template::ObjectFactory<IFrameReader, std::string> > FrameReaderFactory;
 
 } // end namespace IO
 } // end namespace LibHDR
