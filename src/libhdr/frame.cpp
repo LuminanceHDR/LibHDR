@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
@@ -16,18 +16,14 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
- *   
+ * ----------------------------------------------------------------------   
  */
+
 
 #include <iostream>
 #include <functional>
 #include <algorithm>
 #include <string>
-//#include <map>
 
 #include "libhdr/frame.h"
 

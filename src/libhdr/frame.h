@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
@@ -17,7 +17,6 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *   
  */
 
 #ifndef LIBHDR_FRAME
@@ -30,8 +29,6 @@
 #include "libhdr/tag.h"
 #include "libhdr/pixel.h"
 
-
-
 namespace LibHDR
 {
 class Channel;  // forward declaration
@@ -40,7 +37,7 @@ typedef Matrix<Pixel> MatrixOfPixels;
 
 //! \class Frame
 //! \brief Class representing a single frame. Every frame contains also additional information in tags
-//! \author Davide Anastasia <davide.anastasia@users.sourceforge.net>
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 class LIBHDR_API Frame: public MatrixOfPixels
 {
 public:
@@ -91,7 +88,7 @@ private:
     FrameType       m_FrameType;
 };
 
-//! \brief generic swap of Frame(s)
+//! \brief swaps Frame a with Frame b
 void swap(Frame& a, Frame& b);
 } // namespace LibHDR
 
