@@ -20,6 +20,9 @@
  *
  */
 
+#ifndef LIBHDR_SINGLETON_H
+#define LIBHDR_SINGLETON_H
+
 #include <boost/utility.hpp>
 #include <boost/thread.hpp>
 
@@ -30,13 +33,13 @@ namespace Template
 {
 
 template<typename Type>
-class Singleton : boost::noncopyable
+class Singleton : public boost::noncopyable
 {
 public:
-    typedef Type SingletonType;
+    typedef Type HoldType;
 
     //! \brief Create an instance of the object
-    static Type* instance();
+    static Type& instance();
 
 protected:
     //! \brief notice that the constructor is NOT public
@@ -45,28 +48,32 @@ protected:
 private:
     //! \brief The actual object
     static Type* m_instance;
-    static boost::mutex m_mutex;
+//    static boost::mutex m_mutex;
 };
 
 template<typename Type>
 Type* Singleton<Type>::m_instance = NULL;
 
+//template<typename Type>
+//boost::mutex Singleton<Type>::m_mutex;
+
 template<typename Type>
-Type* Singleton<Type>::instance()
+Type& Singleton<Type>::instance()
 {
     if (!m_instance)
     {
-        boost::unique_lock<boost::mutex> lock(m_mutex);
+//        boost::unique_lock<boost::mutex> lock(m_mutex);
         if (!m_instance)
         {
             m_instance = new Type();
         }
     }
-    return m_instance;
+    return *m_instance;
 }
 
-}
+}   // namespace Template
+}   // namespace LibHDR
 
-}
+#endif // LIBHDR_SINGLETON_H
 
 
