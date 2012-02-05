@@ -41,20 +41,20 @@ namespace LibHDR
 namespace IO
 {
 
-class LIBHDR_API IFrameReader: public CoreObject
+class LIBHDR_API FrameReader: public CoreObject
 {
 public:
-    IFrameReader(); // cstr
-    virtual ~IFrameReader();
+    FrameReader(); // cstr
+    virtual ~FrameReader();
 
-    virtual void open(std::string) = 0;
+    virtual void open(std::string filename) = 0;
     //virtual Frame* readFrame() = 0;
     virtual void close() = 0;
 
     virtual bool isOpen() = 0;
 };
 
-typedef Template::Singleton< Template::ObjectFactory<IFrameReader, std::string> > FrameReaderFactory;
+typedef Template::Singleton< Template::ObjectFactory<FrameReader, std::string> > FrameReaderFactory;
 
 } // end namespace IO
 } // end namespace LibHDR

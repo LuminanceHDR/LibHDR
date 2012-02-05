@@ -22,7 +22,7 @@
  *  
  */
 
-#include "libhdr/io/iframereader.h"
+#include "libhdr/io/framereader.h"
 
 namespace LibHDR
 {
@@ -30,10 +30,10 @@ namespace LibHDR
 namespace IO
 {
 
-IFrameReader::IFrameReader()
+FrameReader::FrameReader()
 {}
 
-IFrameReader::~IFrameReader()
+FrameReader::~FrameReader()
 {}
 
 } // end namespace IO
