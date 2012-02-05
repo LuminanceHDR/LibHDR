@@ -22,6 +22,10 @@
 #ifndef OBJECT_FACTORY_H
 #define OBJECT_FACTORY_H
 
+//! \file objectfactory.h
+//! \date 2012-01-20
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
 #include <map>
 #include <vector>
 
@@ -44,6 +48,7 @@ public:
     typedef ObjectFactory<AbstractProduct, IdentifierType, ProductCreator> ThisFactory;
     typedef std::map<IdentifierType, ProductCreator> Associations;
 
+    //! \brief creates an instance of an object identified by id in the inheritance hierarchy of AbstractProduct
     AbstractProduct* create(const IdentifierType& id)
     {
         typename Associations::const_iterator i = this->m_associations.find(id);

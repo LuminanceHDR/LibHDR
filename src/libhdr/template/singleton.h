@@ -19,6 +19,11 @@
  * ----------------------------------------------------------------------
  */
 
+
+//! \file singleton.h
+//! \date 2012-02-05
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+
 #ifndef LIBHDR_SINGLETON_H
 #define LIBHDR_SINGLETON_H
 
@@ -26,22 +31,25 @@
 #include <boost/thread.hpp>
 
 namespace LibHDR
-{  
-
+{
 namespace Template
 {
-
+//! \class Creates a Singleton wrapper
+//! \brief This class creates a Singleton wrapper around a class of type Type
+//! (argument of the template). This class inherits boost::noncopyable: copy construction
+//! and assignment are then disabled.
+//! \param Type Specifies the type of the class that will be wrapped
 template<typename Type>
 class Singleton : public boost::noncopyable
 {
 public:
     typedef Type HoldType;
 
-    //! \brief Create an instance of the object
+    //! \brief Create an instance of the wrapped type
     static Type& instance();
 
 protected:
-    //! \brief notice that the constructor is NOT public
+    //! \note the constructor is NOT public
     Singleton();
 
 private:
