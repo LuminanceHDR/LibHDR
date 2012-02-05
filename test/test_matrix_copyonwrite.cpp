@@ -28,30 +28,14 @@
 #include <new>
 
 #include <libhdr/frame.h>
-#include <libhdr/rotate.h>
+
+#include "test_utils.h"
 
 namespace
 {
 
 const int WIDTH = 3000;
 const int HEIGHT = 2000;
-
-int get_mode(char* value)
-{
-    std::stringstream ss;
-    ss << value;
-
-    int i;
-    ss >> i;
-
-    return i;
-}
-
-bool check_parameters(int argc, char *argv[])
-{
-    if ( argc <= 1 ) return false;
-    return true;
-}
 
 const float* test_function1(LibHDR::Frame frame)
 {
