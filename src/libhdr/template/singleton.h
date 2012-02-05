@@ -33,10 +33,12 @@ template<typename Type>
 class Singleton : boost::noncopyable
 {
 public:
+    typedef Type SingletonType;
+
     //! \brief Create an instance of the object
     static Type* instance();
 
-private:
+protected:
     //! \brief notice that the constructor is NOT public
     Singleton();
 
@@ -60,7 +62,7 @@ Type* Singleton<Type>::instance()
             m_instance = new Type();
         }
     }
-    return *m_instance;
+    return m_instance;
 }
 
 }
