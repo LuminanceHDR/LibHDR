@@ -30,13 +30,16 @@
 #include "libhdr_dlldefines.h"
 #include "libhdr/io/iocommon.h"
 #include "libhdr/coreobject.h"
-#include "libhdr/frame.h"
+//#include "libhdr/frame.h"
+#include "libhdr/settings.h"
 
 #include "libhdr/template/objectfactory.h"
 #include "libhdr/template/singleton.h"
 
 namespace LibHDR
 {
+
+class Frame;
 
 namespace IO
 {
@@ -48,7 +51,7 @@ public:
     virtual ~FrameReader();
 
     virtual void open(std::string filename) = 0;
-    //virtual Frame* readFrame() = 0;
+    virtual Frame* readFrame(const Settings& settings) = 0;
     virtual void close() = 0;
 
     virtual bool isOpen() = 0;

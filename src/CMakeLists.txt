@@ -12,7 +12,7 @@ SET(LIBHDR_HDRS
     libhdr/corecallback.h
     libhdr/io/framereader.h
 #    libhdr/io/pfscommon.h
-#    libhdr/io/pfsreader.h
+    libhdr/io/pfsreader.h
 #    libhdr/io/iocommon.h
 #    libhdr/io/ioexceptions.h
 #    libhdr/rotate.h
@@ -33,7 +33,7 @@ SET(LIBHDR_SRCS
     libhdr/corecallback.cpp
     libhdr/io/framereader.cpp
 #    libhdr/io/pfscommon.cpp
-#    libhdr/io/pfsreader.cpp
+    libhdr/io/pfsreader.cpp
 #    libhdr/io/ioexceptions.cpp
 #    libhdr/rotate.cpp
 )

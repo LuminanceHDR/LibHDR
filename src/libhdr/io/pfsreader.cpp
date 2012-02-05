@@ -24,9 +24,31 @@
  */
 
 #include "libhdr/io/pfsreader.h"
-#include "libhdr/io/ioexceptions.h"
+//#include "libhdr/io/ioexceptions.h"
 
 #include <iostream>
+
+
+
+namespace
+{
+using namespace LibHDR::Template;
+using namespace LibHDR::IO;
+
+bool subscribe2factory()
+{
+    // get pointer to FrameReaderFactory
+    FrameReaderFactory::HoldType& factory = FrameReaderFactory::instance();
+
+    std::vector<std::string> id_ = PFSReader::getID();
+    for ( int idx = 0; idx < id_.size(); ++idx)
+    {
+        factory.subscribe(id_[idx], createInstance<FrameReader, PFSReader>);
+    }
+}
+
+static bool factory_subscription = subscribe2factory();
+}
 
 namespace LibHDR
 {
@@ -37,9 +59,6 @@ namespace IO
 PFSReader::PFSReader()
 {}
 
-PFSReader::PFSReader(std::string _filename)
-{}
-
 PFSReader::~PFSReader()
 {}
 
@@ -48,10 +67,10 @@ void PFSReader::open(std::string _filename)
 
 }
 
-//Frame* PFSReader::readFrame()
-//{
-//    return NULL;
-//}
+Frame* PFSReader::readFrame(const Settings& settings)
+{
+    return NULL;
+}
     
 void PFSReader::close()
 {
@@ -63,6 +82,14 @@ bool PFSReader::isOpen()
     return false;
 }
 
+std::vector<std::string> PFSReader::getID()
+{
+    std::vector<std::string> id_;
+
+    id_.push_back("pfs");
+
+    return id_;
+}
     
 } // namespace IO
 } // namespace LibHDR

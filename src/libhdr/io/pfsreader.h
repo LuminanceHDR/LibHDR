@@ -27,10 +27,11 @@
 #define LIBHDR_PFSREADER
 
 #include <string>
+#include <vector>
 #include <stdio.h>
 
 #include "libhdr_dlldefines.h"
-#include "libhdr/io/iframereader.h"
+#include "libhdr/io/framereader.h"
 #include "libhdr/io/pfscommon.h"
 
 namespace LibHDR
@@ -38,18 +39,19 @@ namespace LibHDR
 namespace IO
 {
 
-class LIBHDR_API PFSReader: public IFrameReader //, public PFSCommon
+class LIBHDR_API PFSReader: public FrameReader //, public PFSCommon
 {
 public:
     PFSReader();
-    PFSReader(std::string _filename);
     ~PFSReader();
 
-    void open(std::string _filename);
+    void open(std::string filename_);
     void close();
-    //Frame* readFrame();
+    Frame* readFrame(const Settings& settings_);
 
     bool isOpen();
+
+    static std::vector<std::string> getID();
 };
 
 } // namespace IO
