@@ -24,6 +24,7 @@
 #define OBJECT_FACTORY_H
 
 #include <map>
+#include <vector>
 
 namespace LibHDR
 {
@@ -40,28 +41,48 @@ template <typename AbstractProduct,
           typename ProductCreator = AbstractProduct * (*)()>
 class ObjectFactory
 {
-    //typedef ObjectFactory<AbstractProduct, IdentifierType, ProductCreator> ThisClass;
 public:
-    AbstractProduct * create(const IdentifierType & id)
+    typedef ObjectFactory<AbstractProduct, IdentifierType, ProductCreator> ThisFactory;
+    typedef std::map<IdentifierType, ProductCreator> Associations;
+
+    AbstractProduct* create(const IdentifierType& id)
     {
-        typename Associations::const_iterator i = this->associations_.find(id);
-        if (this->associations_.end() != i)
+        typename Associations::const_iterator i = this->m_associations.find(id);
+        if (this->m_associations.end() != i)
         {
             return (i->second)();
         }
         return NULL;
     }
 
-    bool subscribe(const IdentifierType & id, ProductCreator creator)
+    bool subscribe(const IdentifierType& id, ProductCreator creator)
     {
-        return this->associations_.insert(Associations::value_type(id,
-                                                                   creator)).second;
+        return this->m_associations.insert(typename Associations::value_type(id, creator)).second;
     }
-    
+
+    std::vector<IdentifierType> getSubscribed()
+    {
+        std::vector<IdentifierType> ids_;
+
+        typename Associations::const_iterator it = this->m_associations.begin();
+        typename Associations::const_iterator it_end = this->m_associations.end();
+        for (; it != it_end; ++it)
+        {
+            ids_.push_back( it->first );
+        }
+        return ids_;
+    }
+
 private:
-    typedef std::map<IdentifierType, ProductCreator> Associations;
-    Associations associations_;
+    Associations m_associations;
 };
+
+//! \brief Basic product creator for classes with empty default constructor
+template <typename Base, typename Derived>
+Base* createInstance()
+{
+    return new Derived;
+}
 
 }
 }
