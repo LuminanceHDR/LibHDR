@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
         std::vector<std::string> subscribed = factory.getSubscribed();
         std::cout << "Subscribed types:\n";
-        for (int idx = 0; idx < subscribed.size(); ++idx)
+        for (std::vector<std::string>::size_type idx = 0; idx < subscribed.size(); ++idx)
         {
             std::cout << subscribed[idx] << "\n";
         }
