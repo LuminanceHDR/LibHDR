@@ -4,7 +4,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${LibHDR_SOURCE_DIR}/src)
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
-ADD_LIBRARY(testutils test_utils.cpp test_utils.h)
+ADD_LIBRARY(testutils STATIC test_utils.cpp test_utils.h)
 
 ADD_EXECUTABLE(test_corecallback
     mockcallback.h

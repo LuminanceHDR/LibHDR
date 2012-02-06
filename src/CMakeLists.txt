@@ -1,45 +1,51 @@
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libhdr_version.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp)
 
 SET(LIBHDR_HDRS
+#LIBHDR BASE
     libhdr_dlldefines.h
     libhdr_version.h
     libhdr.h
+# LIBHDR CORE
     libhdr/matrix.h
-#    libhdr/array2d.h
+#   libhdr/array2d.h
     libhdr/tag.h
     libhdr/channel.h
     libhdr/frame.h
     libhdr/pixel.h
-#    libhdr/frameexceptions.h
+#   libhdr/frameexceptions.h
     libhdr/coreobject.h
     libhdr/corecallback.h
-    libhdr/io/framereader.h
-#    libhdr/io/pfscommon.h
-    libhdr/io/pfsreader.h
-#    libhdr/io/iocommon.h
-#    libhdr/io/ioexceptions.h
-#    libhdr/rotate.h
+    libhdr/settings.h
+# TEMPLATE
     libhdr/template/objectfactory.h
     libhdr/template/singleton.h
-    libhdr/settings.h
+#LIBHDR IO
+    libhdr/io/framereader.h
+#   libhdr/io/pfscommon.h
+    libhdr/io/pfsreader.h
+#   libhdr/io/iocommon.h
+#   libhdr/io/ioexceptions.h
 )
 
 SET(LIBHDR_SRCS
+#LIBHDR BASE
     ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp
+#LIBHDR CORE
     libhdr/matrix.cpp
-#    libhdr/array2d.cpp
+#   libhdr/array2d.cpp
     libhdr/tag.cpp
     libhdr/channel.cpp
     libhdr/frame.cpp
     libhdr/pixel.cpp
-#    libhdr/frameexceptions.cpp
+#   libhdr/frameexceptions.cpp
     libhdr/coreobject.cpp
     libhdr/corecallback.cpp
+#   libhdr/rotate.cpp
+#LIBHDR IO
     libhdr/io/framereader.cpp
-#    libhdr/io/pfscommon.cpp
+#   libhdr/io/pfscommon.cpp
     libhdr/io/pfsreader.cpp
-#    libhdr/io/ioexceptions.cpp
-#    libhdr/rotate.cpp
+#   libhdr/io/ioexceptions.cpp
 )
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
@@ -55,8 +61,6 @@ IF (BUILD_SHARED_LIBS)
   # User wants to build Dynamic Libraries, so change the LIB_TYPE variable to CMake keyword 'SHARED'
   SET (LIB_TYPE SHARED)
 ENDIF (BUILD_SHARED_LIBS)
-
-#ADD_SUBDIRECTORY(io)
 
 ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
 TARGET_LINK_LIBRARIES(${LIB_NAME} ${Boost_LIBRARIES})
