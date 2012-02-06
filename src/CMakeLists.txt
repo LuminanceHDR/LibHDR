@@ -1,5 +1,8 @@
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libhdr_version.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp)
+
 SET(LIBHDR_HDRS
     libhdr_dlldefines.h
+    libhdr_version.h
     libhdr.h
     libhdr/matrix.h
 #    libhdr/array2d.h
@@ -22,6 +25,7 @@ SET(LIBHDR_HDRS
 )
 
 SET(LIBHDR_SRCS
+    ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp
     libhdr/matrix.cpp
 #    libhdr/array2d.cpp
     libhdr/tag.cpp
@@ -38,9 +42,9 @@ SET(LIBHDR_SRCS
 #    libhdr/rotate.cpp
 )
 
-include_directories("${CMAKE_SOURCE_DIR}/src")
-
+INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
 # Allow the developer to select if Dynamic or Static libraries are built
