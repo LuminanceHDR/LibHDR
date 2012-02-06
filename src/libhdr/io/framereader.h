@@ -23,11 +23,11 @@
 #define LIBHDR_ISTRATEGYREADER
 
 #include <string>
+#include <boost/utility.hpp>
 
 #include "libhdr_dlldefines.h"
 #include "libhdr/io/iocommon.h"
 #include "libhdr/coreobject.h"
-//#include "libhdr/frame.h"
 #include "libhdr/settings.h"
 
 #include "libhdr/template/objectfactory.h"
@@ -41,7 +41,7 @@ class Frame;
 namespace IO
 {
 
-class LIBHDR_API FrameReader: public CoreObject
+class LIBHDR_API FrameReader: public CoreObject, public boost::noncopyable
 {
 public:
     FrameReader(); // cstr
@@ -57,7 +57,7 @@ public:
 typedef Template::Singleton< Template::ObjectFactory<FrameReader, std::string> > FrameReaderFactory;
 
 template<typename Type>
-bool subscribe2factory()
+bool subscribeFrameReaderFactory()
 {
     bool status = true;
     // get pointer to FrameReaderFactory
@@ -65,7 +65,6 @@ bool subscribe2factory()
 
     // every class subscribed to FrameReaderFactory must expose this method
     std::vector<std::string> id_ = Type::getID();
-
     for (std::vector<std::string>::size_type idx = 0; idx < id_.size(); ++idx)
     {
         if ( !factory.subscribe(id_[idx], LibHDR::Template::createInstance<FrameReader, Type>) )
@@ -75,7 +74,7 @@ bool subscribe2factory()
 }
 
 #define REGISTER_FRAMEREADER(reader) \
-    static bool factory_subscription##reader = subscribe2factory<reader>();
+    static bool factory_subscription##reader = subscribeFrameReaderFactory<reader>();
 
 
 } // end namespace IO
