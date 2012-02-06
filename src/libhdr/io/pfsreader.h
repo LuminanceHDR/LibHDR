@@ -24,7 +24,6 @@
 
 #include <string>
 #include <vector>
-#include <stdio.h>
 
 #include "libhdr_dlldefines.h"
 #include "libhdr/io/framereader.h"

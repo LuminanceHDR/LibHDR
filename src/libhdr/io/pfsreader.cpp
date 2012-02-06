@@ -23,34 +23,12 @@
 //#include "libhdr/io/ioexceptions.h"
 
 #include <iostream>
-
-
-
-namespace
-{
-using namespace LibHDR::Template;
-using namespace LibHDR::IO;
-
-bool subscribe2factory()
-{
-    // get pointer to FrameReaderFactory
-    FrameReaderFactory::HoldType& factory = FrameReaderFactory::instance();
-
-    std::vector<std::string> id_ = PFSReader::getID();
-    for ( int idx = 0; idx < id_.size(); ++idx)
-    {
-        factory.subscribe(id_[idx], createInstance<FrameReader, PFSReader>);
-    }
-}
-
-static bool factory_subscription = subscribe2factory();
-}
+#include <stdio.h>
 
 namespace LibHDR
 {
 namespace IO
 {
-
 
 PFSReader::PFSReader()
 {}
@@ -86,7 +64,9 @@ std::vector<std::string> PFSReader::getID()
 
     return id_;
 }
-    
+
+REGISTER_FRAMEREADER(PFSReader)
+
 } // namespace IO
 } // namespace LibHDR
 

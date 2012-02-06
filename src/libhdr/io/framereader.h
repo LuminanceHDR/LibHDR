@@ -56,6 +56,28 @@ public:
 
 typedef Template::Singleton< Template::ObjectFactory<FrameReader, std::string> > FrameReaderFactory;
 
+template<typename Type>
+bool subscribe2factory()
+{
+    bool status = true;
+    // get pointer to FrameReaderFactory
+    FrameReaderFactory::HoldType& factory = FrameReaderFactory::instance();
+
+    // every class subscribed to FrameReaderFactory must expose this method
+    std::vector<std::string> id_ = Type::getID();
+
+    for (std::vector<std::string>::size_type idx = 0; idx < id_.size(); ++idx)
+    {
+        if ( !factory.subscribe(id_[idx], LibHDR::Template::createInstance<FrameReader, Type>) )
+            status = false;
+    }
+    return status;
+}
+
+#define REGISTER_FRAMEREADER(reader) \
+    static bool factory_subscription##reader = subscribe2factory<reader>();
+
+
 } // end namespace IO
 } // end namespace LibHDR
 
