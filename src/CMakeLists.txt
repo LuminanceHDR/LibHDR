@@ -25,6 +25,7 @@ SET(LIBHDR_HDRS
     libhdr/io/pfsreader.h
 #   libhdr/io/iocommon.h
 #   libhdr/io/ioexceptions.h
+    libhdr/io/framewriter.h
 )
 
 SET(LIBHDR_SRCS
@@ -46,6 +47,7 @@ SET(LIBHDR_SRCS
 #   libhdr/io/pfscommon.cpp
     libhdr/io/pfsreader.cpp
 #   libhdr/io/ioexceptions.cpp
+    libhdr/io/framewriter.cpp
 )
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
