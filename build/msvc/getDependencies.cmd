@@ -1,4 +1,4 @@
-	@echo off
+@echo off
 SETLOCAL
 call setenv.cmd
 
@@ -143,8 +143,8 @@ popd
 IF EXIST libhdr.build\LibHDR.sln (
 	pushd libhdr.build
 	devenv LibHDR.sln /Upgrade
-	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project LibHDR
-	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project Docs
+	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project libHDR
+	devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project doc
 	popd
 )
 
