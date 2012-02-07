@@ -21,6 +21,7 @@ SET(LIBHDR_HDRS
     libhdr/template/singleton.h
 #LIBHDR IO
     libhdr/io/framereader.h
+    libhdr/io/framereader.aux.h
 #   libhdr/io/pfscommon.h
     libhdr/io/pfsreader.h
 #   libhdr/io/iocommon.h

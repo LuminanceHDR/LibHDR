@@ -20,6 +20,7 @@
  */
 
 #include "libhdr/io/pfsreader.h"
+#include "libhdr/io/framereader.aux.h"
 //#include "libhdr/io/ioexceptions.h"
 
 #include <iostream>

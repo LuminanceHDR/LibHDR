@@ -19,8 +19,13 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef LIBHDR_ISTRATEGYREADER
-#define LIBHDR_ISTRATEGYREADER
+#ifndef LIBHDR_FRAMEREADER_H
+#define LIBHDR_FRAMEREADER_H
+
+//! \file framereader.h
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \date December 2011
+//! \since 0.0
 
 #include <string>
 #include <boost/utility.hpp>
@@ -35,49 +40,43 @@
 
 namespace LibHDR
 {
-
 class Frame;
 
 namespace IO
 {
-
-class LIBHDR_API FrameReader: public CoreObject, public boost::noncopyable
+//!
+//! \class FrameReader
+//! \brief Base class interface for object subscribed to the FrameReaderFactory
+class LIBHDR_API FrameReader:
+        public CoreObject,
+        public boost::noncopyable
 {
 public:
-    FrameReader(); // cstr
+    //! \brief empty constructor for the base class FrameReader
+    FrameReader();
+    //! \brief empty virtual destructor for the base class FrameReader
     virtual ~FrameReader();
 
+    //! \brief open a file of name filename
     virtual void open(std::string filename) = 0;
+
+    //! \brief reads a file
+    //! \param[in] settings
+    //! \return Valid pointer to Frame, or NULL otherwise
     virtual Frame* readFrame(const Settings& settings) = 0;
+
+    //! \brief closes the current file
     virtual void close() = 0;
 
+    //! \brief Check if the current file is open
+    //! \return returns true if the file is open
     virtual bool isOpen() = 0;
 };
 
+//! \typedef Defines a Singleton holder for a factory of FrameReader
 typedef Template::Singleton< Template::ObjectFactory<FrameReader, std::string> > FrameReaderFactory;
-
-template<typename Type>
-bool subscribeFrameReaderFactory()
-{
-    bool status = true;
-    // get pointer to FrameReaderFactory
-    FrameReaderFactory::HoldType& factory = FrameReaderFactory::instance();
-
-    // every class subscribed to FrameReaderFactory must expose this method
-    std::vector<std::string> id_ = Type::getID();
-    for (std::vector<std::string>::size_type idx = 0; idx < id_.size(); ++idx)
-    {
-        if ( !factory.subscribe(id_[idx], LibHDR::Template::createInstance<FrameReader, Type>) )
-            status = false;
-    }
-    return status;
-}
-
-#define REGISTER_FRAMEREADER(reader) \
-    static bool factory_subscription##reader = subscribeFrameReaderFactory<reader>();
-
 
 } // end namespace IO
 } // end namespace LibHDR
 
-#endif // LIBHDR_ISTRATEGYREADER
+#endif // LIBHDR_FRAMEREADER_H
