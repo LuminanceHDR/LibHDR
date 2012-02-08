@@ -27,6 +27,7 @@ SET(LIBHDR_HDRS
 #   libhdr/io/iocommon.h
 #   libhdr/io/ioexceptions.h
     libhdr/io/framewriter.h
+    libhdr/io/framewriter.aux.h
     libhdr/io/tiffwriter.h
 )
 

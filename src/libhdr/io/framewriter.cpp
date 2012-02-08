@@ -23,6 +23,8 @@
 
 namespace LibHDR
 {
+namespace IO
+{
 
 FrameWriter::FrameWriter()
 {}
@@ -30,4 +32,5 @@ FrameWriter::FrameWriter()
 FrameWriter::~FrameWriter()
 {}
 
+}
 }

@@ -28,11 +28,15 @@
 #include "libhdr_dlldefines.h"
 #include "libhdr/settings.h"
 #include "libhdr/coreobject.h"
+#include "libhdr/template/singleton.h"
+#include "libhdr/template/objectfactory.h"
 
 namespace LibHDR
 {
 class Frame; // forward declaration
 
+namespace IO
+{
 //! \class FrameWrite
 //! \brief Defines an interface for object that write Frame into a file
 class LIBHDR_API FrameWriter:
@@ -49,6 +53,10 @@ public:
 
     virtual bool isOpen() = 0;
 };
+
+//! \typedef Defines a Singleton holder for a factory of FrameWriter(s)
+typedef Template::Singleton< Template::ObjectFactory<FrameWriter, std::string> > FrameWriterFactory;
+}
 
 }
 
