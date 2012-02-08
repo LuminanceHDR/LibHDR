@@ -20,6 +20,10 @@ ADD_EXECUTABLE(test_factory
     test_factory.cpp)
 TARGET_LINK_LIBRARIES(test_factory ${LIB_NAME} ${Boost_LIBRARIES} testutils)
 
+ADD_EXECUTABLE(libhdr_stats
+    libhdr_stats.cpp)
+TARGET_LINK_LIBRARIES(libhdr_stats ${LIB_NAME} ${Boost_LIBRARIES})
+
 ADD_TEST(test_corecallback ${CMAKE_CURRENT_BINARY_DIR}/test_corecallback)
 ADD_TEST(test_copy_on_write_no_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 1)
 ADD_TEST(test_copy_on_write_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 2)
