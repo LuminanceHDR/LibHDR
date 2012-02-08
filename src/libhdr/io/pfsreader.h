@@ -40,9 +40,9 @@ public:
     PFSReader();
     ~PFSReader();
 
-    void open(std::string filename_);
+    void open(const std::string& filename);
     void close();
-    Frame* readFrame(const Settings& settings_);
+    Frame* readFrame(const Settings& settings);
 
     bool isOpen();
 

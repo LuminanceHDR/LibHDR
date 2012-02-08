@@ -37,7 +37,7 @@ PFSReader::PFSReader()
 PFSReader::~PFSReader()
 {}
 
-void PFSReader::open(std::string _filename)
+void PFSReader::open(const std::string& filename)
 {
 
 }
@@ -59,11 +59,11 @@ bool PFSReader::isOpen()
 
 std::vector<std::string> PFSReader::getID()
 {
-    std::vector<std::string> id_;
+    std::vector<std::string> id;
 
-    id_.push_back("pfs");
+    id.push_back("pfs");
 
-    return id_;
+    return id;
 }
 
 REGISTER_FRAMEREADER(PFSReader)

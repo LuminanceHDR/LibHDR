@@ -58,7 +58,7 @@ public:
     virtual ~FrameReader();
 
     //! \brief open a file of name filename
-    virtual void open(std::string filename) = 0;
+    virtual void open(const std::string& filename) = 0;
 
     //! \brief reads a file
     //! \param[in] settings
