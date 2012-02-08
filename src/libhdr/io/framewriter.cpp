@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,7 +19,7 @@
  * ----------------------------------------------------------------------
  */
 
-#include "framewriter.h"
+#include "libhdr/io/framewriter.h"
 
 namespace LibHDR
 {
