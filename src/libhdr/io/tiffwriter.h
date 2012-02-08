@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,37 +19,34 @@
  * ----------------------------------------------------------------------
  */
 
-#ifndef LIBHDR_FRAMEWRITER_H
-#define LIBHDR_FRAMEWRITER_H
+#ifndef LIBHDR_TIFFWRITER_H
+#define LIBHDR_TIFFWRITER_H
 
 #include <string>
-#include <boost/utility.hpp>
 
-#include "libhdr_dlldefines.h"
+#include "libhdr/io/framewriter.h"
 #include "libhdr/settings.h"
-#include "libhdr/coreobject.h"
 
 namespace LibHDR
 {
-class Frame; // forward declaration
+namespace IO
+{
 
-//! \class FrameWrite
-//! \brief Defines an interface for object that write Frame into a file
-class LIBHDR_API FrameWriter:
-        public CoreObject,
-        public boost::noncopyable
+class TIFFWriter : public FrameWriter
 {
 public:
-    FrameWriter();
-    virtual ~FrameWriter();
+    TIFFWriter();
+    virtual ~TIFFWriter();
 
-    virtual void open(const std::string& filename) = 0;
-    virtual bool writeFrame(const Frame& frame, const Settings& settings) = 0;
-    virtual void close() = 0;
+    void open(const std::string& filename);
+    bool writeFrame(const Frame& frame, const Settings& settings);
+    void close();
 
-    virtual bool isOpen() = 0;
+    bool isOpen();
 };
 
 }
+}
 
-#endif // FRAMEWRITER_H
+
+#endif // LIBHDR_TIFFWRITER_H
