@@ -23,6 +23,7 @@
 #define LIBHDR_TIFFWRITER_H
 
 #include <string>
+#include <vector>
 
 #include "libhdr/io/framewriter.h"
 #include "libhdr/settings.h"
@@ -43,6 +44,9 @@ public:
     void close();
 
     bool isOpen();
+
+    //! \brief Returns a vector of supported extension
+    static std::vector<std::string> getID();
 };
 
 }

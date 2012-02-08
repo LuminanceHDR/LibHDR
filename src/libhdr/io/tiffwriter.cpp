@@ -20,6 +20,7 @@
  */
 
 #include "libhdr/io/tiffwriter.h"
+#include "libhdr/io/framewriter.aux.h"
 
 namespace LibHDR
 {
@@ -47,6 +48,18 @@ bool TIFFWriter::isOpen()
 {
     return false;
 }
+
+std::vector<std::string> TIFFWriter::getID()
+{
+    std::vector<std::string> id;
+
+    id.push_back("tif");
+    id.push_back("tiff");
+
+    return id;
+}
+
+REGISTER_FRAMEWRITER(TIFFWriter)
 
 }
 }
