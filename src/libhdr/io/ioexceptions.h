@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
@@ -17,13 +17,15 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *
  */
 
 #ifndef LIBHDR_IOEXCEPTION
 #define LIBHDR_IOEXCEPTION
+
+//! \file ioexceptions.h
+//! \brief This file contains basic I/O exceptions
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \since 0.0
 
 #include <string>
 #include <exception>
