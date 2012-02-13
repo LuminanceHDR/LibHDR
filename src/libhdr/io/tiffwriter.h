@@ -21,9 +21,16 @@
 
 #ifndef LIBHDR_TIFFWRITER_H
 #define LIBHDR_TIFFWRITER_H
-
+//!
+//! \file tiffwriter.h
+//! \brief
+//! \date 2012-02-09
+//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
+//! \since 0.0
+//!
 #include <string>
 #include <vector>
+#include <boost/scoped_ptr.hpp>
 
 #include "libhdr/io/framewriter.h"
 #include "libhdr/settings.h"
@@ -33,20 +40,38 @@ namespace LibHDR
 namespace IO
 {
 
+class TIFFWriterImpl;
+//!
+//! \class TIFFWriter
+//! \brief Writes file with extension .tif or .tiff
+//!
 class TIFFWriter : public FrameWriter
 {
 public:
+    //!
+    //!
     TIFFWriter();
+    //!
+    //!
     virtual ~TIFFWriter();
-
+    //!
+    //!
     void open(const std::string& filename);
+    //!
+    //!
     bool writeFrame(const Frame& frame, const Settings& settings);
+    //!
+    //!
     void close();
-
+    //!
+    //!
     bool isOpen();
-
+    //!
     //! \brief Returns a vector of supported extension
     static std::vector<std::string> getID();
+    //!
+private:
+    boost::scoped_ptr<TIFFWriterImpl> m_TIFFWriterImpl;
 };
 
 }

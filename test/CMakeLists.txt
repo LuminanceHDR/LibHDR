@@ -11,25 +11,25 @@ ADD_EXECUTABLE(test_corecallback
     consolecallbackmt.h
     test_corecallback.cpp)
 TARGET_LINK_LIBRARIES(test_corecallback ${LIB_NAME} ${Boost_LIBRARIES} testutils)
+ADD_TEST(test_corecallback ${CMAKE_CURRENT_BINARY_DIR}/test_corecallback)
 
 ADD_EXECUTABLE(test_matrix_copyonwrite
     test_matrix_copyonwrite.cpp)
 TARGET_LINK_LIBRARIES(test_matrix_copyonwrite ${LIB_NAME} ${Boost_LIBRARIES} testutils)
-
-ADD_EXECUTABLE(test_factory
-    test_factory.cpp)
-TARGET_LINK_LIBRARIES(test_factory ${LIB_NAME} ${Boost_LIBRARIES} testutils)
-
-ADD_EXECUTABLE(libhdr_stats
-    libhdr_stats.cpp)
-TARGET_LINK_LIBRARIES(libhdr_stats ${LIB_NAME} ${Boost_LIBRARIES})
-
-ADD_TEST(test_corecallback ${CMAKE_CURRENT_BINARY_DIR}/test_corecallback)
 ADD_TEST(test_copy_on_write_no_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 1)
 ADD_TEST(test_copy_on_write_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 2)
 ADD_TEST(test_copy_on_write_function_parameter_no_copy ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 3)
 ADD_TEST(test_copy_on_write_leak_and_performance_check ${CMAKE_CURRENT_BINARY_DIR}/test_matrix_copyonwrite 4)
 
-
+ADD_EXECUTABLE(test_factory
+    test_factory.cpp)
+TARGET_LINK_LIBRARIES(test_factory ${LIB_NAME} ${Boost_LIBRARIES} testutils)
 ADD_TEST(test_factory_list ${CMAKE_CURRENT_BINARY_DIR}/test_factory 1)
 ADD_TEST(test_factory_basic_retrieve ${CMAKE_CURRENT_BINARY_DIR}/test_factory 2)
+
+ADD_EXECUTABLE(libhdr_stats
+    libhdr_stats.cpp)
+TARGET_LINK_LIBRARIES(libhdr_stats ${LIB_NAME} ${Boost_LIBRARIES})
+
+ADD_EXECUTABLE(testio testio.cpp)
+TARGET_LINK_LIBRARIES(testio ${LIB_NAME} ${Boost_LIBRARIES})

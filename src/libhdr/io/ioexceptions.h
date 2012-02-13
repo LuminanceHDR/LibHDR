@@ -35,25 +35,33 @@ namespace LibHDR
 {
 namespace IO
 {
-
+//!
+//!
+//!
 class OpenException: public std::runtime_error
 {
 public:
     OpenException(const std::string& msg = "");
 };
-
+//!
+//!
+//!
 class CloseException: public std::runtime_error
 {
 public:
     CloseException(const std::string& msg = "");
 };
-
+//!
+//!
+//!
 class ReadException: public std::runtime_error
 {
 public:
     ReadException(const std::string& msg = "");
 };
-
+//!
+//!
+//!
 class WriteException: public std::runtime_error
 {
 public:

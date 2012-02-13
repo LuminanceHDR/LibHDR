@@ -25,7 +25,7 @@ SET(LIBHDR_HDRS
 #   libhdr/io/pfscommon.h
     libhdr/io/pfsreader.h
 #   libhdr/io/iocommon.h
-#   libhdr/io/ioexceptions.h
+    libhdr/io/ioexceptions.h
     libhdr/io/framewriter.h
     libhdr/io/framewriter.aux.h
     libhdr/io/tiffwriter.h
@@ -49,15 +49,19 @@ SET(LIBHDR_SRCS
     libhdr/io/framereader.cpp
 #   libhdr/io/pfscommon.cpp
     libhdr/io/pfsreader.cpp
-#   libhdr/io/ioexceptions.cpp
+    libhdr/io/ioexceptions.cpp
     libhdr/io/framewriter.cpp
     libhdr/io/tiffwriter.cpp
 )
 
+FIND_PACKAGE(TIFF REQUIRED)
+
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIRS})
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
 
 # Allow the developer to select if Dynamic or Static libraries are built
 OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
@@ -69,6 +73,6 @@ IF (BUILD_SHARED_LIBS)
 ENDIF (BUILD_SHARED_LIBS)
 
 ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
-TARGET_LINK_LIBRARIES(${LIB_NAME} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(${LIB_NAME} ${Boost_LIBRARIES} ${TIFF_LIBRARIES})
 
 

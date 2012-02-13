@@ -30,6 +30,7 @@
 #include "libhdr/coreobject.h"
 #include "libhdr/template/singleton.h"
 #include "libhdr/template/objectfactory.h"
+#include "libhdr/io/ioexceptions.h"
 
 namespace LibHDR
 {
@@ -44,13 +45,23 @@ class LIBHDR_API FrameWriter:
         public boost::noncopyable
 {
 public:
+    //!
     FrameWriter();
+    //!
     virtual ~FrameWriter();
-
+    //!
+    //! \brief opens a file of name filename
+    //! \param[in] filename name of the file to open
+    //! \throw LibHDR::IO::OpenException
     virtual void open(const std::string& filename) = 0;
-    virtual bool writeFrame(const Frame& frame, const Settings& settings) = 0;
+    //!
+    //!
+    virtual bool writeFrame(const Frame& frame, const Settings& settings = Settings()) = 0;
+    //!
+    //!
     virtual void close() = 0;
-
+    //!
+    //!
     virtual bool isOpen() = 0;
 };
 
