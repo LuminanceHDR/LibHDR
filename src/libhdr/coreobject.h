@@ -64,7 +64,7 @@ public:
     void notifyStop();
 
     //! \brief send a message to all the observer
-    void notifyMessage(std::string& message);
+    void notifyMessage(const std::string& message);
 
     //! \brief check if one of the observer received a termination signal
     bool isTerminated();

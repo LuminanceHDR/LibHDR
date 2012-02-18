@@ -85,17 +85,16 @@ void CoreObject::notifyStop()
     for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::stopCallback ));
 }
 
-void CoreObject::notifyMessage(std::string& message)
+void CoreObject::notifyMessage(const std::string& /*message*/)
 {
     // TODO: to implement
     if ( !m_IsNotifyActive ) return;
-
 }
 
 bool CoreObject::isTerminated()
 {
     /* look for an callback with the termination status active */
-    std::list<CoreCallback*>::iterator it = std::find_if (m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::isTerminated ));
+    std::list<CoreCallback*>::iterator it = std::find_if(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::isTerminated ));
 
     return ( it != m_Callbacks.end() ) ? true : false;
 }
