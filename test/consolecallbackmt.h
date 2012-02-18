@@ -106,7 +106,7 @@ public:
         }
     }
 
-    void setCallbackMessage(std::string&) {}
+    void setCallbackMessage(const std::string&) {}
 };
 
 int ConsoleCallbackMT::sm_NumJobActive = 0;

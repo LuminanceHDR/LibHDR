@@ -40,7 +40,7 @@ class LIBHDR_API CoreCallback
 {
 public:
     CoreCallback();
-    CoreCallback(CoreObject*);
+    explicit CoreCallback(CoreObject*);
     virtual ~CoreCallback();
 
     void registerCallback(CoreObject*);
@@ -55,7 +55,7 @@ public:
     virtual void setCallbackLength(int) = 0;
     virtual void setCallbackNextStep(int) = 0;
 
-    virtual void setCallbackMessage(std::string& message) = 0;
+    virtual void setCallbackMessage(const std::string&) = 0;
 
 private:
     CoreObject* m_Observed;

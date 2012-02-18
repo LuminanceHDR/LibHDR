@@ -71,10 +71,9 @@ public:
 
             std::cout << "Step: " << m_CurrentStatus << "/" << m_Duration << std::endl;
         }
-
-        if ( m_CurrentStatus > 60 ) setTerminated(true);
+        // if ( m_CurrentStatus > 60 ) setTerminated(true);
     }
 
-    void setCallbackMessage(std::string) {}
+    void setCallbackMessage(const std::string&) {}
 };
 } // namespace LibHDRTest
