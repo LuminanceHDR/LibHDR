@@ -21,16 +21,17 @@
 
 #include <algorithm>
 #include <functional>
+#include <boost/lambda/lambda.hpp>
+#include <boost/lambda/bind.hpp>
 
 #include "libhdr/coreobject.h"
 #include "libhdr/corecallback.h"
 
 namespace LibHDR
 {
-
+    
+using namespace boost::lambda;
 using std::for_each;
-using std::bind2nd;
-using std::mem_fun;
 
 CoreObject::CoreObject():
     m_IsNotifyActive(true)
@@ -44,7 +45,7 @@ CoreObject::~CoreObject()
      */
 
     /* unset all the observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::unregisterCallback ) );
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind(&CoreCallback::unregisterCallback, _1));
 }
 
 void CoreObject::subscribe(CoreCallback* _cb)
@@ -61,28 +62,28 @@ void CoreObject::notifyStart()
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::startCallback ));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::startCallback, _1));
 }
 
 void CoreObject::notifyJobLength(int _i)
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind2nd( mem_fun( &CoreCallback::setCallbackLength ), _i));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackLength, _1, _i));
 }
 
 void CoreObject::notifyJobNextStep(int _inc)
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind2nd( mem_fun( &CoreCallback::setCallbackNextStep ), _inc));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackNextStep, _1, _inc));
 }
 
 void CoreObject::notifyStop()
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::stopCallback ));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::stopCallback, _1));
 }
 
 void CoreObject::notifyMessage(const std::string& /*message*/)
@@ -94,7 +95,7 @@ void CoreObject::notifyMessage(const std::string& /*message*/)
 bool CoreObject::isTerminated()
 {
     /* look for an callback with the termination status active */
-    std::list<CoreCallback*>::iterator it = std::find_if(m_Callbacks.begin(), m_Callbacks.end(), mem_fun( &CoreCallback::isTerminated ));
+    std::list<CoreCallback*>::iterator it = std::find_if(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::isTerminated, _1) == true);
 
     return ( it != m_Callbacks.end() ) ? true : false;
 }
