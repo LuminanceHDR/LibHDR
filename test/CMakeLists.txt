@@ -31,5 +31,5 @@ ADD_EXECUTABLE(libhdr_stats
     libhdr_stats.cpp)
 TARGET_LINK_LIBRARIES(libhdr_stats ${LIB_NAME} ${Boost_LIBRARIES})
 
-ADD_EXECUTABLE(testio testio.cpp)
-TARGET_LINK_LIBRARIES(testio ${LIB_NAME} ${Boost_LIBRARIES})
+ADD_EXECUTABLE(test_tiffio test_tiffio.cpp)
+TARGET_LINK_LIBRARIES(test_tiffio ${LIB_NAME} ${Boost_LIBRARIES})
