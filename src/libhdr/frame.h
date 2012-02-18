@@ -83,6 +83,9 @@ public:
     //! \brief Clones "other"'s tags into current object
     void cloneTags(const Frame& other);
 
+    static const Pixel* pixels(const float* data);
+    static Pixel* pixels(float* data);
+
 private:
     TagContainer    m_Tags;
     FrameType       m_FrameType;

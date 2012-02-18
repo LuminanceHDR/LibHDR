@@ -117,6 +117,17 @@ const TagContainer& Frame::getTags() const
     return m_Tags;
 }
 
+const Pixel* Frame::pixels(const float* data)
+{
+    return reinterpret_cast<const Pixel*>(data);
+}
+
+Pixel* Frame::pixels(float* data)
+{
+    return reinterpret_cast<Pixel*>(data);
+}
+
+
 void swap(Frame& a, Frame& b)
 {
     a.swap(b);
