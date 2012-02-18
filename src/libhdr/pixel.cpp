@@ -23,6 +23,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 namespace LibHDR
 {
@@ -38,6 +39,39 @@ Pixel::Pixel(float c0, float c1, float c2, float c3):
     vec4f(_mm_set_ps(c3, c2, c1, c0))
 {}
 
+Pixel::operator uint32_t() const
+{
+    /*
+    __m128 temp = _mm_mul_ps(vec4f, _mm_set1_ps(255.f));
+    __m64 conv = _mm_cvtps_pi8(temp);
+    uint32_t* pix = reinterpret_cast<uint32_t*>(&conv);
+
+// DEBUG
+    uint8_t* p = reinterpret_cast<uint8_t*>(&conv);
+    std::cout << (int)p[0] << " " << (int)p[1] << " " << (int)p[2] << " " << (int)p[3] << std::endl;
+// DEBUG
+
+    return pix[0];
+     */
+    
+    __m128 conv = _mm_mul_ps(vec4f, _mm_set1_ps(255.f));
+    float* pix = reinterpret_cast<float*>(&conv);
+    
+    uint32_t bit8;
+    uint8_t* p = reinterpret_cast<uint8_t*>(&bit8);
+    
+    p[0] = static_cast<uint8_t> (pix[0]);
+    p[1] = static_cast<uint8_t> (pix[1]);
+    p[2] = static_cast<uint8_t> (pix[2]);
+    p[3] = static_cast<uint8_t> (pix[3]);
+    
+    // DEBUG
+    //uint8_t* p = reinterpret_cast<uint8_t*>(&conv);
+    //std::cout << (uint32_t)p[0] << " " << (uint32_t)p[1] << " " << (uint32_t)p[2] << " " << (uint32_t)p[3] << std::endl;
+    //DEBUG
+    
+    return bit8;
+}
 
 std::ostream &operator<<( std::ostream &out, const Pixel& P )
 {

@@ -32,6 +32,7 @@
 
 #include <iostream>
 #include <pmmintrin.h>
+#include <boost/cstdint.hpp>
 
 namespace LibHDR
 {
@@ -45,9 +46,13 @@ public:
         __m128 vec4f;
     };
 
-    explicit Pixel();
+    Pixel();
     explicit Pixel(float value);
-    Pixel(float c0, float c1, float c2, float c3);
+    Pixel(float c0, float c1, float c2, float c3 = 1.0f);
+
+    //! \brief Conversion operator to uint32_t (8 bit/4 samples)
+    //! This conversion operator is useful when saving 8 bit/channel files (JPG, TIFF, ...)
+    operator uint32_t() const;
 };
 
 std::ostream &operator<<( std::ostream &out, const Pixel& P );
