@@ -25,21 +25,14 @@
 
 #include <tiffio.h>
 #include <boost/cstdint.hpp>
+#include <algorithm>
+#include <boost/lambda/lambda.hpp>
+#include <cassert>
 
 namespace LibHDR
 {
 namespace IO
 {
-namespace
-{
-
-inline uint8_t convertFloatTo8Bit(const float& fl)
-{
-    return static_cast<uint8_t>((fl*255.f) + 0.5f);
-    //std::cout << (int)v << " " << std::endl;
-}
-}
-
 
 class TIFFWriterImpl
 {
@@ -72,7 +65,9 @@ public:
         if ( m_TIFF != NULL )
         {
             TIFFClose(m_TIFF);
-            m_TIFF == NULL;
+            m_TIFF = NULL;
+
+            assert(m_TIFF == NULL);
         }
     }
 
@@ -83,6 +78,8 @@ public:
 
     void write8BitTiff(const Frame& frame, const Settings& /*settings*/)
     {
+        using std::transform;
+
         // Generic TIFF properties
         TIFFSetField (m_TIFF, TIFFTAG_IMAGEWIDTH, frame.getWidth());
         TIFFSetField (m_TIFF, TIFFTAG_IMAGELENGTH, frame.getHeight());
@@ -103,7 +100,7 @@ public:
         //std::cout << "Strip size: " << strip_size << "\n";
         //std::cout << "Strip number: " << number_of_strips << "\n";
 
-        boost::shared_ptr<uint8_t> strip_buffer( (uint8_t*)_TIFFmalloc(strip_size) , &_TIFFfree);
+        boost::shared_ptr<uint32_t> strip_buffer( (uint32_t*)_TIFFmalloc(strip_size) , &_TIFFfree);
 
         if ( !strip_buffer )
         {
@@ -111,8 +108,8 @@ public:
         }
         // I have enough space for a strip
         // so I create nice pointers to my data ready
-        uint8_t* strip_buf = strip_buffer.get();
-        const float* frame_data = frame.constData();
+        uint32_t* strip_buf = boost::get_pointer( strip_buffer );
+        const Pixel* frame_data = Frame::pixels(frame.constData());
         const int WIDTH = frame.getWidth();
 
         // Notify length and start
@@ -121,33 +118,35 @@ public:
 
         for (tstrip_t strip = 0; strip < number_of_strips; ++strip)
         {
-            for (tsize_t col = 0; col < WIDTH; ++col)
-            {
-                // red
-                strip_buf[4*col] = convertFloatTo8Bit(frame_data[4*col]);
-                // green
-                strip_buf[4*col+1] = convertFloatTo8Bit(frame_data[4*col+1]);
-                // blue
-                strip_buf[4*col+2] = convertFloatTo8Bit(frame_data[4*col+2]);
-                // alpha
-                //strip_buf[4*col+3] = convertFloatTo8Bit(frame_data[4*col+3]);
-                strip_buf[4*col+3] = 255;
-            }
-            // Update location pointer
-            frame_data += WIDTH*4;
-            
+            // Transform a row of Pixel(s) to uint32_t(s) (every uint32_t contains 4 uint8_t)
+            transform(frame_data,                   // from (start)
+                      frame_data + WIDTH,           // from (stop)
+                      strip_buf,                    // to
+                      boost::lambda::_1);           // automatic conversion from Pixel to uint32_t
+
+            // update pointer to frame_data
+            frame_data += WIDTH;
+
+//            for (tsize_t col = 0; col < WIDTH; ++col)
+//            {
+//                strip_buf[col] = frame_data[strip*WIDTH + col];
+//            }
+
             // Write strip into final file
             tsize_t written = TIFFWriteEncodedStrip(m_TIFF, strip, strip_buf, strip_size);
             if ( written == -1 || written != strip_size )
             {
+                // I have encountered an error, so I have to stop the current
+                // calculation and raise an exception
+                m_TIFFWriter.notifyStop();
+
                 throw WriteException("TIFF: error writing data strip");
             }
-            else
-            {
-                m_TIFFWriter.notifyJobNextStep();
-            }
+
+            m_TIFFWriter.notifyJobNextStep();
         }
         m_TIFFWriter.notifyStop();
+
         // No need of a explicit call to the free function, thanks to boost::shared_ptr
         //_TIFFfree(strip_buf);
     }
