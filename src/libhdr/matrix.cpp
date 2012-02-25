@@ -109,14 +109,23 @@ public:
 
 }
 
-namespace boost
+namespace
 {
-template <typename Type>
-void intrusive_ptr_add_ref(LibHDR::MatrixData<Type> * p);
 
 template <typename Type>
-void intrusive_ptr_release(LibHDR::MatrixData<Type> * p);
+inline void intrusive_ptr_add_ref(LibHDR::MatrixData<Type> * p)
+{
+    p->add_ref();
 }
+
+template <typename Type>
+inline void intrusive_ptr_release(LibHDR::MatrixData<Type> * p)
+{
+    if (p->release_ref() == 0)
+        delete p;
+}
+
+} // anonymous namespace
 
 namespace LibHDR
 {
@@ -227,23 +236,5 @@ void Matrix<Type>::swap(Matrix<Type>& other)
 }
 
 } // end namespace LibHDR
-
-namespace boost
-{
-
-template <typename Type>
-inline void intrusive_ptr_add_ref(LibHDR::MatrixData<Type> * p)
-{
-    p->add_ref();
-}
-
-template <typename Type>
-inline void intrusive_ptr_release(LibHDR::MatrixData<Type> * p)
-{
-    if (p->release_ref() == 0)
-        delete p;
-}
-
-} // namespace boost
 
 #endif
