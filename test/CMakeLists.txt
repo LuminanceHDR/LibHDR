@@ -33,3 +33,7 @@ TARGET_LINK_LIBRARIES(libhdr_stats ${LIB_NAME} ${Boost_LIBRARIES})
 
 ADD_EXECUTABLE(test_tiffio test_tiffio.cpp)
 TARGET_LINK_LIBRARIES(test_tiffio ${LIB_NAME} ${Boost_LIBRARIES})
+
+ADD_EXECUTABLE(test_pixel test_pixel.cpp)
+TARGET_LINK_LIBRARIES(test_pixel ${LIB_NAME} ${Boost_LIBRARIES})
+ADD_TEST(test_pixel_conversion_to_8bit ${CMAKE_CURRENT_BINARY_DIR}/test_pixel)
