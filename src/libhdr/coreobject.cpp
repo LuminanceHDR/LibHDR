@@ -48,14 +48,15 @@ CoreObject::~CoreObject()
     for_each(m_Callbacks.begin(), m_Callbacks.end(), bind(&CoreCallback::unregisterCallback, _1));
 }
 
-void CoreObject::subscribe(CoreCallback* _cb)
+void CoreObject::subscribe(CoreCallback* cb)
 {
-    m_Callbacks.push_back(_cb);
+    if ( cb != NULL )
+        m_Callbacks.insert(cb);
 }
 
-void CoreObject::unsubscribe(CoreCallback* _cb)
+void CoreObject::unsubscribe(CoreCallback* cb)
 {
-    m_Callbacks.remove(_cb);
+    m_Callbacks.erase(cb);
 }
 
 void CoreObject::notifyStart()
@@ -65,18 +66,18 @@ void CoreObject::notifyStart()
     for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::startCallback, _1));
 }
 
-void CoreObject::notifyJobLength(int _i)
+void CoreObject::notifyJobLength(int length)
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackLength, _1, _i));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackLength, _1, length));
 }
 
-void CoreObject::notifyJobNextStep(int _inc)
+void CoreObject::notifyJobNextStep(int inc)
 {
     if ( !m_IsNotifyActive ) return;
     /* update all observers */
-    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackNextStep, _1, _inc));
+    for_each(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::setCallbackNextStep, _1, inc));
 }
 
 void CoreObject::notifyStop()
@@ -95,7 +96,7 @@ void CoreObject::notifyMessage(const std::string& /*message*/)
 bool CoreObject::isTerminated()
 {
     /* look for an callback with the termination status active */
-    std::list<CoreCallback*>::iterator it = std::find_if(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::isTerminated, _1) == true);
+    std::set<CoreCallback*>::iterator it = std::find_if(m_Callbacks.begin(), m_Callbacks.end(), bind( &CoreCallback::isTerminated, _1) == true);
 
     return ( it != m_Callbacks.end() ) ? true : false;
 }

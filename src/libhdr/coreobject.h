@@ -22,7 +22,7 @@
 #ifndef LIBHDR_COREOBJECT
 #define LIBHDR_COREOBJECT
 
-#include <list>
+#include <set>
 
 #include "libhdr_dlldefines.h"
 
@@ -48,15 +48,15 @@ public:
     virtual ~CoreObject();
 
     //! \brief subscribe a new observer to CoreObject, notified every time a new event raises
-    void subscribe(CoreCallback*);
+    void subscribe(CoreCallback* cb);
 
     //! \brief unsubscribe current observer from CoreObject
-    void unsubscribe(CoreCallback*);
+    void unsubscribe(CoreCallback* cb);
 
     //! \brief notify all the observer of the start of a new operation
     void notifyStart();
     //! \brief notify all the observer the length of a new operation
-    void notifyJobLength(int);
+    void notifyJobLength(int length);
     //! \brief notify all the observer that a certain number of increment have been completed
     //! \param[in] inc number of increments completed
     void notifyJobNextStep(int inc = 1);
@@ -77,13 +77,13 @@ public:
 
     //! \brief turn on/off notifications
     //! \param[in] b status of the notifications: true for on, false for off
-    void setNotify(bool b);
+    void setNotify(bool status);
 
     //! \brief check if notifications are active
     bool isNotifyActive();
 
 private:
-    std::list<CoreCallback*> m_Callbacks;
+    std::set<CoreCallback*> m_Callbacks;
     bool m_IsNotifyActive;
 };
 
