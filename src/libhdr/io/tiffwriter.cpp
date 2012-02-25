@@ -33,11 +33,12 @@ namespace LibHDR
 {
 namespace IO
 {
+using namespace std;
 
 class TIFFWriterImpl
 {
 public:
-    TIFFWriterImpl(TIFFWriter& tiff_writer):
+    TIFFWriterImpl(TIFFWriter* tiff_writer):
         m_TIFFWriter(tiff_writer),
         m_TIFF(NULL)
     {}
@@ -78,8 +79,6 @@ public:
 
     void write8BitTiff(const Frame& frame, const Settings& /*settings*/)
     {
-        using std::transform;
-
         // Generic TIFF properties
         TIFFSetField (m_TIFF, TIFFTAG_IMAGEWIDTH, frame.getWidth());
         TIFFSetField (m_TIFF, TIFFTAG_IMAGELENGTH, frame.getHeight());
@@ -109,12 +108,12 @@ public:
         // I have enough space for a strip
         // so I create nice pointers to my data ready
         uint32_t* strip_buf = boost::get_pointer( strip_buffer );
-        const Pixel* frame_data = Frame::pixels(frame.constData());
+        const Pixel* frame_data = Frame::pixels( frame.constData() );
         const int WIDTH = frame.getWidth();
 
         // Notify length and start
-        m_TIFFWriter.notifyJobLength( number_of_strips );
-        m_TIFFWriter.notifyStart();
+        m_TIFFWriter->notifyJobLength(number_of_strips);
+        m_TIFFWriter->notifyStart();
 
         for (tstrip_t strip = 0; strip < number_of_strips; ++strip)
         {
@@ -127,39 +126,33 @@ public:
             // update pointer to frame_data
             frame_data += WIDTH;
 
-//            for (tsize_t col = 0; col < WIDTH; ++col)
-//            {
-//                strip_buf[col] = frame_data[strip*WIDTH + col];
-//            }
-
             // Write strip into final file
             tsize_t written = TIFFWriteEncodedStrip(m_TIFF, strip, strip_buf, strip_size);
             if ( written == -1 || written != strip_size )
             {
                 // I have encountered an error, so I have to stop the current
                 // calculation and raise an exception
-                m_TIFFWriter.notifyStop();
+                m_TIFFWriter->notifyStop();
 
                 throw WriteException("TIFF: error writing data strip");
             }
 
-            m_TIFFWriter.notifyJobNextStep();
+            m_TIFFWriter->notifyJobNextStep();
         }
-        m_TIFFWriter.notifyStop();
+        m_TIFFWriter->notifyStop();
 
         // No need of a explicit call to the free function, thanks to boost::shared_ptr
         //_TIFFfree(strip_buf);
     }
 
 private:
-    TIFFWriter& m_TIFFWriter;
-
+    TIFFWriter* m_TIFFWriter;
     TIFF* m_TIFF;
 };
 
 TIFFWriter::TIFFWriter()
 {
-    m_TIFFWriterImpl.reset( new TIFFWriterImpl(*this) );
+    m_TIFFWriterImpl.reset( new TIFFWriterImpl(this) );
 }
 
 TIFFWriter::~TIFFWriter()
@@ -187,9 +180,9 @@ bool TIFFWriter::isOpen()
     return m_TIFFWriterImpl->isOpen();
 }
 
-std::vector<std::string> TIFFWriter::getID()
+vector<string> TIFFWriter::getID()
 {
-    std::vector<std::string> id;
+    vector<string> id;
 
     id.push_back("tif");
     id.push_back("tiff");
