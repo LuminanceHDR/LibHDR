@@ -38,10 +38,18 @@ namespace IO
 //!
 //!
 //!
-class OpenException: public std::runtime_error
+class OpenException : public std::runtime_error
 {
 public:
     OpenException(const std::string& msg = "");
+};
+//!
+//!
+//!
+class NotOpenException : public OpenException
+{
+public:
+    NotOpenException(const std::string& msg = "");
 };
 //!
 //!

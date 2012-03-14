@@ -30,6 +30,10 @@ OpenException::OpenException(const std::string& msg):
 std::runtime_error(msg)
 {}
 
+NotOpenException::NotOpenException(const std::string& msg):
+OpenException(msg)
+{}
+
 CloseException::CloseException(const std::string& msg):
 std::runtime_error(msg)
 {}
