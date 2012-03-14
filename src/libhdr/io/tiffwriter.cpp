@@ -24,10 +24,10 @@
 #include "libhdr/frame.h"
 
 #include <tiffio.h>
-#include <boost/cstdint.hpp>
 #include <algorithm>
-#include <boost/lambda/lambda.hpp>
 #include <cassert>
+#include <boost/cstdint.hpp>
+#include <boost/lambda/lambda.hpp>
 
 namespace LibHDR
 {
@@ -79,6 +79,8 @@ public:
 
     void write8BitTiff(const Frame& frame, const Settings& /*settings*/)
     {
+        if ( m_TIFF == NULL ) throw NotOpenException("TIFF: file not open");
+
         // Generic TIFF properties
         TIFFSetField (m_TIFF, TIFFTAG_IMAGEWIDTH, frame.getWidth());
         TIFFSetField (m_TIFF, TIFFTAG_IMAGELENGTH, frame.getHeight());
@@ -192,5 +194,5 @@ vector<string> TIFFWriter::getID()
 
 REGISTER_FRAMEWRITER(TIFFWriter)
 
-}
-}
+} // namespace LibHDR
+} // namespace IO

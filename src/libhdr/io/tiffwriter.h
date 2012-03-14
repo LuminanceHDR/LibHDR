@@ -33,6 +33,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "libhdr/io/framewriter.h"
+#include "libhdr/io/ioexceptions.h"
 #include "libhdr/settings.h"
 
 namespace LibHDR
