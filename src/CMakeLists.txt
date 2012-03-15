@@ -29,6 +29,7 @@ SET(LIBHDR_HDRS
     libhdr/io/framewriter.h
     libhdr/io/framewriter.aux.h
     libhdr/io/tiffwriter.h
+    libhdr/io/tiffreader.h
 )
 
 SET(LIBHDR_SRCS
@@ -52,6 +53,7 @@ SET(LIBHDR_SRCS
     libhdr/io/ioexceptions.cpp
     libhdr/io/framewriter.cpp
     libhdr/io/tiffwriter.cpp
+    libhdr/io/tiffreader.cpp
 )
 
 FIND_PACKAGE(TIFF REQUIRED)
