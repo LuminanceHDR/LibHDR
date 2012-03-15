@@ -35,6 +35,11 @@ namespace IO
 {
 using namespace std;
 
+namespace
+{
+const uint16_t ALPHA_ASSOC[1] = { EXTRASAMPLE_ASSOCALPHA };
+}
+
 class TIFFWriterImpl
 {
 public:
@@ -85,7 +90,7 @@ public:
         TIFFSetField (m_TIFF, TIFFTAG_IMAGEWIDTH, frame.getWidth());
         TIFFSetField (m_TIFF, TIFFTAG_IMAGELENGTH, frame.getHeight());
         TIFFSetField (m_TIFF, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
-        //TIFFSetField (m_TIFF, TIFFTAG_EXTRASAMPLES, EXTRASAMPLE_ASSOCALPHA);
+        TIFFSetField (m_TIFF, TIFFTAG_EXTRASAMPLES, 1, &ALPHA_ASSOC);
         TIFFSetField (m_TIFF, TIFFTAG_SAMPLESPERPIXEL, 4);
         TIFFSetField (m_TIFF, TIFFTAG_ROWSPERSTRIP, 1);
 
@@ -101,7 +106,7 @@ public:
         //std::cout << "Strip size: " << strip_size << "\n";
         //std::cout << "Strip number: " << number_of_strips << "\n";
 
-        boost::shared_ptr<uint32_t> strip_buffer( (uint32_t*)_TIFFmalloc(strip_size) , &_TIFFfree);
+        boost::shared_ptr<uint32_t> strip_buffer( (uint32_t*)_TIFFmalloc(strip_size) , &_TIFFfree );
 
         if ( !strip_buffer )
         {

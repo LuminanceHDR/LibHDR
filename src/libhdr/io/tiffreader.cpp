@@ -26,9 +26,10 @@
 #include <tiffio.h>
 #include <algorithm>
 #include <cassert>
+#include <memory>
 #include <boost/cstdint.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/tr1/memory.hpp>
 
 namespace LibHDR
 {
@@ -107,7 +108,7 @@ public:
         return (m_TIFF != NULL);
     }
 
-    void readLogLuv(boost::shared_ptr<Frame> /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void readLogLuv(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 //        // compression type
 //        uint16_t compression_type;
@@ -123,40 +124,41 @@ public:
 //        TIFFSetField(m_TIFF, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
     }
 
-    void read8BitInt(boost::shared_ptr<Frame> frame, const TIFFReaderParameters& parameters)
+    inline void read8BitInt(Frame* frame, const TIFFReaderParameters& parameters)
     {
-        uint32_t image_length;
-        TIFFGetField(m_TIFF, TIFFTAG_IMAGELENGTH, &image_length);
-
         tdata_t buffer =  _TIFFmalloc( TIFFScanlineSize(m_TIFF) );
 
         float* pixels = frame->data();
-        //Pixel* pixels = Frame::pixels(frame->data());
 
-        for (uint32_t row = 0; row < image_length; ++row)
+        m_TIFFReader->notifyJobLength(parameters.height);
+        m_TIFFReader->notifyStart();
+
+        for (uint32_t row = 0; row < parameters.height; ++row)
         {
             TIFFReadScanline(m_TIFF, buffer, row);
 
             uint8_t* inner_loop_buffer = static_cast<uint8_t*>(buffer);
             for (uint32_t sample = 0; sample < parameters.width; ++sample)
             {
-                pixels[0] = powf(inner_loop_buffer[sample*parameters.samples_per_pixel]*DIV255, 2.2f);          // red
-                pixels[1] = powf(inner_loop_buffer[sample*parameters.samples_per_pixel + 1]*DIV255, 2.2f);      // green
-                pixels[2] = powf(inner_loop_buffer[sample*parameters.samples_per_pixel + 2]*DIV255, 2.2f);      // blue
-                pixels[3] = 1.0f;                                                                         // alpha
+                pixels[0] = inner_loop_buffer[0]*DIV255; //powf(inner_loop_buffer[0]*DIV255, 2.2f);      // red
+                pixels[1] = inner_loop_buffer[1]*DIV255; //powf(inner_loop_buffer[1]*DIV255, 2.2f);      // green
+                pixels[2] = inner_loop_buffer[2]*DIV255; //powf(inner_loop_buffer[2]*DIV255, 2.2f);      // blue
+                pixels[3] = 1.0f;                                         // alpha
 
                 pixels += 4;
                 inner_loop_buffer += parameters.samples_per_pixel;
             }
+            m_TIFFReader->notifyJobNextStep();
         }
 
+        m_TIFFReader->notifyStop();
     }
 
-    void read16BitInt(boost::shared_ptr<Frame> /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void read16BitInt(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 
     }
-    void read32BitFloat(boost::shared_ptr<Frame> /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void read32BitFloat(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 
     }
@@ -170,12 +172,12 @@ public:
         TIFFGetField(m_TIFF, TIFFTAG_IMAGEWIDTH, &parameters.width);
         TIFFGetField(m_TIFF, TIFFTAG_IMAGELENGTH, &parameters.height);
 
-        if ( parameters.width || parameters.height )
+        if ( !parameters.width || !parameters.height )
         {
             throw ReadException("TIFF: Invalid image size");
         }
 
-        boost::shared_ptr<Frame> frame(new Frame(parameters.width, parameters.height));
+        std::auto_ptr<Frame> frame(new Frame(parameters.width, parameters.height));
 
 //        if (!TIFFGetField(tif, TIFFTAG_STONITS, &parameters.stonits))
 //        {
@@ -211,9 +213,9 @@ public:
         case PHOTOMETRIC_LOGLUV:
         {
             // Read DATA!
-            readLogLuv(frame, parameters);
-        }
+            readLogLuv(frame.get(), parameters);
             break;
+        }
         case PHOTOMETRIC_RGB:
         {
             if ( !TIFFGetField(m_TIFF, TIFFTAG_BITSPERSAMPLE, &parameters.bit_per_sample) )
@@ -226,38 +228,36 @@ public:
             case 8:
             {
                 // Read 8 bit per sample!
-                read8BitInt(frame, parameters);
-            }
+                read8BitInt(frame.get(), parameters);
                 break;
+            }
             case 16:
             {
                 // Read 16 bit per sample!
-                read16BitInt(frame, parameters);
-            }
+                read16BitInt(frame.get(), parameters);
                 break;
+            }
             case 32:
             {
                 // Read 32 bit per sample!
-                read32BitFloat(frame, parameters);
-            }
+                read32BitFloat(frame.get(), parameters);
                 break;
+            }
             default:
             {
                 throw ReadException("TIFF: unsupported bits per sample for RGB");
-            }
                 break;
             }
-        }
+            }
             break;
+        }
         default:
         {
             throw ReadException("TIFF: unsupported photometric type");
-        }
             break;
         }
-
-         // TO CHANGE!
-        return frame.get();
+        }
+        return frame.release();
     }
 
 private:
