@@ -1,6 +1,6 @@
 #include "libhdr/io/framewriter.h"
 #include "libhdr/io/framereader.h"
-#include "libhdr/frame.h"
+#include "libhdr/image.h"
 #include "mockcallback.h"
 
 #include <boost/shared_ptr.hpp>
@@ -20,7 +20,7 @@ int main(int /*argc*/, char** /*argv*/)
     boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("tif") );
 
     // create empty frame, with red Pixel(s)
-    Frame frame(WIDTH, HEIGTH);
+    Image frame(WIDTH, HEIGTH);
     Pixel* fdata = reinterpret_cast<Pixel*>(frame.data());
     for (int idx = 0; idx < WIDTH*HEIGTH; ++idx)
     {
@@ -39,7 +39,7 @@ int main(int /*argc*/, char** /*argv*/)
         writer->close();
 
         reader->open("test.tif");
-        boost::shared_ptr<Frame> read_frame( reader->readFrame(Settings()) );
+        boost::shared_ptr<Image> read_frame( reader->readFrame(Settings()) );
         reader->close();
 
         float* pre = frame.data();

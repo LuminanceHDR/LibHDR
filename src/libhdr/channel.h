@@ -24,14 +24,15 @@
 
 #include "libhdr_dlldefines.h"
 #include "libhdr/matrix.h"
+#include "libhdr/frame.h"
 
 namespace LibHDR
 {
-class Frame; // forward declaration
+class Image; // forward declaration
 
 typedef Matrix<float> MatrixOfFloats;
 
-class LIBHDR_API Channel : public MatrixOfFloats
+class LIBHDR_API Channel : public MatrixOfFloats, public Frame
 {
 public:
     enum ChannelType
@@ -85,17 +86,17 @@ public:
     void synchronize();
 
     //! \brief set the Frame this Channel will belong to
-    void setFrame(Frame* frame);
+    void setFrame(Image* frame);
     //! \brief return a pointer to the Frame this Channel belong to
     //! \return NULL if this Channel does not belong to any Frame
-    Frame* hasFrame();
+    Image* hasFrame();
     //! \brief reset the pointed Frame
     void unsetFrame();
 
 private:
     ChannelType m_ChannelType;
     bool m_IsSynchronized;
-    Frame* m_FatherFrame;
+    Image* m_FatherFrame;
 };
 
 //! \brief Swap Channel a with Channel b

@@ -42,7 +42,7 @@ void PFSReader::open(const std::string& filename)
 
 }
 
-Frame* PFSReader::readFrame(const Settings& settings)
+Image* PFSReader::readFrame(const Settings& settings)
 {
     return NULL;
 }

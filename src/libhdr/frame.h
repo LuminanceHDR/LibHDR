@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -22,85 +22,66 @@
 #ifndef LIBHDR_FRAME
 #define LIBHDR_FRAME
 
-#include <string>
-
-#include "libhdr_dlldefines.h"
-#include "libhdr/matrix.h"
-#include "libhdr/tag.h"
-#include "libhdr/pixel.h"
+#include <libhdr_dlldefines.h>
 
 namespace LibHDR
 {
-class Channel;  // forward declaration
 
-typedef Matrix<Pixel> MatrixOfPixels;
-
-//! \class Frame
-//! \brief Class representing a single frame. Every frame contains also additional information in tags
-//! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-class LIBHDR_API Frame: public MatrixOfPixels
+class LIBHDR_API Frame
 {
 public:
-    enum FrameType
+    //! \enum define bit per sample of the source image (whether available)
+    enum BitPerSample
     {
-        RGB,
-        sRGB,
-        XYZ,
-        YUV,
-        Yxy,
-        UNKNOWN
+        BPS_0 = 0,
+        BPS_8 = 8,
+        BPS_16 = 16,
+        BPS_32 = 32
     };
 
-public:
-    Frame(int width, int height, FrameType frame_type = RGB);
-    Frame(const Frame&);
-    Frame& operator=(const Frame&);
-    virtual ~Frame();
+    //! \enum define sample type of the source image
+    enum SampleType
+    {
+        UNSPEC = 0,
+        UINT = 1,
+        FLOAT = 2
+    };
 
-    //! \brief Swap Frame(s)
-    void swap(Frame&);
+    //! \brief ctor
+    Frame();
 
-    //! \brief Gets width of the channels (in pixels).
-    int getWidth() const;
+    //! \brief copy ctor
+    Frame(const Frame& rhs);
 
-    //! \brief Gets height of the channels (in pixels).
-    int getHeight() const;
+    //! \brief Swap \c Fram
+    void swap(Frame& rhs);
 
-    ////! \brief Gets a named channel
-    ////! \param name [in] name of the channel.
-    ////! \return channel or NULL if the channel does not exist
-    //Channel& getChannel( std::string name );
-    //const Channel& getChannel( std::string name ) const;
+    //! \brief Return bit per sample, whenever available, of the source image
+    BitPerSample getBitPerSample() const;
+    //! \brief Set bit per sample of the current image
+    void setBitPerSample(BitPerSample bps);
 
-    //! \brief handle to a the internal tag container
-    //! \return reference to TagContainer
-    TagContainer& getTags();
-
-    //! \brief handle to a the internal tag container
-    //! \return const reference to TagContainer
-    const TagContainer& getTags() const;
-
-    //! \brief Clones "other"'s tags into current object
-    void cloneTags(const Frame& other);
-
-    static const Pixel* pixels(const float* data);
-    static Pixel* pixels(float* data);
+    //! \brief Return sample type of the current image (whenever available)
+    SampleType getSampleType() const;
+    //! \brief Set sample type of the current image
+    void setSampleType(SampleType sample_type);
 
 private:
-    TagContainer    m_Tags;
-    FrameType       m_FrameType;
+    BitPerSample    m_BitPerSample;
+    SampleType      m_SampleType;
 };
 
-//! \brief swaps Frame a with Frame b
+//! \brief swaps \c Frame a with \c Frame b
 void swap(Frame& a, Frame& b);
+
 } // namespace LibHDR
 
 namespace std
 {
 
-//! \brief Specialization of std::swap for Frame
-template<>
-void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b);
+//! \brief Specialization of std::swap for \c Frame
+//template<>
+//void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b);
 }
 
 #endif // LIBHDR_FRAME

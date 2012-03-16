@@ -40,7 +40,8 @@
 
 namespace LibHDR
 {
-class Frame;
+// forward declaration
+class Image;
 
 namespace IO
 {
@@ -63,7 +64,7 @@ public:
     //! \brief reads a file
     //! \param[in] settings
     //! \return Valid pointer to Frame, or NULL otherwise
-    virtual Frame* readFrame(const Settings& settings) = 0;
+    virtual Image* readFrame(const Settings& settings) = 0;
 
     //! \brief closes the current file
     virtual void close() = 0;

@@ -30,10 +30,10 @@ namespace LibHDR
 //! Namespace for classes handling input and output (IO)
 namespace IO
 {
-    enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
+    //enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
     //enum OutputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
 
-    enum IOStatus {OPEN, CLOSE}; 
+    //enum IOStatus {OPEN, CLOSE};
     
 } // namespace IO
 } // namespace LibHDR

@@ -21,7 +21,7 @@
 
 #include "libhdr/io/tiffreader.h"
 #include "libhdr/io/framereader.aux.h"
-#include "libhdr/frame.h"
+#include "libhdr/image.h"
 
 #include <tiffio.h>
 #include <algorithm>
@@ -108,7 +108,7 @@ public:
         return (m_TIFF != NULL);
     }
 
-    void readLogLuv(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void readLogLuv(Image* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 //        // compression type
 //        uint16_t compression_type;
@@ -124,7 +124,7 @@ public:
 //        TIFFSetField(m_TIFF, TIFFTAG_SGILOGDATAFMT, SGILOGDATAFMT_FLOAT);
     }
 
-    inline void read8BitInt(Frame* frame, const TIFFReaderParameters& parameters)
+    inline void read8BitInt(Image* frame, const TIFFReaderParameters& parameters)
     {
         tdata_t buffer =  _TIFFmalloc( TIFFScanlineSize(m_TIFF) );
 
@@ -154,16 +154,16 @@ public:
         m_TIFFReader->notifyStop();
     }
 
-    void read16BitInt(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void read16BitInt(Image* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 
     }
-    void read32BitFloat(Frame* /*frame*/, const TIFFReaderParameters& /*parameters*/)
+    void read32BitFloat(Image* /*frame*/, const TIFFReaderParameters& /*parameters*/)
     {
 
     }
 
-    Frame* readFrame(const Settings& /*settings*/)
+    Image* readFrame(const Settings& /*settings*/)
     {
         if (m_TIFF == NULL) throw NotOpenException("TIFF: file not open");
 
@@ -177,7 +177,7 @@ public:
             throw ReadException("TIFF: Invalid image size");
         }
 
-        std::auto_ptr<Frame> frame(new Frame(parameters.width, parameters.height));
+        std::auto_ptr<Image> image(new Image(parameters.width, parameters.height));
 
 //        if (!TIFFGetField(tif, TIFFTAG_STONITS, &parameters.stonits))
 //        {
@@ -213,7 +213,7 @@ public:
         case PHOTOMETRIC_LOGLUV:
         {
             // Read DATA!
-            readLogLuv(frame.get(), parameters);
+            readLogLuv(image.get(), parameters);
             break;
         }
         case PHOTOMETRIC_RGB:
@@ -228,19 +228,19 @@ public:
             case 8:
             {
                 // Read 8 bit per sample!
-                read8BitInt(frame.get(), parameters);
+                read8BitInt(image.get(), parameters);
                 break;
             }
             case 16:
             {
                 // Read 16 bit per sample!
-                read16BitInt(frame.get(), parameters);
+                read16BitInt(image.get(), parameters);
                 break;
             }
             case 32:
             {
                 // Read 32 bit per sample!
-                read32BitFloat(frame.get(), parameters);
+                read32BitFloat(image.get(), parameters);
                 break;
             }
             default:
@@ -257,7 +257,7 @@ public:
             break;
         }
         }
-        return frame.release();
+        return image.release();
     }
 
 private:
@@ -284,7 +284,7 @@ void TIFFReader::close()
     m_TIFFReaderImpl->close();
 }
 
-Frame* TIFFReader::readFrame(const Settings& settings)
+Image* TIFFReader::readFrame(const Settings& settings)
 {
     return m_TIFFReaderImpl->readFrame(settings);
 }

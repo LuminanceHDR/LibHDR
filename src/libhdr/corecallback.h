@@ -30,7 +30,7 @@
 namespace LibHDR
 {
 
-class CoreObject; // forward decleration
+class CoreObject; // forward declaration
 
 //! \class CoreCallback
 //! \brief Observes and receives notify from CoreObject objects.
@@ -39,22 +39,46 @@ class CoreObject; // forward decleration
 class LIBHDR_API CoreCallback
 {
 public:
+    //!
+    //!
     CoreCallback();
+    //!
+    //!
     explicit CoreCallback(CoreObject*);
+    //!
+    //!
     virtual ~CoreCallback();
 
+    //!
+    //!
     void registerCallback(CoreObject*);
+    //!
+    //!
     void unregisterCallback();
 
+    //!
+    //!
     bool isTerminated();
+    //!
+    //!
     void setTerminated(bool);
 
+    //!
+    //!
     virtual void startCallback() = 0;
+    //!
+    //!
     virtual void stopCallback() = 0;
 
+    //!
+    //!
     virtual void setCallbackLength(int) = 0;
+    //!
+    //!
     virtual void setCallbackNextStep(int) = 0;
 
+    //!
+    //!
     virtual void setCallbackMessage(const std::string&) = 0;
 
 private:

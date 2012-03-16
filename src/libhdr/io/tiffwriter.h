@@ -60,7 +60,7 @@ public:
     void open(const std::string& filename);
     //!
     //!
-    bool writeFrame(const Frame& frame, const Settings& settings);
+    bool writeFrame(const Image& frame, const Settings& settings);
     //!
     //!
     void close();

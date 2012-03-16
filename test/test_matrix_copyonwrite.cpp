@@ -24,7 +24,7 @@
 #include <list>
 #include <new>
 
-#include <libhdr/frame.h>
+#include <libhdr/image.h>
 
 #include "test_utils.h"
 
@@ -34,7 +34,7 @@ namespace
 const int WIDTH = 3000;
 const int HEIGHT = 2000;
 
-const float* test_function1(LibHDR::Frame frame)
+const float* test_function1(LibHDR::Image frame)
 {
     return frame.constData();
 }
@@ -53,11 +53,11 @@ int main(int argc, char *argv[])
         // test copy-on-write
         std::cout << "Test copy-on-write: should not copy the underlying data" << std::endl;
 
-        LibHDR::Frame frame(WIDTH, HEIGHT);
+        LibHDR::Image frame(WIDTH, HEIGHT);
 
         const float* data = frame.constData();
 
-        LibHDR::Frame frame2 = frame;
+        LibHDR::Image frame2 = frame;
         const float* data2 = frame2.constData();
 
         std::stringstream ss;
@@ -84,11 +84,11 @@ int main(int argc, char *argv[])
         // test copy-on-write
         std::cout << "Test copy-on-write: should COPY the underlying data" << std::endl;
 
-        LibHDR::Frame frame(WIDTH, HEIGHT);
+        LibHDR::Image frame(WIDTH, HEIGHT);
 
         const float* data = frame.constData();
 
-        LibHDR::Frame frame2 = frame;
+        LibHDR::Image frame2 = frame;
 
         frame2(0) = LibHDR::Pixel();    // should make a copy here!
 
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
         // test copy-on-write
         std::cout << "Test copy-on-write: function argument (should not copy the underlying data)" << std::endl;
 
-        LibHDR::Frame frame(WIDTH, HEIGHT);
+        LibHDR::Image frame(WIDTH, HEIGHT);
 
         const float* data = frame.constData();
 
@@ -154,14 +154,14 @@ int main(int argc, char *argv[])
 
             bool test = true;
 
-            std::list<LibHDR::Frame> list_of_frames;
+            std::list<LibHDR::Image> list_of_frames;
 
-            LibHDR::Frame frame(3000, 2000);
+            LibHDR::Image frame(3000, 2000);
             const float* dt = frame.constData();
 
             for (int idx = 0; idx < 10; idx++)
             {
-                std::list<LibHDR::Frame>::iterator it = list_of_frames.insert(list_of_frames.end(), frame);
+                std::list<LibHDR::Image>::iterator it = list_of_frames.insert(list_of_frames.end(), frame);
                 float* data = (*it).data(); // this line forces the code to make a deep copy
 
                 if ( dt == data ) test = false; // it must NOT be the same, because of the deep copy

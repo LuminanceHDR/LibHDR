@@ -34,7 +34,8 @@
 
 namespace LibHDR
 {
-class Frame; // forward declaration
+// forward declaration
+class Image;
 
 namespace IO
 {
@@ -56,7 +57,7 @@ public:
     virtual void open(const std::string& filename) = 0;
     //!
     //!
-    virtual bool writeFrame(const Frame& frame, const Settings& settings = Settings()) = 0;
+    virtual bool writeFrame(const Image& frame, const Settings& settings = Settings()) = 0;
     //!
     //!
     virtual void close() = 0;

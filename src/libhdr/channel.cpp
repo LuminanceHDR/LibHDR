@@ -27,6 +27,7 @@ namespace LibHDR
 {
 Channel::Channel(int width, int height, ChannelType channel_type):
     MatrixOfFloats(width, height),
+    Frame(),
     m_ChannelType(channel_type),
     m_IsSynchronized(false),
     m_FatherFrame(NULL)
@@ -37,6 +38,7 @@ Channel::Channel(int width, int height, ChannelType channel_type):
 // copy constructor
 Channel::Channel(const Channel& rhs):
     MatrixOfFloats(rhs),
+    Frame(rhs),
     m_ChannelType(rhs.m_ChannelType),
     m_IsSynchronized(false),
     m_FatherFrame(NULL)
@@ -121,14 +123,14 @@ void Channel::synchronize()
 
 }
 
-void Channel::setFrame(Frame* frame)
+void Channel::setFrame(Image* /*frame*/)
 {
     //bool status = frame->bindChannel(this);
     //if (
 
 }
 
-Frame* Channel::hasFrame()
+Image* Channel::hasFrame()
 {
     return m_FatherFrame;
 }

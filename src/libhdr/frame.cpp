@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -16,117 +16,55 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ----------------------------------------------------------------------   
+ * ----------------------------------------------------------------------
  */
 
+#include "frame.h"
 
-#include <iostream>
 #include <functional>
 #include <algorithm>
-#include <string>
-
-#include "libhdr/frame.h"
 
 namespace LibHDR
 {
-using namespace std;
 
-// ctor
-Frame::Frame(int width, int height, FrameType frame_type):
-    MatrixOfPixels(height, width),
-    m_FrameType(frame_type)
-{ }
+Frame::Frame():
+    m_BitPerSample(BPS_0),
+    m_SampleType(UNSPEC)
+{}
 
-// copy ctor
-Frame::Frame(const Frame& rhs):
-    MatrixOfPixels(rhs),
-    m_Tags(rhs.m_Tags),
-    m_FrameType(rhs.m_FrameType)
-{ }
-
-// assignment operator
-Frame& Frame::operator=(const Frame& rhs)
+Frame::Frame(const Frame& rhs)
 {
-    // check self-assignment
-    if (this == &rhs) return *this;
-
-    // Base class
-    MatrixOfPixels::operator=(rhs);
-
-    m_Tags = rhs.m_Tags;
-    m_FrameType = rhs.m_FrameType;
-
-    return *this;
+    m_BitPerSample = rhs.m_BitPerSample;
+    m_SampleType = rhs.m_SampleType;
 }
 
-// dtor
-Frame::~Frame()
-{
-    // std::cout << "Frame::~Frame()" << std::endl;
-}
-
-void Frame::swap(Frame& other)
+void Frame::swap(Frame& rhs)
 {
     using std::swap;
 
-    // Base class swap
-    MatrixOfPixels::swap(other);
-
-    // Channel data member specialization
-    m_Tags.swap(other.m_Tags);
-    swap(m_FrameType, other.m_FrameType);
+    swap(m_BitPerSample, rhs.m_BitPerSample);
+    swap(m_SampleType, rhs.m_SampleType);
 }
 
-//const Channel& Frame::getChannel( std::string name ) const
-//{
-//    ChannelList::const_iterator it = find_if(m_Channels.begin(), m_Channels.end(), std::bind2nd( std::mem_fun_ref( &Channel::isName ), name));
-//    if ( it == m_Channels.end() )
-//        throw ChannelNotFound(name); // throw
-//    else
-//        return *it;
-//}
-
-//Channel& Frame::getChannel( std::string name )
-//{
-//    // Effective C++: Item 3
-//    return const_cast<Channel&>(static_cast<const Frame&>(*this).getChannel(name));
-//}
-
-void Frame::cloneTags(const Frame& other)
+Frame::BitPerSample Frame::getBitPerSample() const
 {
-    this->m_Tags = other.m_Tags;
+    return m_BitPerSample;
 }
 
-int Frame::getWidth() const
+void Frame::setBitPerSample(BitPerSample bps)
 {
-    return MatrixOfPixels::getCols();
+    m_BitPerSample = bps;
 }
 
-int Frame::getHeight() const
+Frame::SampleType Frame::getSampleType() const
 {
-    return MatrixOfPixels::getRows();
+    return m_SampleType;
 }
 
-TagContainer& Frame::getTags()
+void Frame::setSampleType(SampleType sample_type)
 {
-    return m_Tags;
+    m_SampleType = sample_type;
 }
-
-const TagContainer& Frame::getTags() const
-{
-    return m_Tags;
-}
-
-const Pixel* Frame::pixels(const float* data)
-{
-    return reinterpret_cast<const Pixel*>(data);
-}
-
-Pixel* Frame::pixels(float* data)
-{
-    return reinterpret_cast<Pixel*>(data);
-}
-
 
 void swap(Frame& a, Frame& b)
 {
@@ -143,4 +81,3 @@ void swap<LibHDR::Frame>(LibHDR::Frame& a, LibHDR::Frame& b)
     a.swap(b);
 }
 }
-

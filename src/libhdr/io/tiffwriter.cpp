@@ -21,7 +21,7 @@
 
 #include "libhdr/io/tiffwriter.h"
 #include "libhdr/io/framewriter.aux.h"
-#include "libhdr/frame.h"
+#include "libhdr/image.h"
 
 #include <tiffio.h>
 #include <algorithm>
@@ -82,7 +82,7 @@ public:
         return (m_TIFF != NULL);
     }
 
-    void write8BitTiff(const Frame& frame, const Settings& /*settings*/)
+    void write8BitTiff(const Image& frame, const Settings& /*settings*/)
     {
         if ( m_TIFF == NULL ) throw NotOpenException("TIFF: file not open");
 
@@ -115,7 +115,7 @@ public:
         // I have enough space for a strip
         // so I create nice pointers to my data ready
         uint32_t* strip_buf = boost::get_pointer( strip_buffer );
-        const Pixel* frame_data = Frame::pixels( frame.constData() );
+        const Pixel* frame_data = Image::pixels( frame.constData() );
         const int WIDTH = frame.getWidth();
 
         // Notify length and start
@@ -171,7 +171,7 @@ void TIFFWriter::open(const std::string& filename)
     m_TIFFWriterImpl->open(filename);
 }
 
-bool TIFFWriter::writeFrame(const Frame& frame, const Settings& settings)
+bool TIFFWriter::writeFrame(const Image& frame, const Settings& settings)
 {
     m_TIFFWriterImpl->write8BitTiff(frame, settings);
     return true;
