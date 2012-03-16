@@ -73,6 +73,7 @@ void Image::swap(Image& other)
 
     // Base class swap
     MatrixOfPixels::swap(other);
+    Frame::swap(other);
 
     // Channel data member specialization
     m_Tags.swap(other.m_Tags);

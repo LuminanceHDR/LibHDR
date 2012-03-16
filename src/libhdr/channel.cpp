@@ -70,6 +70,7 @@ void Channel::swap(Channel& other)
 
     // Base class swap
     MatrixOfFloats::swap(other);
+    Frame::swap(other);
 
     // Channel data member specialization
     swap(m_ChannelType, other.m_ChannelType);
