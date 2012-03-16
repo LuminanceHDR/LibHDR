@@ -152,6 +152,10 @@ public:
         }
 
         m_TIFFReader->notifyStop();
+
+        frame->setBitPerSample(Frame::BPS_8);
+        frame->setImageType(Image::RGB);
+        frame->setSampleType(Frame::UINT);
     }
 
     void read16BitInt(Image* /*frame*/, const TIFFReaderParameters& /*parameters*/)
