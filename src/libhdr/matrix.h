@@ -22,7 +22,7 @@
 #ifndef LIBHDR_MATRIX_H
 #define LIBHDR_MATRIX_H
 
-#include <boost/intrusive_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace LibHDR
 {
@@ -80,56 +80,8 @@ protected:
     void detach();
 
 private:
-    boost::intrusive_ptr< MatrixData<Type> > d;
+    boost::shared_ptr< MatrixData<Type> > d;
 };
-
-//template<typename In, typename Out>
-//void copyMatrix(const Matrix<In>& mat_in, Matrix<Out>& mat_out)
-//{
-//    assert( mat_in.get_elems() == mat_out.get_elems() );
-
-//    const In* in_elems = mat_in.data();
-//    Out* out_elems = mat_out.data();
-
-//    for (int idx = 0; idx < mat_in.get_elems(); ++idx)
-//    {
-//        out_elems[idx] = (Out)in_elems[idx];
-//    }
-//}
-
-//template<typename T>
-//std::ostream &operator<<( std::ostream &out, const Matrix<T>& M )
-//{
-//    using namespace std;
-//    const std::streamsize _width = 7;
-
-//    stringstream ss;
-
-//    //ss.precision(3);
-//    ss.fill(' ');
-//    //ss.setf(ios::fixed);
-
-//    ss << "[";
-//    for (int i = 0; i < M.get_rows()-1; i++)
-//    {
-//        for (int j=0; j < M.get_cols()-1; j++)
-//        {
-//            ss << setw(_width) << M(i, j) << ",";
-//        }
-//        ss << setw(_width) << M(i, M.get_cols()-1) << ";";
-//        ss << "\n";
-//    }
-
-//    for (int j=0; j < M.get_cols()-1; j++)
-//    {
-//        ss << setw(_width) << M(M.get_rows()-1, j) << ",";
-//    }
-//    ss << setw(_width) << M(M.get_rows()-1, M.get_cols()-1);
-//    ss << "]" << endl;
-
-//    out << ss.str();
-//    return out;
-//}
 
 } // end namespace LibHDR
 

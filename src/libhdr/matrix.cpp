@@ -43,20 +43,13 @@ public:
     int m_Elems;
     float* m_Data;
 
-private:
-    // hold the number of references for this instance
-    // it must be set to zero during construction (or copy construction) of a new MatrixData
-    int m_ReferenceCounter;
-    boost::mutex m_Mutex;
-
 public:
     // ctor
     MatrixData(int rows, int cols):
         m_Rows(rows),
         m_Cols(cols),
         m_Elems(rows*cols),
-        m_Data( static_cast<float*>(_mm_malloc(rows*cols*sizeof(Type), 16)) ),
-        m_ReferenceCounter(0)
+        m_Data( static_cast<float*>(_mm_malloc(rows*cols*sizeof(Type), 16)) )
     {
         if ( m_Data == NULL )
             // _mm_malloc could not allocate the memory, so I throw and exception
@@ -68,8 +61,7 @@ public:
         m_Rows(other.m_Rows),
         m_Cols(other.m_Cols),
         m_Elems(other.m_Rows*other.m_Cols),
-        m_Data( static_cast<float*>(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16)) ),
-        m_ReferenceCounter(0)
+        m_Data( static_cast<float*>(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16)) )
     {
         if ( m_Data == NULL )
             // _mm_malloc could not allocate the memory, so I throw and exception
@@ -83,52 +75,7 @@ public:
     {
         _mm_free(m_Data);
     }
-
-public:
-    inline void add_ref()
-    {
-        boost::mutex::scoped_lock l(m_Mutex);
-
-        ++m_ReferenceCounter;
-    }
-
-    inline int release_ref()
-    {
-        boost::mutex::scoped_lock l(m_Mutex);
-
-        return --m_ReferenceCounter;
-    }
-
-    inline int num_ref()
-    {
-        boost::mutex::scoped_lock l(m_Mutex);
-
-        return m_ReferenceCounter;
-    }
 };
-
-}
-
-namespace
-{
-
-template <typename Type>
-inline void intrusive_ptr_add_ref(LibHDR::MatrixData<Type> * p)
-{
-    p->add_ref();
-}
-
-template <typename Type>
-inline void intrusive_ptr_release(LibHDR::MatrixData<Type> * p)
-{
-    if (p->release_ref() == 0)
-        delete p;
-}
-
-} // anonymous namespace
-
-namespace LibHDR
-{
 
 template<typename Type>
 Matrix<Type>::Matrix(int rows, int cols):
@@ -155,7 +102,7 @@ Matrix<Type>::~Matrix()
 template<typename Type>
 void Matrix<Type>::detach()
 {
-    if ( d->num_ref() != 1 )
+    if ( !d.unique() )
     {
         // perform deep copy of the pointed element
         d.reset( new MatrixData<Type>(*d) );
