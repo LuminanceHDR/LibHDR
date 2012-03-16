@@ -128,7 +128,7 @@ public:
     {
         tdata_t buffer =  _TIFFmalloc( TIFFScanlineSize(m_TIFF) );
 
-        float* pixels = frame->data();
+        float* pixels = reinterpret_cast<float*>(frame->data());
 
         m_TIFFReader->notifyJobLength(parameters.height);
         m_TIFFReader->notifyStart();

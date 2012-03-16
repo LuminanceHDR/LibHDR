@@ -92,11 +92,6 @@ public:
     //! \brief set the \c ImageType
     void setImageType(ImageType image_type);
 
-    //! \brief Returns a pointer to a vector of Pixel(s)
-    static const Pixel* pixels(const float* data);
-    //! \brief Returns a const pointer to a vector of Pixel(s)
-    static Pixel* pixels(float* data);
-
 private:
     TagContainer    m_Tags;
     ImageType       m_ImageType;

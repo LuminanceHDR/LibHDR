@@ -66,14 +66,14 @@ public:
 
     //! \brief returns a pointer to the underlying buffer of data
     //! \note it performs a deep copy
-    float* data();
+    Type* data();
     //! \brief returns a pointer to the underlying buffer of data
     //! \note it does not perform a deep copy
-    const float* data() const;
+    const Type* data() const;
 
     //! \brief returns a const pointer to the underlying buffer of data
     //! \note it never perform a deep copy
-    const float* constData() const;
+    const Type* constData() const;
 
 protected:
     //! \brief Based on the number of references to the underlying data, performs a deep copy

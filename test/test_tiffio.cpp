@@ -42,8 +42,8 @@ int main(int /*argc*/, char** /*argv*/)
         boost::shared_ptr<Image> read_frame( reader->readFrame(Settings()) );
         reader->close();
 
-        float* pre = frame.data();
-        float* post = read_frame->data();
+        LibHDR::Pixel* pre = frame.data();
+        LibHDR::Pixel* post = read_frame->data();
 
         int cmp = memcmp((void*)(post), (void*)(pre), sizeof(float)*WIDTH*HEIGTH);
 

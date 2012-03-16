@@ -41,7 +41,7 @@ public:
     int m_Rows;
     int m_Cols;
     int m_Elems;
-    float* m_Data;
+    Type* m_Data;
 
 public:
     // ctor
@@ -49,7 +49,7 @@ public:
         m_Rows(rows),
         m_Cols(cols),
         m_Elems(rows*cols),
-        m_Data( static_cast<float*>(_mm_malloc(rows*cols*sizeof(Type), 16)) )
+        m_Data( static_cast<Type*>(_mm_malloc(rows*cols*sizeof(Type), 16)) )
     {
         if ( m_Data == NULL )
             // _mm_malloc could not allocate the memory, so I throw and exception
@@ -61,7 +61,7 @@ public:
         m_Rows(other.m_Rows),
         m_Cols(other.m_Cols),
         m_Elems(other.m_Rows*other.m_Cols),
-        m_Data( static_cast<float*>(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16)) )
+        m_Data( static_cast<Type*>(_mm_malloc(other.m_Rows*other.m_Cols*sizeof(Type), 16)) )
     {
         if ( m_Data == NULL )
             // _mm_malloc could not allocate the memory, so I throw and exception
@@ -73,7 +73,7 @@ public:
     // dtor
     ~MatrixData()
     {
-        _mm_free(m_Data);
+        _mm_free(static_cast<void*>(m_Data));
     }
 };
 
@@ -132,43 +132,43 @@ template<typename Type>
 Type& Matrix<Type>::operator()(int pos)
 {
     detach();
-    return ((Type*)d->m_Data)[ pos ];
+    return (d->m_Data)[ pos ];
 }
 
 template<typename Type>
 const Type& Matrix<Type>::operator()(int pos) const
 {
-    return ((Type*)d->m_Data)[ pos ];
+    return (d->m_Data)[ pos ];
 }
 
 template<typename Type>
 Type& Matrix<Type>::operator()(int row, int col)
 {
     detach();
-    return ((Type*)d->m_Data)[ row*d->m_Cols + col ];
+    return (d->m_Data)[ row*d->m_Cols + col ];
 }
 
 template<typename Type>
 const Type& Matrix<Type>::operator()(int row, int col) const
 {
-    return ((Type*)d->m_Data)[ row*d->m_Cols + col ];
+    return (d->m_Data)[ row*d->m_Cols + col ];
 }
 
 template<typename Type>
-float* Matrix<Type>::data()
+Type* Matrix<Type>::data()
 {
     detach();
     return d->m_Data;
 }
 
 template<typename Type>
-const float* Matrix<Type>::data() const
+const Type* Matrix<Type>::data() const
 {
     return d->m_Data;
 }
 
 template<typename Type>
-const float* Matrix<Type>::constData() const
+const Type* Matrix<Type>::constData() const
 {
     return d->m_Data;
 }

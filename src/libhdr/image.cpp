@@ -130,17 +130,6 @@ void Image::setImageType(ImageType image_type)
     m_ImageType = image_type;
 }
 
-const Pixel* Image::pixels(const float* data)
-{
-    return reinterpret_cast<const Pixel*>(data);
-}
-
-Pixel* Image::pixels(float* data)
-{
-    return reinterpret_cast<Pixel*>(data);
-}
-
-
 void swap(Image& a, Image& b)
 {
     a.swap(b);
