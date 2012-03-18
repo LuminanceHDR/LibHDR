@@ -31,6 +31,7 @@ SET(LIBHDR_HDRS
     libhdr/io/framewriter.aux.h
     libhdr/io/tiffwriter.h
     libhdr/io/tiffreader.h
+    libhdr/io/magickreader.h
 )
 
 SET(LIBHDR_SRCS
@@ -56,13 +57,16 @@ SET(LIBHDR_SRCS
     libhdr/io/framewriter.cpp
     libhdr/io/tiffwriter.cpp
     libhdr/io/tiffreader.cpp
+    libhdr/io/magickreader.cpp
 )
 
 FIND_PACKAGE(TIFF REQUIRED)
+FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
@@ -77,6 +81,9 @@ IF (BUILD_SHARED_LIBS)
 ENDIF (BUILD_SHARED_LIBS)
 
 ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
-TARGET_LINK_LIBRARIES(${LIB_NAME} ${Boost_LIBRARIES} ${TIFF_LIBRARIES})
+TARGET_LINK_LIBRARIES(${LIB_NAME}
+    ${Boost_LIBRARIES}
+    ${TIFF_LIBRARIES}
+    ${ImageMagick_LIBRARIES})
 
 
