@@ -17,6 +17,8 @@ SET(LIBHDR_HDRS
     libhdr/coreobject.h
     libhdr/corecallback.h
     libhdr/settings.h
+# EXIF
+    libhdr/exif/utility.h
 # TEMPLATE
     libhdr/template/objectfactory.h
     libhdr/template/singleton.h
@@ -49,6 +51,8 @@ SET(LIBHDR_SRCS
     libhdr/coreobject.cpp
     libhdr/corecallback.cpp
 #   libhdr/rotate.cpp
+# EXIF
+    libhdr/exif/utility.cpp
 #LIBHDR IO
     libhdr/io/framereader.cpp
 #   libhdr/io/pfscommon.cpp
@@ -62,11 +66,13 @@ SET(LIBHDR_SRCS
 
 FIND_PACKAGE(TIFF REQUIRED)
 FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
+FIND_PACKAGE(Exiv2 REQUIRED)
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR})
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
@@ -84,6 +90,7 @@ ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
 TARGET_LINK_LIBRARIES(${LIB_NAME}
     ${Boost_LIBRARIES}
     ${TIFF_LIBRARIES}
-    ${ImageMagick_LIBRARIES})
+    ${ImageMagick_LIBRARIES}
+    ${EXIV2_LIBRARIES})
 
 
