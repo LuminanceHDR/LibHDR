@@ -25,16 +25,18 @@
 #ifndef LIBHDR_IOCOMMON
 #define LIBHDR_IOCOMMON
 
+#include <boost/shared_ptr.hpp>
+
 namespace LibHDR
 {
-//! Namespace for classes handling input and output (IO)
+class Image;
+
+typedef boost::shared_ptr<Image> ImagePtr;
+
+//! \brief Namespace for classes handling input and output (IO)
 namespace IO
 {
-    //enum InputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
-    //enum OutputFileFormat { PFS, TIFF, HDR /*Radiance HDR*/ , RGBE, EXR, JPEG, PNG };
 
-    //enum IOStatus {OPEN, CLOSE};
-    
 } // namespace IO
 } // namespace LibHDR
 

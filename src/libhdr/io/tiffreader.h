@@ -54,7 +54,7 @@ public:
 
     void open(const std::string& filename);
     void close();
-    Image* readFrame(const Settings& settings);
+    ImagePtr readFrame(const Settings& settings);
 
     bool isOpen();
 

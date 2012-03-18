@@ -63,8 +63,8 @@ public:
 
     //! \brief reads a file
     //! \param[in] settings
-    //! \return Valid pointer to Frame, or NULL otherwise
-    virtual Image* readFrame(const Settings& settings) = 0;
+    //! \return Valid shared pointer to Frame, or NULL otherwise
+    virtual ImagePtr readFrame(const Settings& settings) = 0;
 
     //! \brief closes the current file
     virtual void close() = 0;

@@ -25,7 +25,7 @@ SET(LIBHDR_HDRS
     libhdr/io/framereader.aux.h
 #   libhdr/io/pfscommon.h
     libhdr/io/pfsreader.h
-#   libhdr/io/iocommon.h
+    libhdr/io/iocommon.h
     libhdr/io/ioexceptions.h
     libhdr/io/framewriter.h
     libhdr/io/framewriter.aux.h

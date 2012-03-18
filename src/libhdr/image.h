@@ -100,6 +100,9 @@ private:
 //! \brief swaps \c Image a with \c Image b
 void swap(Image& a, Image& b);
 
+//! \typedef Shared pointer to \c Image
+typedef boost::shared_ptr<Image> ImagePtr;
+
 } // namespace LibHDR
 
 namespace std

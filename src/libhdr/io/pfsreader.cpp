@@ -37,14 +37,14 @@ PFSReader::PFSReader()
 PFSReader::~PFSReader()
 {}
 
-void PFSReader::open(const std::string& filename)
+void PFSReader::open(const std::string& /*filename*/)
 {
 
 }
 
-Image* PFSReader::readFrame(const Settings& settings)
+ImagePtr PFSReader::readFrame(const Settings& /*settings*/)
 {
-    return NULL;
+    return ImagePtr();
 }
     
 void PFSReader::close()

@@ -167,7 +167,7 @@ public:
 
     }
 
-    Image* readFrame(const Settings& /*settings*/)
+    ImagePtr readFrame(const Settings& /*settings*/)
     {
         if (m_TIFF == NULL) throw NotOpenException("TIFF: file not open");
 
@@ -181,7 +181,7 @@ public:
             throw ReadException("TIFF: Invalid image size");
         }
 
-        std::auto_ptr<Image> image(new Image(parameters.width, parameters.height));
+        ImagePtr image(new Image(parameters.width, parameters.height));
 
 //        if (!TIFFGetField(tif, TIFFTAG_STONITS, &parameters.stonits))
 //        {
@@ -261,7 +261,7 @@ public:
             break;
         }
         }
-        return image.release();
+        return image;
     }
 
 private:
@@ -288,7 +288,7 @@ void TIFFReader::close()
     m_TIFFReaderImpl->close();
 }
 
-Image* TIFFReader::readFrame(const Settings& settings)
+ImagePtr TIFFReader::readFrame(const Settings& settings)
 {
     return m_TIFFReaderImpl->readFrame(settings);
 }
