@@ -23,7 +23,7 @@
 #include "libhdr/io/framewriter.aux.h"
 #include "libhdr/image.h"
 
-#include <tiffio.h>
+#include "tiffio.h"
 #include <algorithm>
 #include <cassert>
 #include <boost/cstdint.hpp>
