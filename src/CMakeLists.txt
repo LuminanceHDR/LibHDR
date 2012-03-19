@@ -75,9 +75,9 @@ IF(MSVC)
     SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include" "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
     
-    message(STATUS "Test")
-    message(STATUS ${EXIV2_INCLUDE_DIR})
-        
+    # Test
+    SET(ImageMagick_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6" "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/Magick++/lib")
+    
     # Enable multi processor compilation
     ADD_DEFINITIONS(/MP)
 
