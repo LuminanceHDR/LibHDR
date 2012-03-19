@@ -33,7 +33,7 @@ using namespace LibHDR;
 
 typedef vector<string> VecOfString;
 
-int main(int argc, char *argv[])
+int main(int /*argc*/, char ** /*argv*/)
 {
     cout << "LibHDR V." << Version::getVersion() << "\n";
 

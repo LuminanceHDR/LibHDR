@@ -15,10 +15,6 @@ const int HEIGTH = 30;
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    // create TIFF Writer
-    boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
-    boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("tif") );
-
     // create empty frame, with red Pixel(s)
     Image frame(WIDTH, HEIGTH);
     Pixel* fdata = reinterpret_cast<Pixel*>(frame.data());
@@ -29,11 +25,15 @@ int main(int /*argc*/, char** /*argv*/)
 
     // Callback!
     LibHDRTest::MockCallback cb;
-    writer->subscribe(&cb);
-    reader->subscribe(&cb);
-
     try
     {
+        // create TIFF Writer
+        boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
+        boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("tif") );
+
+        writer->subscribe(&cb);
+        reader->subscribe(&cb);
+
         writer->open("test.tif");
         writer->writeFrame( frame );
         writer->close();
@@ -60,7 +60,6 @@ int main(int /*argc*/, char** /*argv*/)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Could not write the file to test.tif" << std::endl;
         std::cerr << e.what() << std::endl;
         return 1;
     }

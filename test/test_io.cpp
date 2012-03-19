@@ -9,60 +9,49 @@
 
 using namespace LibHDR;
 using namespace std;
+using namespace boost;
 
-const int WIDTH = 40;
-const int HEIGTH = 30;
-
-int main(int /*argc*/, char** /*argv*/)
+int main(int argc, char** argv)
 {
-    // create TIFF Writer
-    boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
-    boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
-
-    // create empty frame, with red Pixel(s)
-    Image frame(WIDTH, HEIGTH);
-    Pixel* fdata = reinterpret_cast<Pixel*>(frame.data());
-    for (int idx = 0; idx < WIDTH*HEIGTH; ++idx)
+    std::string in_file;
+    std::string out_file;
+    if (argc >= 3)
     {
-        fdata[idx] = Pixel(1.f, 0.f, 0.f, 1.f);  // R G B
+        in_file = argv[1];
+        out_file = argv[2];
+    }
+    else
+    {
+        std::cerr << "Usage: " << argv[0] << " <input file> <output file>" << std::endl;
+        return -1;
     }
 
-    // Callback!
     LibHDRTest::MockCallback cb;
-    writer->subscribe(&cb);
-    reader->subscribe(&cb);
-
     try
     {
-        reader->open("DSC_9746.jpg");
-        boost::shared_ptr<Image> read_frame( reader->readFrame(Settings()) );
+        // create TIFF Writer
+        shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
+        // create JPG Reader
+        shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
+
+        // Subscribe
+        writer->subscribe(&cb);
+        reader->subscribe(&cb);
+
+        reader->open(in_file);
+        ImagePtr read_frame( reader->readFrame(Settings()) );
         reader->close();
 
-        writer->open("test.tif");
+        cout << read_frame->exifData() << endl;
+
+        writer->open(out_file);
         writer->writeFrame( *read_frame );
         writer->close();
-
-//        LibHDR::Pixel* pre = frame.data();
-//        LibHDR::Pixel* post = read_frame->data();
-
-//        int cmp = memcmp((void*)(post), (void*)(pre), sizeof(float)*WIDTH*HEIGTH);
-
-//        if (cmp)
-//        {
-//            for (unsigned int idx = 0; idx < sizeof(float)*WIDTH*HEIGTH; ++idx)
-//            {
-//                if ( pre[idx] != post[idx] )
-//                    std::cout << idx << ", ref = " << pre[idx] << ", Post = " << post[idx] << std::endl;
-//            }
-//            cout << cmp << endl;
-//        }
-//        return cmp;
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Could not write the file to test.tif" << std::endl;
         std::cerr << e.what() << std::endl;
-        return 1;
+        return -1;
     }
 
 }
