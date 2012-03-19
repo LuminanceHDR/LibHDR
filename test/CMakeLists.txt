@@ -37,3 +37,6 @@ TARGET_LINK_LIBRARIES(test_tiffio ${LIB_NAME} ${Boost_LIBRARIES})
 ADD_EXECUTABLE(test_pixel test_pixel.cpp)
 TARGET_LINK_LIBRARIES(test_pixel ${LIB_NAME} ${Boost_LIBRARIES})
 ADD_TEST(test_pixel_conversion_to_8bit ${CMAKE_CURRENT_BINARY_DIR}/test_pixel)
+
+ADD_EXECUTABLE(test_io test_io.cpp)
+TARGET_LINK_LIBRARIES(test_io ${LIB_NAME})
