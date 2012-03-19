@@ -29,7 +29,6 @@
 #include <memory>
 #include <boost/cstdint.hpp>
 #include <boost/lambda/lambda.hpp>
-#include <boost/tr1/memory.hpp>
 
 namespace LibHDR
 {
@@ -53,18 +52,6 @@ struct TIFFReaderParameters
 
     bool     has_alpha;
 };
-    /*
-  uint32 width, height;
-
-  uint16 comp;                  /// compression type
-  uint16 phot;                  /// type of photometric data
-  enum {FLOATLOGLUV, FLOAT, WORD, BYTE} TypeOfData; //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
-  uint16 bps;                   /// bits per sample
-  uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
-  bool has_alpha;
-  double stonits;               /// scale factor to get nit values
-  */
-//  };
 
 class TIFFReaderImpl
 {
@@ -81,15 +68,14 @@ public:
 
     void open(const std::string& filename)
     {
-        if ( m_TIFF != NULL )
-        {
-            TIFFClose(m_TIFF);
-        }
+        close();
+
         m_TIFF = TIFFOpen(filename.c_str(), "r");
         if ( !m_TIFF )
         {
             throw OpenException("TIFF: could not open file for writing");
         }
+        m_FileName = filename;
     }
 
     void close()
@@ -98,9 +84,8 @@ public:
         {
             TIFFClose(m_TIFF);
             m_TIFF = NULL;
-
-            assert(m_TIFF == NULL);
         }
+        m_FileName.clear();
     }
 
     bool isOpen()
@@ -151,11 +136,14 @@ public:
             m_TIFFReader->notifyJobNextStep();
         }
 
-        m_TIFFReader->notifyStop();
-
         frame->setBitPerSample(Frame::BPS_8);
         frame->setImageType(Image::RGB);
         frame->setSampleType(Frame::UINT);
+
+        // read Exif Data
+        frame->exifData().fromFile(m_FileName);
+
+        m_TIFFReader->notifyStop();
     }
 
     void read16BitInt(Image* /*frame*/, const TIFFReaderParameters& /*parameters*/)
@@ -267,6 +255,7 @@ public:
 private:
     TIFFReader* m_TIFFReader;
     TIFF* m_TIFF;
+    std::string m_FileName;
 };
 
 TIFFReader::TIFFReader()

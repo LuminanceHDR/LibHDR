@@ -113,7 +113,7 @@ public:
             throw WriteException("TIFF: error allocating buffer");
         }
         // I have enough space for a strip
-        // so I create nice pointers to my data ready
+        // so I create nice pointers to my data
         uint32_t* strip_buf = boost::get_pointer( strip_buffer );
         const Pixel* frame_data = frame.constData();
         const int WIDTH = frame.getWidth();

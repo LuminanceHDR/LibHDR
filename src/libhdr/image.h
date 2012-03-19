@@ -29,6 +29,7 @@
 #include "libhdr/tag.h"
 #include "libhdr/pixel.h"
 #include "libhdr/frame.h"
+#include "libhdr/exif/exifdata.h"
 
 namespace LibHDR
 {
@@ -92,9 +93,14 @@ public:
     //! \brief set the \c ImageType
     void setImageType(ImageType image_type);
 
+    //! \brief return \c ExifData object
+    Exif::ExifData& exifData();
+    //! \brief return \c ExifData object
+    const Exif::ExifData& exifData() const;
 private:
     TagContainer    m_Tags;
     ImageType       m_ImageType;
+    Exif::ExifData  m_ExifData;
 };
 
 //! \brief swaps \c Image a with \c Image b

@@ -60,6 +60,7 @@ public:
         {
             // If already open, it will get rid of the old one and open the new one
             m_MagickImage.reset( new Magick::Image(filename) );
+            m_FileName = filename;
         } catch (...)
         {
             throw OpenException("Magick++: could not initialise a Magick::Image object");
@@ -69,6 +70,7 @@ public:
     void close()
     {
         m_MagickImage.reset();
+        m_FileName.clear();
     }
 
     ImagePtr readFrame(const Settings& /*settings*/)
@@ -101,6 +103,9 @@ public:
         image->setImageType(Image::RGB);
         image->setSampleType(Frame::UINT);
 
+        // read Exif Data
+        image->exifData().fromFile(m_FileName);
+
         m_MagickReader->notifyStop();
 
         return image;
@@ -114,6 +119,7 @@ public:
 private:
     boost::shared_ptr<Magick::Image> m_MagickImage;
     MagickReader* m_MagickReader;
+    std::string m_FileName;
 };
 
 MagickReader::MagickReader()

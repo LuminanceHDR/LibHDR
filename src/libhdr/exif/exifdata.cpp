@@ -111,12 +111,12 @@ void ExifData::fromFile(const std::string& filename)
         }
 
         //if iso is found use that value, otherwise assume a value of iso=100. (again, some cameras do not print iso in exif).
-        if ((it = exif_data.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"))) == exif_data.end())
+        if ((it = exif_data.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"))) != exif_data.end())
         {
             m_IsoSpeed = it->toFloat();
         }
 
-        if ((it = exif_data.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"))) == exif_data.end())
+        if ((it = exif_data.findKey(Exiv2::ExifKey("Exif.Photo.ExposureBiasValue"))) != exif_data.end())
         {
             m_EvCompensation = it->toFloat();
         }

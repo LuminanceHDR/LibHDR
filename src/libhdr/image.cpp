@@ -43,7 +43,8 @@ Image::Image(const Image& rhs):
     MatrixOfPixels(rhs),
     Frame(rhs),
     m_Tags(rhs.m_Tags),
-    m_ImageType(rhs.m_ImageType)
+    m_ImageType(rhs.m_ImageType),
+    m_ExifData(rhs.m_ExifData)
 { }
 
 // assignment operator
@@ -57,6 +58,7 @@ Image& Image::operator=(const Image& rhs)
 
     m_Tags = rhs.m_Tags;
     m_ImageType = rhs.m_ImageType;
+    m_ExifData = rhs.m_ExifData;
 
     return *this;
 }
@@ -78,6 +80,7 @@ void Image::swap(Image& other)
     // Channel data member specialization
     m_Tags.swap(other.m_Tags);
     swap(m_ImageType, other.m_ImageType);
+    swap(m_ExifData, other.m_ExifData);
 }
 
 //const Channel& Frame::getChannel( std::string name ) const
@@ -129,6 +132,16 @@ Image::ImageType Image::getImageType() const
 void Image::setImageType(ImageType image_type)
 {
     m_ImageType = image_type;
+}
+
+Exif::ExifData& Image::exifData()
+{
+    return m_ExifData;
+}
+
+const Exif::ExifData& Image::exifData() const
+{
+    return m_ExifData;
 }
 
 void swap(Image& a, Image& b)
