@@ -45,7 +45,7 @@ int main(int argc, char** argv)
         cout << read_frame->exifData() << endl;
 
         writer->open(out_file);
-        writer->writeFrame( *read_frame );
+        writer->writeFrame( read_frame );
         writer->close();
     }
     catch (const std::exception& e)

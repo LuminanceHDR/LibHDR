@@ -171,9 +171,9 @@ void TIFFWriter::open(const std::string& filename)
     m_TIFFWriterImpl->open(filename);
 }
 
-bool TIFFWriter::writeFrame(const Image& frame, const Settings& settings)
+bool TIFFWriter::writeFrame(const ImagePtr frame, const Settings& settings)
 {
-    m_TIFFWriterImpl->write8BitTiff(frame, settings);
+    m_TIFFWriterImpl->write8BitTiff(*frame, settings);
     return true;
 }
 

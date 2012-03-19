@@ -31,6 +31,7 @@
 #include "libhdr/template/singleton.h"
 #include "libhdr/template/objectfactory.h"
 #include "libhdr/io/ioexceptions.h"
+#include "libhdr/io/iocommon.h"
 
 namespace LibHDR
 {
@@ -57,7 +58,7 @@ public:
     virtual void open(const std::string& filename) = 0;
     //!
     //!
-    virtual bool writeFrame(const Image& frame, const Settings& settings = Settings()) = 0;
+    virtual bool writeFrame(const ImagePtr frame, const Settings& settings = Settings()) = 0;
     //!
     //!
     virtual void close() = 0;

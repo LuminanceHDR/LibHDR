@@ -16,8 +16,8 @@ const int HEIGTH = 30;
 int main(int /*argc*/, char** /*argv*/)
 {
     // create empty frame, with red Pixel(s)
-    Image frame(WIDTH, HEIGTH);
-    Pixel* fdata = reinterpret_cast<Pixel*>(frame.data());
+    ImagePtr frame( new Image(WIDTH, HEIGTH));
+    Pixel* fdata = reinterpret_cast<Pixel*>(frame->data());
     for (int idx = 0; idx < WIDTH*HEIGTH; ++idx)
     {
         fdata[idx] = Pixel(1.f, 0.f, 0.f, 1.f);  // R G B
@@ -42,7 +42,7 @@ int main(int /*argc*/, char** /*argv*/)
         boost::shared_ptr<Image> read_frame( reader->readFrame(Settings()) );
         reader->close();
 
-        LibHDR::Pixel* pre = frame.data();
+        LibHDR::Pixel* pre = frame->data();
         LibHDR::Pixel* post = read_frame->data();
 
         int cmp = memcmp((void*)(post), (void*)(pre), sizeof(float)*WIDTH*HEIGTH);
