@@ -21,7 +21,7 @@
 
 #include "utility.h"
 
-#include <exiv2/exiv2.hpp>
+#include "exiv2/exiv2.hpp"
 #include <cmath>
 
 namespace LibHDR
