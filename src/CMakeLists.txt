@@ -18,7 +18,7 @@ SET(LIBHDR_HDRS
     libhdr/corecallback.h
     libhdr/settings.h
 # EXIF
-    libhdr/exif/utility.h
+    libhdr/exif/exifdata.h
 # TEMPLATE
     libhdr/template/objectfactory.h
     libhdr/template/singleton.h
@@ -52,7 +52,7 @@ SET(LIBHDR_SRCS
     libhdr/corecallback.cpp
 #   libhdr/rotate.cpp
 # EXIF
-    libhdr/exif/utility.cpp
+    libhdr/exif/exifdata.cpp
 #LIBHDR IO
     libhdr/io/framereader.cpp
 #   libhdr/io/pfscommon.cpp
