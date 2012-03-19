@@ -30,11 +30,15 @@ namespace LibHDR
 {
 class Image; // forward declaration
 
+//! \class Channel
+//! \brief Representation of an \c Image \c Channel
+class LIBHDR_API Channel : public Matrix<float>, public Frame
+{
+private:
 typedef Matrix<float> MatrixOfFloats;
 
-class LIBHDR_API Channel : public MatrixOfFloats, public Frame
-{
 public:
+    //! \enum Available \c Channel types
     enum ChannelType
     {
         ALPHA,
