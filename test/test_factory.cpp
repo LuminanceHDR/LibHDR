@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2012 Davide Anastasia
