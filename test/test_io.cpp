@@ -9,7 +9,6 @@
 
 using namespace LibHDR;
 using namespace std;
-using namespace boost;
 
 int main(int argc, char** argv)
 {
@@ -30,9 +29,9 @@ int main(int argc, char** argv)
     try
     {
         // create TIFF Writer
-        shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
+        boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
         // create JPG Reader
-        shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
+        boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
 
         // Subscribe
         writer->subscribe(&cb);
