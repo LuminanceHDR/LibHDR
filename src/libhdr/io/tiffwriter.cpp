@@ -23,11 +23,10 @@
 #include "libhdr/io/framewriter.aux.h"
 #include "libhdr/image.h"
 
-#include "tiffio.h"
+#include <tiffio.h>
 #include <algorithm>
 #include <cassert>
 #include <boost/cstdint.hpp>
-#include <boost/lambda/lambda.hpp>
 
 namespace LibHDR
 {
@@ -125,10 +124,10 @@ public:
         for (tstrip_t strip = 0; strip < number_of_strips; ++strip)
         {
             // Transform a row of Pixel(s) to uint32_t(s) (every uint32_t contains 4 uint8_t)
-            transform(frame_data,                   // from (start)
-                      frame_data + WIDTH,           // from (stop)
-                      strip_buf,                    // to
-                      boost::lambda::_1);           // automatic conversion from Pixel to uint32_t
+            copy(frame_data,                   // from (start)
+                 frame_data + WIDTH,           // from (stop)
+                 strip_buf                     // to
+                 );           // automatic conversion from Pixel to uint32_t
 
             // update pointer to frame_data
             frame_data += WIDTH;
