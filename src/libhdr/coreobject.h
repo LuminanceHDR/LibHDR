@@ -23,8 +23,10 @@
 #define LIBHDR_COREOBJECT
 
 #include <set>
+#include <boost/utility.hpp>
 
 #include "libhdr_dlldefines.h"
+
 
 //! Library namespace
 namespace LibHDR
@@ -38,7 +40,7 @@ class CoreCallback;
 //! and need to notify other object of their progress
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 //! \since 0.0
-class LIBHDR_API CoreObject
+class LIBHDR_API CoreObject : public boost::noncopyable
 {
 public:
     //! \brief CoreObject ctor

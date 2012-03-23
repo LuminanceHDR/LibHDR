@@ -48,9 +48,7 @@ namespace IO
 //!
 //! \class FrameReader
 //! \brief Base class interface for object subscribed to the FrameReaderFactory
-class LIBHDR_API FrameReader:
-        public CoreObject,
-        public boost::noncopyable
+class LIBHDR_API FrameReader : public CoreObject
 {
 public:
     //! \brief empty constructor for the base class FrameReader

@@ -23,7 +23,6 @@
 #define LIBHDR_FRAMEWRITER_H
 
 #include <string>
-#include <boost/utility.hpp>
 
 #include "libhdr_dlldefines.h"
 #include "libhdr/settings.h"
@@ -42,9 +41,7 @@ namespace IO
 {
 //! \class FrameWrite
 //! \brief Defines an interface for object that write Frame into a file
-class LIBHDR_API FrameWriter:
-        public CoreObject,
-        public boost::noncopyable
+class LIBHDR_API FrameWriter : public CoreObject
 {
 public:
     //!
