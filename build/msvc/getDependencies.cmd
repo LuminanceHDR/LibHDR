@@ -381,8 +381,12 @@ pushd libhdrStuff\libhdr.build
 	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\libhdr
 	IF EXIST LibHDR.sln (
 		devenv LibHDR.sln /Upgrade
-		devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project libHDR
-		rem devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project doc
+		REM Building everything, without running the tests
+		devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project ALL_BUILD
+		devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project doc
+	)
+	IF EXIST test\Release\libhdr_stats.exe (
+		%CMAKE_DIR%\bin\ctest.exe
 	)
 popd
 

@@ -84,6 +84,9 @@ IF(MSVC)
     # Enable SSE2
     ADD_DEFINITIONS(/arch:SSE2)
     
+    # Disable warning 4251 ('identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2')
+    ADD_DEFINITIONS(/wd4251)
+    
     ADD_DEFINITIONS(-DUNICODE )
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
@@ -101,6 +104,8 @@ IF(MSVC)
     SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
     
     SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
+    
+    SET(ImageMagick_LIBRARIES "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/VisualMagick/lib/CORE_RL_Magick++_.lib")
 
 ELSE()
     # Unix & Apple part
