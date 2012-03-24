@@ -32,13 +32,13 @@
 */
 // We are using the Visual Studio Compiler and building Shared libraries
 
-#if defined (_WIN32) 
+#if defined (WIN32)
   #if defined(LibHDR_EXPORTS)
     #define LIBHDR_API __declspec(dllexport)
   #else
     #define LIBHDR_API //__declspec(dllimport)
   #endif /* LIBHDR_API */
-#else /* defined (_WIN32) */
+#else /* defined (WIN32) */
  #define LIBHDR_API
 #endif
 

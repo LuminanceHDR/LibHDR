@@ -87,6 +87,10 @@ IF(MSVC)
     # Disable warning 4251 ('identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2')
     ADD_DEFINITIONS(/wd4251)
     
+    IF (BUILD_SHARED_LIBS)
+        ADD_DEFINITIONS(-DLibHDR_EXPORTS)
+    ENDIF()
+    
     ADD_DEFINITIONS(-DUNICODE )
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
     SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
@@ -123,8 +127,6 @@ INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
 
-# Allow the developer to select if Dynamic or Static libraries are built
-OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
 # Set the LIB_TYPE variable to STATIC
 SET (LIB_TYPE STATIC)
 IF (BUILD_SHARED_LIBS)
