@@ -30,6 +30,8 @@
 #ifndef LIBHDR_VERSION_H
 #define LIBHDR_VERSION_H
 
+#include "libhdr_dlldefines.h"
+
 #include <string>
 
 namespace LibHDR
@@ -50,7 +52,7 @@ namespace LibHDR
 //! "API design for C++" by Martin Reddy. Most of this library would be a mess without
 //! this book. Or it would not exist at all
 //!
-class Version
+class LIBHDR_API Version
 {
 public:
     //! \brief Return API major version number.

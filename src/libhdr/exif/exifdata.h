@@ -23,6 +23,8 @@
 #include <stdexcept>
 #include <iosfwd>
 
+#include "libhdr_dlldefines.h"
+
 namespace LibHDR
 {
 //! \namespace Contains all the operations based on EXIF data
@@ -32,7 +34,7 @@ namespace Exif
 //! \class ExifData
 //! \brief Holds Exif Data
 //!
-class ExifData
+class LIBHDR_API ExifData
 {
 public:
     //! \brief empty ctor
