@@ -93,7 +93,7 @@ public:
     void reset();
 
     //! \brief returns whether enough information are available to compute additional values
-    bool isValid();
+    bool isValid() const;
 
     friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 private:

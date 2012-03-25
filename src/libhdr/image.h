@@ -108,6 +108,8 @@ void swap(Image& a, Image& b);
 
 //! \typedef Shared pointer to \c Image
 typedef boost::shared_ptr<Image> ImagePtr;
+//! \typedef Constant shared pointer to \c Image
+typedef boost::shared_ptr<const Image> ImageConstPtr;
 
 } // namespace LibHDR
 

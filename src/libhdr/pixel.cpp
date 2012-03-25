@@ -104,13 +104,14 @@ Pixel::operator uint32_t() const
 
 ostream &operator<<( ostream &out, const Pixel& P )
 {
+    using namespace std;
     stringstream ss;
 
-    ss << "Pixel:";
-    ss << "[0]=" << std::setprecision(2) << P.f32[0];
-    ss << "[1]=" << std::setprecision(2) << P.f32[1];
-    ss << "[2]=" << std::setprecision(2) << P.f32[2];
-    ss << "[3]=" << std::setprecision(2) << P.f32[3];
+    ss << "Pixel {";
+    ss << fixed << setprecision(2) << P.f32[0] << ", ";
+    ss << P.f32[1] << ", ";
+    ss << P.f32[2] << ", ";
+    ss << P.f32[3] << "}";
 
     out << ss.str();
     return out;

@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,31 +17,36 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
 
-#ifndef LIBHDR_IOCOMMON
-#define LIBHDR_IOCOMMON
+#ifndef LIBHDR_MERGEEXCEPTIONS_H
+#define LIBHDR_MERGEEXCEPTIONS_H
 
-#include <boost/shared_ptr.hpp>
-
-#include "libhdr/settings.h"
+#include <stdexcept>
+#include <string>
 
 namespace LibHDR
 {
-// forward declaration
-class Image;
-
-//! \typedef Shared pointer of \c Image
-typedef boost::shared_ptr<Image> ImagePtr;
-
-//! \brief Namespace for classes handling input and output (IO)
-namespace IO
+namespace Merge
 {
+//!
+//! \brief This exception is raised when the input set of images
+//! for the merge algorithm do not have the same size
+class MismatchImagesException : public std::runtime_error
+{
+public:
+    MismatchImagesException(const std::string& msg = "");
+};
 
-} // namespace IO
-} // namespace LibHDR
+//! \brief This exception is raised when an empty set of input images
+//! is given to the merge operator
+class NoImagesException : public std::runtime_error
+{
+public:
+    NoImagesException(const std::string& msg = "");
+};
 
-#endif
+}
+}
+
+#endif // LIBHDR_MERGEEXCEPTIONS_H

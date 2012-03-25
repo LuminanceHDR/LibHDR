@@ -76,6 +76,7 @@ public:
     //! \brief Return the API build version derived (if available from the Git hash)
     //! \return The build string, e.g., "aa00cc"
     //! \since 0.0
+    //! \todo implementation :)
     static std::string getBuild();
 
     //! \brief Compare the current version number against a specific version.

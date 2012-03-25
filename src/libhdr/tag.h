@@ -32,23 +32,23 @@ namespace LibHDR
 typedef std::map<std::string, std::string> TagContainer;
 typedef std::pair<std::string, std::string> Tag;
 
-   /**
-    * Copy all tags from both the frame and its channels to the
-    * destination frame. If there is no corresponding destination
-    * channel for a source channel, the tags from that source channel
-    * will not be copied. Note, that all tags in the destination
-    * channel will be removed before copying. Therefore after this
-    * operation, the destination will contain exactly the same tags as
-    * the source.
-    */
+//   /**
+//    * Copy all tags from both the frame and its channels to the
+//    * destination frame. If there is no corresponding destination
+//    * channel for a source channel, the tags from that source channel
+//    * will not be copied. Note, that all tags in the destination
+//    * channel will be removed before copying. Therefore after this
+//    * operation, the destination will contain exactly the same tags as
+//    * the source.
+//    */
     //void copyTags( Frame *from, Frame *to );
 
-   /**
-    * Copy all tags from one container into another. Note, that all
-    * tags in the destination channel will be removed before
-    * copying. Therefore after this operation, the destination will
-    * contain exactly the same tags as the source.
-    */
+//   /**
+//    * Copy all tags from one container into another. Note, that all
+//    * tags in the destination channel will be removed before
+//    * copying. Therefore after this operation, the destination will
+//    * contain exactly the same tags as the source.
+//    */
     //void copyTags( const TagContainer *from, TagContainer *to );
 
     //void writeTags( const TagContainer *tags, FILE *out );

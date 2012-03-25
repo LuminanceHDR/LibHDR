@@ -210,16 +210,18 @@ void ExifData::reset()
     m_EvCompensation = DEFAULT_EVCOMP;
 }
 
-bool ExifData::isValid()
+bool ExifData::isValid() const
 {
     return ( isIsoSpeed() && isFNumber() && isExposureTime() );
 }
 
 std::ostream& operator<<(std::ostream& out, const ExifData& exifdata)
 {
-    out << "Exposure value = " << exifdata.m_ExposureTime << ", ";
+    out << "Exposure time = " << exifdata.m_ExposureTime << ", ";
     out << "F value = " << exifdata.m_F_Number << ", ";
-    out << "ISO = " << exifdata.m_IsoSpeed;
+    out << "ISO = " << exifdata.m_IsoSpeed << ", ";
+    out << "Exposure value = " << exifdata.exposureValue() << " (" << exifdata.m_EvCompensation << "), ";
+    out << "Average Scene Luminance = " << exifdata.getAverageSceneLuminance();
 
     return out;
 }

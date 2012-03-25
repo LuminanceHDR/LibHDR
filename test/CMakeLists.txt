@@ -40,3 +40,6 @@ ADD_TEST(test_pixel_conversion_to_8bit ${CMAKE_CURRENT_BINARY_DIR}/test_pixel)
 
 ADD_EXECUTABLE(test_io test_io.cpp)
 TARGET_LINK_LIBRARIES(test_io ${LIB_NAME})
+
+ADD_EXECUTABLE(test_merge test_merge.cpp)
+TARGET_LINK_LIBRARIES(test_merge ${LIB_NAME})

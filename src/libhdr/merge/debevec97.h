@@ -1,7 +1,7 @@
 /*
  * This file is a part of LibHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2011 Davide Anastasia
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,31 +17,43 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
- *
- * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- *  Derived from the original work by Rafal Mantiuk <mantiuk@mpi-sb.mpg.de> for PFSTOOLS
  */
 
-#ifndef LIBHDR_IOCOMMON
-#define LIBHDR_IOCOMMON
+#ifndef LIBHDR_DEBEVEC97_H
+#define LIBHDR_DEBEVEC97_H
 
-#include <boost/shared_ptr.hpp>
+#include <vector>
+#include <string>
 
-#include "libhdr/settings.h"
+#include "libhdr_dlldefines.h"
+#include "libhdr/merge/mergeoperator.h"
 
 namespace LibHDR
 {
-// forward declaration
-class Image;
-
-//! \typedef Shared pointer of \c Image
-typedef boost::shared_ptr<Image> ImagePtr;
-
-//! \brief Namespace for classes handling input and output (IO)
-namespace IO
+namespace Merge
 {
+struct Debevec97Impl;
 
-} // namespace IO
-} // namespace LibHDR
+class LIBHDR_API Debevec97 : public MergeOperator
+{
+public:
+    Debevec97();
 
-#endif
+    virtual ~Debevec97();
+
+protected:
+    //! \brief core portion of the Debevec97 merge operator
+    //! \pre image.getWidth() == images[i].getWidth() for all i
+    //! \pre image.getHeight() == images[i].getHeight() for all i
+    //! \post
+    virtual void coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, const Settings& settings);
+
+private:
+    boost::shared_ptr<Debevec97Impl> m_impl;
+};
+
+
+}
+}
+
+#endif // #ifndef LIBHDR_DEBEVEC97_H

@@ -34,6 +34,10 @@ SET(LIBHDR_HDRS
     libhdr/io/tiffwriter.h
     libhdr/io/tiffreader.h
     libhdr/io/magickreader.h
+#LIBHDR MERGE
+    libhdr/merge/mergeexceptions.h
+    libhdr/merge/mergeoperator.h
+    libhdr/merge/debevec97.h
 )
 
 SET(LIBHDR_SRCS
@@ -62,6 +66,10 @@ SET(LIBHDR_SRCS
     libhdr/io/tiffwriter.cpp
     libhdr/io/tiffreader.cpp
     libhdr/io/magickreader.cpp
+#LIBHDR MERGE
+    libhdr/merge/mergeexceptions.cpp
+    libhdr/merge/mergeoperator.cpp
+    libhdr/merge/debevec97.cpp
 )
 
 IF(MSVC)
