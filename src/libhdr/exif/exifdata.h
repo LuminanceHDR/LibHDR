@@ -97,7 +97,7 @@ public:
     //! \brief returns whether enough information are available to compute additional values
     bool isValid() const;
 
-    friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+    LIBHDR_API friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 private:
     float m_ExposureTime;
     float m_IsoSpeed;
@@ -105,7 +105,7 @@ private:
     float m_EvCompensation;
 };
 
-std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+LIBHDR_API std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 
 }
 }
