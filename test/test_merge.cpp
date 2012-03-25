@@ -29,8 +29,10 @@
 #include <cmath>
 
 #include <libhdr/merge/debevec97.h>
-#include <libhdr/io/framereader.h>
-#include <libhdr/io/framewriter.h>
+#include <libhdr/io/magickreader.h>
+#include <libhdr/io/tiffwriter.h>.h>
+//#include <libhdr/io/framereader.h>
+//#include <libhdr/io/framewriter.h>
 
 #include "mockcallback.h"
 
@@ -94,10 +96,12 @@ int main(int argc, char** argv)
     try
     {
         //create TIFF Writer
-        boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
+        //boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
+        boost::shared_ptr< IO::FrameWriter > writer( new IO::TIFFWriter );
 
         // create JPG Reader
-        boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
+        //boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
+        boost::shared_ptr< IO::FrameReader > reader( new IO::MagickReader );
         //reader->subscribe(&cb);
 
         std::vector<ImagePtr> images;
