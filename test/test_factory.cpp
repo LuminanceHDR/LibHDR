@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
         {
             std::cout << subscribed[idx] << "\n";
         }
+        return 0;
     }
     case 2:
     {
@@ -60,4 +61,5 @@ int main(int argc, char *argv[])
         return 0;
     }
     }
+    return 1;
 }
