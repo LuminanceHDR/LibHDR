@@ -55,7 +55,7 @@ public:
     operator uint32_t() const;
 };
 
-std::ostream &operator<<( std::ostream &out, const Pixel& P );
+LIBHDR_API std::ostream &operator<<( std::ostream &out, const Pixel& P );
 
 }
 

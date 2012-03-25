@@ -23,6 +23,8 @@
 #include <stdexcept>
 #include <iosfwd>
 
+#include "libhdr_dlldefines.h"
+
 namespace LibHDR
 {
 //! \namespace Contains all the operations based on EXIF data
@@ -32,7 +34,7 @@ namespace Exif
 //! \class ExifData
 //! \brief Holds Exif Data
 //!
-class ExifData
+class LIBHDR_API ExifData
 {
 public:
     //! \brief empty ctor
@@ -95,7 +97,7 @@ public:
     //! \brief returns whether enough information are available to compute additional values
     bool isValid() const;
 
-    friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+    LIBHDR_API friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 private:
     float m_ExposureTime;
     float m_IsoSpeed;
@@ -103,7 +105,7 @@ private:
     float m_EvCompensation;
 };
 
-std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+LIBHDR_API std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
 
 }
 }
