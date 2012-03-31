@@ -30,7 +30,8 @@
 
 #include <libhdr/merge/debevec97.h>
 #include <libhdr/io/magickreader.h>
-#include <libhdr/io/tiffwriter.h>.h>
+#include <libhdr/io/tiffwriter.h>
+#include <libhdr/io/exrwriter.h>
 //#include <libhdr/io/framereader.h>
 //#include <libhdr/io/framewriter.h>
 
@@ -92,17 +93,18 @@ int main(int argc, char** argv)
     // create merge based on Debevec97
     Merge::Debevec97 debevec;
 
-    //LibHDRTest::MockCallback cb;
+    LibHDRTest::MockCallback cb;
     try
     {
         //create TIFF Writer
         //boost::shared_ptr< IO::FrameWriter > writer( IO::FrameWriterFactory::instance().create("tif") );
         boost::shared_ptr< IO::FrameWriter > writer( new IO::TIFFWriter );
+        boost::shared_ptr< IO::FrameWriter > writer_exr( new IO::EXRWriter );
 
         // create JPG Reader
         //boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
         boost::shared_ptr< IO::FrameReader > reader( new IO::MagickReader );
-        //reader->subscribe(&cb);
+
 
         std::vector<ImagePtr> images;
         for (int idx = 1; idx < (argc-1); ++idx)
@@ -115,6 +117,12 @@ int main(int argc, char** argv)
         }
 
         ImagePtr hdr_image( debevec.merge(images) );
+
+        writer_exr->subscribe(&cb);
+
+        writer_exr->open("test.exr");
+        writer_exr->writeFrame( hdr_image );
+        writer_exr->close();
 
         normalize(hdr_image->data(), hdr_image->getElems(), 2.2f);
 

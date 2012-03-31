@@ -49,6 +49,23 @@ struct ResponseLinear : public Response
     }
 };
 
+struct ResponseCubic : public Response
+{
+    float response(float value)
+    {
+        return (-2.0f*(value*value*value)+3.0f*(value*value));
+    }
+};
+
+// applies a certain gamma function
+struct ResponseGamma : public Response
+{
+    float response(float value)
+    {
+        return powf(value, 1.7f);
+    }
+};
+
 // Base class for Weights
 struct Weights
 {
@@ -108,6 +125,48 @@ struct WeightsTriangular : public Weights
         return maxTrustWeightTriangular - std::numeric_limits<float>::epsilon();
     }
 };
+
+namespace
+{
+const float minTrustWeightSin = 0.f;
+const float maxTrustWeightSin = 1.0f;
+const float middlePointTrustAreaSin = 0.5f;
+const float Pi = 4.0f * atanf(1.0f);
+}
+
+struct WeightsSin : public Weights
+{
+    WeightsSin()
+    {
+        using std::cout;
+        using std::endl;
+
+        cout << "WeightsSin {min: " << minTrustWeightSin << ", ";
+        cout << "max: " << maxTrustWeightSin << ", ";
+        cout << "middle: " << middlePointTrustAreaSin << ", ";
+        cout << "slope: 1/2*[sin(2*pi*x - pi/2) + 1] }" << endl;
+    }
+
+
+    float weight(float value)
+    {
+        if (value < minTrustWeightSin) return 0.0f;
+        if (value > maxTrustWeightSin) return 0.0f;
+
+        return 0.5f * ( sinf(2*Pi*value - Pi/2.0f) + 1.0f );
+    }
+
+    float getMinimunTrustWeight()
+    {
+        return minTrustWeightSin + std::numeric_limits<float>::epsilon();
+    }
+    virtual float getMaximumTrustWeight()
+    {
+        return maxTrustWeightSin - std::numeric_limits<float>::epsilon();
+    }
+};
+
+
 
 }
 
