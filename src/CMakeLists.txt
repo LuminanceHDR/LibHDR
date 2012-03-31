@@ -34,6 +34,7 @@ SET(LIBHDR_HDRS
     libhdr/io/tiffwriter.h
     libhdr/io/tiffreader.h
     libhdr/io/magickreader.h
+    libhdr/io/exrwriter.h
 #LIBHDR MERGE
     libhdr/merge/mergeexceptions.h
     libhdr/merge/mergeoperator.h
@@ -66,6 +67,7 @@ SET(LIBHDR_SRCS
     libhdr/io/tiffwriter.cpp
     libhdr/io/tiffreader.cpp
     libhdr/io/magickreader.cpp
+    libhdr/io/exrwriter.cpp
 #LIBHDR MERGE
     libhdr/merge/mergeexceptions.cpp
     libhdr/merge/mergeoperator.cpp
@@ -124,6 +126,7 @@ ELSE()
     FIND_PACKAGE(TIFF REQUIRED)
     FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
     FIND_PACKAGE(Exiv2 REQUIRED)
+    FIND_PACKAGE(OpenEXR REQUIRED)
 ENDIF()
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
@@ -131,6 +134,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR})
+INCLUDE_DIRECTORIES("${OPENEXR_INCLUDE_DIR}/OpenEXR")
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
@@ -147,6 +151,7 @@ TARGET_LINK_LIBRARIES(${LIB_NAME}
     ${Boost_LIBRARIES}
     ${TIFF_LIBRARIES}
     ${ImageMagick_LIBRARIES}
-    ${EXIV2_LIBRARIES})
+    ${EXIV2_LIBRARIES}
+    ${OPENEXR_LIBRARIES})
 
 
