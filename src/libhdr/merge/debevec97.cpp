@@ -21,154 +21,17 @@
 
 #include "debevec97.h"
 
-#include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <limits>
+#include <boost/scoped_ptr.hpp>
+
+#include <libhdr/merge/responses.h>
+#include <libhdr/merge/weights.h>
 
 namespace LibHDR
 {
 namespace Merge
 {
-namespace
-{
-// Base class for Response
-struct Response
-{
-    Response() {}
-    virtual ~Response() {}
-
-    virtual float response(float value) = 0;
-};
-
-// Linear response class
-struct ResponseLinear : public Response
-{
-    float response(float value)
-    {
-        return value;
-    }
-};
-
-struct ResponseCubic : public Response
-{
-    float response(float value)
-    {
-        return (-2.0f*(value*value*value)+3.0f*(value*value));
-    }
-};
-
-// applies a certain gamma function
-struct ResponseGamma : public Response
-{
-    float response(float value)
-    {
-        return powf(value, 1.7f);
-    }
-};
-
-// Base class for Weights
-struct Weights
-{
-    Weights() {}
-    virtual ~Weights() {}
-
-    virtual float weight(float value) = 0;
-
-    virtual float getMinimunTrustWeight() = 0;
-    virtual float getMaximumTrustWeight() = 0;
-};
-
-namespace
-{
-const float minTrustWeightTriangular = 2.f/255.f;
-const float maxTrustWeightTriangular = 254.f/255.f;
-const float middlePointTrustArea = minTrustWeightTriangular + (maxTrustWeightTriangular - minTrustWeightTriangular)/2.f;
-const float triangularWeightsSlope = 2.f/(maxTrustWeightTriangular - minTrustWeightTriangular);
-}
-
-// Triangular weights class
-struct WeightsTriangular : public Weights
-{
-    WeightsTriangular()
-    {
-        using std::cout;
-        using std::endl;
-
-        cout << "WeightsTriangular {min: " <<minTrustWeightTriangular << ", ";
-        cout << "max: " << maxTrustWeightTriangular << ", ";
-        cout << "middle: " << middlePointTrustArea << ", ";
-        cout << "slope: " << triangularWeightsSlope << "}" << endl;
-    }
-
-
-    float weight(float value)
-    {
-        if (value < minTrustWeightTriangular) return 0.0f;
-        if (value > maxTrustWeightTriangular) return 0.0f;
-
-        if ( value > middlePointTrustArea )
-        {
-            return -triangularWeightsSlope*(value - maxTrustWeightTriangular);
-        }
-        else
-        {
-            return triangularWeightsSlope*(value - minTrustWeightTriangular);
-        }
-    }
-
-    float getMinimunTrustWeight()
-    {
-        return minTrustWeightTriangular + std::numeric_limits<float>::epsilon();
-    }
-    virtual float getMaximumTrustWeight()
-    {
-        return maxTrustWeightTriangular - std::numeric_limits<float>::epsilon();
-    }
-};
-
-namespace
-{
-const float minTrustWeightSin = 0.f;
-const float maxTrustWeightSin = 1.0f;
-const float middlePointTrustAreaSin = 0.5f;
-const float Pi = 4.0f * atanf(1.0f);
-}
-
-struct WeightsSin : public Weights
-{
-    WeightsSin()
-    {
-        using std::cout;
-        using std::endl;
-
-        cout << "WeightsSin {min: " << minTrustWeightSin << ", ";
-        cout << "max: " << maxTrustWeightSin << ", ";
-        cout << "middle: " << middlePointTrustAreaSin << ", ";
-        cout << "slope: 1/2*[sin(2*pi*x - pi/2) + 1] }" << endl;
-    }
-
-
-    float weight(float value)
-    {
-        if (value < minTrustWeightSin) return 0.0f;
-        if (value > maxTrustWeightSin) return 0.0f;
-
-        return 0.5f * ( sinf(2*Pi*value - Pi/2.0f) + 1.0f );
-    }
-
-    float getMinimunTrustWeight()
-    {
-        return minTrustWeightSin + std::numeric_limits<float>::epsilon();
-    }
-    virtual float getMaximumTrustWeight()
-    {
-        return maxTrustWeightSin - std::numeric_limits<float>::epsilon();
-    }
-};
-
-
-
-}
 
 // This class is the private implementation of the Debevec97 class
 // It holds shared pointer to a Response class (on of its subclasses)
@@ -195,9 +58,8 @@ struct Debevec97Impl
         return response_->response(value);
     }
 
-//private:
-    boost::shared_ptr<Response> response_;
-    boost::shared_ptr<Weights> weights_;
+    boost::scoped_ptr<Response> response_;
+    boost::scoped_ptr<Weights> weights_;
 };
 
 Debevec97::Debevec97():

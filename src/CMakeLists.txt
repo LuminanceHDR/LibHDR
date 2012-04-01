@@ -41,6 +41,8 @@ SET(LIBHDR_HDRS
     libhdr/merge/mergeexceptions.h
     libhdr/merge/mergeoperator.h
     libhdr/merge/debevec97.h
+    libhdr/merge/responses.h
+    libhdr/merge/weights.h
 )
 
 SET(LIBHDR_SRCS
@@ -74,6 +76,8 @@ SET(LIBHDR_SRCS
     libhdr/merge/mergeexceptions.cpp
     libhdr/merge/mergeoperator.cpp
     libhdr/merge/debevec97.cpp
+    libhdr/merge/responses.cpp
+    libhdr/merge/weights.cpp
 )
 
 IF(MSVC)
