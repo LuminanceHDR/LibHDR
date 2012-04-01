@@ -35,7 +35,6 @@ SET(LIBHDR_HDRS
     libhdr/io/framewriter.aux.h
     libhdr/io/tiffwriter.h
     libhdr/io/tiffreader.h
-    libhdr/io/magickreader.h
     libhdr/io/exrwriter.h
     libhdr/io/jpegreader.h
 #LIBHDR MERGE
@@ -69,7 +68,6 @@ SET(LIBHDR_SRCS
     libhdr/io/framewriter.cpp
     libhdr/io/tiffwriter.cpp
     libhdr/io/tiffreader.cpp
-    libhdr/io/magickreader.cpp
     libhdr/io/exrwriter.cpp
     libhdr/io/jpegreader.cpp
 #LIBHDR MERGE
@@ -90,7 +88,8 @@ IF(MSVC)
     SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include" "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
     
     # Test
-    SET(ImageMagick_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6" "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/Magick++/lib")
+    # Davide 2012.04.01 - No more Magick... it's not an April's fool! :)
+    # SET(ImageMagick_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6" "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/Magick++/lib")
     
     # Enable multi processor compilation
     ADD_DEFINITIONS(/MP)
@@ -123,12 +122,12 @@ IF(MSVC)
     
     SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
     
-    SET(ImageMagick_LIBRARIES "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/VisualMagick/lib/CORE_RL_Magick++_.lib")
+    # Davide 2012.04.01 - No more Magick
+    # SET(ImageMagick_LIBRARIES "${CMAKE_SOURCE_DIR}/../../ImageMagick-6.7.6/VisualMagick/lib/CORE_RL_Magick++_.lib")
 
 ELSE()
     # Unix & Apple part
     FIND_PACKAGE(TIFF REQUIRED)
-    FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
     FIND_PACKAGE(Exiv2 REQUIRED)
     FIND_PACKAGE(OpenEXR REQUIRED)
     FIND_PACKAGE(jpeg REQUIRED)
@@ -138,7 +137,6 @@ ENDIF()
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR})
 INCLUDE_DIRECTORIES("${OPENEXR_INCLUDE_DIR}/OpenEXR")
 INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR})
@@ -160,7 +158,6 @@ ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
 TARGET_LINK_LIBRARIES(${LIB_NAME}
     ${Boost_LIBRARIES}
     ${TIFF_LIBRARIES}
-    ${ImageMagick_LIBRARIES}
     ${EXIV2_LIBRARIES}
     ${OPENEXR_LIBRARIES}
     ${JPEG_LIBRARIES}
