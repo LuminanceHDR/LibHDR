@@ -67,10 +67,12 @@ using namespace LibHDR::details;    // ResourceDeleter
 
 namespace
 {
+const float DIV_255 = 1.0f/255.f;
+
 inline
 float to_float(const JSAMPLE& sample)
 {
-    return static_cast<float>(sample)/255.f;
+    return static_cast<float>(sample)*DIV_255;
 }
 
 inline
