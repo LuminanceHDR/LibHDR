@@ -23,15 +23,23 @@
 
 #include <iostream>
 #include <limits>
+#include <vector>
 #include <boost/scoped_ptr.hpp>
 
 #include <libhdr/merge/responses.h>
 #include <libhdr/merge/weights.h>
 
+using namespace std;
+
 namespace LibHDR
 {
 namespace Merge
 {
+namespace
+{
+const float AVG_3 = 1.0f/3.0f;
+}
+
 
 // This class is the private implementation of the Debevec97 class
 // It holds shared pointer to a Response class (on of its subclasses)
@@ -76,6 +84,13 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
     const float maxTrustWeight = m_impl->weights_->getMaximumTrustWeight();
     const float minTrustWeight = m_impl->weights_->getMinimunTrustWeight();
 
+    // pre-store ti for each image
+    vector<float> ti(images.size());
+    for (size_t i = 0; i < images.size(); ++i)
+    {
+        ti[i] = images[i]->exifData().getAverageSceneLuminance();
+    }
+
     // set initial pointers
     Pixel* output_pixel = image->data();
 
@@ -102,47 +117,45 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
             float index_for_blackG = 0.f;
             float index_for_blackB = 0.f;
 
-            for (size_t i = 0; i < images.size(); ++i)
+            for (size_t idx = 0; idx < images.size(); ++idx)
             {
-                const Pixel& current_image = *(images[i]->constData() + (row*image->getCols()) + col);
+                const Pixel& current_image = *(images[idx]->constData() + (row*image->getCols()) + col);
 
                 float red = current_image.f32[0];
                 float green = current_image.f32[1];
                 float blue = current_image.f32[2];
 
-                float ti = images[i]->exifData().getAverageSceneLuminance();   // is it right?
-
                 // if at least one of the color channel's values are in the bright "not-trusted zone"
                 // and we have min exposure time
-                if ( (red > maxTrustWeight || green > maxTrustWeight || blue > maxTrustWeight) && (ti < minti) )
+                if ( (red > maxTrustWeight || green > maxTrustWeight || blue > maxTrustWeight) && (ti[idx] < minti) )
                 {
                     //update the indexes_for_whiteRGB, minti
                     index_for_whiteR = red;
                     index_for_whiteG = green;
                     index_for_whiteB = blue;
-                    minti = ti;
+                    minti = ti[idx];
                 }
 
                 // if at least one of the color channel's values are in the dim "not-trusted zone"
                 // and we have max exposure time
-                if ( (red < minTrustWeight || green < minTrustWeight || blue < minTrustWeight) && (ti > maxti) )
+                if ( (red < minTrustWeight || green < minTrustWeight || blue < minTrustWeight) && (ti[idx] > maxti) )
                 {
                     //update the indexes_for_blackRGB, maxti
                     index_for_blackR = red;
                     index_for_blackG = green;
                     index_for_blackB = blue;
-                    maxti = ti;
+                    maxti = ti[idx];
                 }
 
                 float w_average = (m_impl->getWeight(red) +
                                    m_impl->getWeight(green) +
-                                   m_impl->getWeight(blue))/3.0f;
+                                   m_impl->getWeight(blue))*AVG_3;
 
-                sumR += w_average * m_impl->getResponse(red) / ti;
+                sumR += w_average * m_impl->getResponse(red) / ti[idx];
                 divR += w_average;
-                sumG += w_average * m_impl->getResponse(green) / ti;
+                sumG += w_average * m_impl->getResponse(green) / ti[idx];
                 divG += w_average;
-                sumB += w_average * m_impl->getResponse(blue) / ti;
+                sumB += w_average * m_impl->getResponse(blue) / ti[idx];
                 divB += w_average;
             }
 
@@ -165,10 +178,7 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
             }
 
             // set final pixel
-            (*output_pixel).f32[0] = sumR/divR;
-            (*output_pixel).f32[1] = sumG/divG;
-            (*output_pixel).f32[2] = sumB/divB;
-            (*output_pixel).f32[3] = 1.f;
+            (*output_pixel) = Pixel(sumR/divR, sumG/divG, sumB/divB);
 
             output_pixel++; // next pixel!
         }

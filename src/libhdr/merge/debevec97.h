@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <string>
+#include <boost/scoped_ptr.hpp>
 
 #include "libhdr_dlldefines.h"
 #include "libhdr/merge/mergeoperator.h"
@@ -49,7 +50,7 @@ protected:
     virtual void coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, const Settings& settings);
 
 private:
-    boost::shared_ptr<Debevec97Impl> m_impl;
+    boost::scoped_ptr<Debevec97Impl> m_impl;
 };
 
 
