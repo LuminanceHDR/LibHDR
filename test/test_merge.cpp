@@ -29,7 +29,7 @@
 #include <cmath>
 
 #include <libhdr/merge/debevec97.h>
-#include <libhdr/io/magickreader.h>
+#include <libhdr/io/jpegreader.h>
 #include <libhdr/io/tiffwriter.h>
 #include <libhdr/io/exrwriter.h>
 //#include <libhdr/io/framereader.h>
@@ -103,8 +103,8 @@ int main(int argc, char** argv)
 
         // create JPG Reader
         //boost::shared_ptr< IO::FrameReader > reader( IO::FrameReaderFactory::instance().create("jpg") );
-        boost::shared_ptr< IO::FrameReader > reader( new IO::MagickReader );
-
+        boost::shared_ptr< IO::FrameReader > reader( new IO::JpegReader );
+        reader->subscribe(&cb);
 
         std::vector<ImagePtr> images;
         for (int idx = 1; idx < (argc-1); ++idx)

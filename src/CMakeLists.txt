@@ -22,6 +22,8 @@ SET(LIBHDR_HDRS
 # TEMPLATE
     libhdr/template/objectfactory.h
     libhdr/template/singleton.h
+    libhdr/details/resourcehandler.h
+    libhdr/details/misc.h
 #LIBHDR IO
     libhdr/io/framereader.h
     libhdr/io/framereader.aux.h
@@ -35,6 +37,7 @@ SET(LIBHDR_HDRS
     libhdr/io/tiffreader.h
     libhdr/io/magickreader.h
     libhdr/io/exrwriter.h
+    libhdr/io/jpegreader.h
 #LIBHDR MERGE
     libhdr/merge/mergeexceptions.h
     libhdr/merge/mergeoperator.h
@@ -68,6 +71,7 @@ SET(LIBHDR_SRCS
     libhdr/io/tiffreader.cpp
     libhdr/io/magickreader.cpp
     libhdr/io/exrwriter.cpp
+    libhdr/io/jpegreader.cpp
 #LIBHDR MERGE
     libhdr/merge/mergeexceptions.cpp
     libhdr/merge/mergeoperator.cpp
@@ -127,6 +131,8 @@ ELSE()
     FIND_PACKAGE(ImageMagick COMPONENTS Magick++ REQUIRED)
     FIND_PACKAGE(Exiv2 REQUIRED)
     FIND_PACKAGE(OpenEXR REQUIRED)
+    FIND_PACKAGE(jpeg REQUIRED)
+    FIND_PACKAGE(LCMS2 REQUIRED)
 ENDIF()
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src")
@@ -135,9 +141,13 @@ INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${ImageMagick_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${EXIV2_INCLUDE_DIR})
 INCLUDE_DIRECTORIES("${OPENEXR_INCLUDE_DIR}/OpenEXR")
+INCLUDE_DIRECTORIES(${JPEG_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${LCMS2_INCLUDE_DIR})
 
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 LINK_DIRECTORIES(${TIFF_LIBRARY_DIRS})
+LINK_DIRECTORIES(${JPEG_LIBRARY_DIRS})
+LINK_DIRECTORIES(${LCMS2_LIBRARY_DIRS})
 
 # Set the LIB_TYPE variable to STATIC
 SET (LIB_TYPE STATIC)
@@ -152,6 +162,8 @@ TARGET_LINK_LIBRARIES(${LIB_NAME}
     ${TIFF_LIBRARIES}
     ${ImageMagick_LIBRARIES}
     ${EXIV2_LIBRARIES}
-    ${OPENEXR_LIBRARIES})
+    ${OPENEXR_LIBRARIES}
+    ${JPEG_LIBRARIES}
+    ${LCMS2_LIBRARIES})
 
 
