@@ -61,7 +61,7 @@ protected:
     virtual void coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, const Settings& settings = Settings()) = 0;
 };
 
-//! \typedef Defines a Singleton holder for a factory of \c MergeOperator
+//! \brief Defines a Singleton holder for a factory of \c MergeOperator
 typedef Template::Singleton< Template::ObjectFactory<MergeOperator, std::string> > MergeOperatorFactory;
 
 }

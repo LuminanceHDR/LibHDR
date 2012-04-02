@@ -34,8 +34,9 @@ namespace LibHDR
 {
 namespace Template
 {
-//! \class Creates a Singleton wrapper
-//! \brief This class creates a Singleton wrapper around a class of type Type
+//! \class Singleton
+//! \brief Creates a Singleton wrapper
+//! This class creates a Singleton wrapper around a class of type Type
 //! (argument of the template). This class inherits boost::noncopyable: copy construction
 //! and assignment are then disabled.
 //! \param Type Specifies the type of the class that will be wrapped

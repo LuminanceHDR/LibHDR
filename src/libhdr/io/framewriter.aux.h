@@ -23,7 +23,7 @@
 #define LIBHDR_FRAMEWRITER_AUX_H
 
 //!
-//! \file framewriter_aux.h
+//! \file framewriter.aux.h
 //! \brief Auxiliary functions for the subscription of classes inherited from
 //! FrameWriter into the FrameWriterFactory
 //!

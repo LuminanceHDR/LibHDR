@@ -23,7 +23,7 @@
 #define LIBHDR_FRAMEREADER_AUX_H
 
 //!
-//! \file framereader_aux.h
+//! \file framereader.aux.h
 //! \brief Auxiliary functions for the subscription of classes inherited from
 //! FrameReader into the FrameReaderFactory
 //!

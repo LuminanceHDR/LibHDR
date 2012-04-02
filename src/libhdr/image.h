@@ -41,11 +41,11 @@ class Channel;  // forward declaration
 class LIBHDR_API Image: public Matrix<Pixel>, public Frame
 {
 private:
-    //! \typedef MatrixOfPixels as \c Matrix of \c Pixel
+    //! \brief MatrixOfPixels as \c Matrix of \c Pixel
     typedef Matrix<Pixel> MatrixOfPixels;
 
 public:
-    //! \enum define the frame type of the current image (whether available)
+    //! \brief define the frame type of the current image (whether available)
     enum ImageType
     {
         UNDEF = 0,
@@ -106,9 +106,9 @@ private:
 //! \brief swaps \c Image a with \c Image b
 void swap(Image& a, Image& b);
 
-//! \typedef Shared pointer to \c Image
+//! \brief Shared pointer to \c Image
 typedef boost::shared_ptr<Image> ImagePtr;
-//! \typedef Constant shared pointer to \c Image
+//! \brief Constant shared pointer to \c Image
 typedef boost::shared_ptr<const Image> ImageConstPtr;
 
 } // namespace LibHDR

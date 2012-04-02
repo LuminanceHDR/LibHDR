@@ -78,7 +78,7 @@ public:
     void enableNotify();
 
     //! \brief turn on/off notifications
-    //! \param[in] b status of the notifications: true for on, false for off
+    //! \param[in] status status of the notifications: true for on, false for off
     void setNotify(bool status);
 
     //! \brief check if notifications are active

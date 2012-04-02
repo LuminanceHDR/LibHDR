@@ -72,7 +72,7 @@ public:
     virtual bool isOpen() = 0;
 };
 
-//! \typedef Defines a Singleton holder for a factory of FrameReader
+//! \brief Defines a Singleton holder for a factory of FrameReader
 typedef Template::Singleton< Template::ObjectFactory<FrameReader, std::string> > FrameReaderFactory;
 
 } // end namespace IO

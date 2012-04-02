@@ -88,7 +88,6 @@ public:
     //! F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
     //! \note This description is copied from the original source code in
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
-    //! \param[in] filename name of the file from which we want to extract the average scene luminance
     float getAverageSceneLuminance() const;
 
     //! \brief reset Exif Data

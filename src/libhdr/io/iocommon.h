@@ -34,7 +34,7 @@ namespace LibHDR
 // forward declaration
 class Image;
 
-//! \typedef Shared pointer of \c Image
+//! \brief Shared pointer of \c Image
 typedef boost::shared_ptr<Image> ImagePtr;
 
 //! \brief Namespace for classes handling input and output (IO)

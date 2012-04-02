@@ -64,7 +64,7 @@ public:
     virtual bool isOpen() = 0;
 };
 
-//! \typedef Defines a Singleton holder for a factory of FrameWriter(s)
+//! \brief Singleton holder for a factory of FrameWriter(s)
 typedef Template::Singleton< Template::ObjectFactory<FrameWriter, std::string> > FrameWriterFactory;
 }
 

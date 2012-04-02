@@ -30,7 +30,7 @@ namespace LibHDR
 class LIBHDR_API Frame
 {
 public:
-    //! \enum define bit per sample of the source image (whether available)
+    //! \brief define bit per sample of the source image (whether available)
     enum BitPerSample
     {
         BPS_0 = 0,
@@ -39,7 +39,7 @@ public:
         BPS_32 = 32
     };
 
-    //! \enum define sample type of the source image
+    //! \brief define sample type of the source image
     enum SampleType
     {
         UNSPEC = 0,

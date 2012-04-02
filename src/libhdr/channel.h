@@ -38,7 +38,7 @@ private:
 typedef Matrix<float> MatrixOfFloats;
 
 public:
-    //! \enum Available \c Channel types
+    //! \brief Available \c Channel types
     enum ChannelType
     {
         ALPHA,
