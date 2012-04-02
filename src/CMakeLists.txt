@@ -7,7 +7,9 @@ SET(LIBHDR_HDRS
     libhdr.h
 # LIBHDR CORE
     libhdr/matrix.h
-#   libhdr/array2d.h
+    libhdr/matrix.hpp
+    libhdr/matrix_iterator.h
+    libhdr/matrix_iterator.hpp
     libhdr/tag.h
     libhdr/frame.h
     libhdr/channel.h
@@ -49,8 +51,6 @@ SET(LIBHDR_SRCS
 #LIBHDR BASE
     ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp
 #LIBHDR CORE
-    libhdr/matrix.cpp
-#   libhdr/array2d.cpp
     libhdr/tag.cpp
     libhdr/frame.cpp
     libhdr/channel.cpp

@@ -22,14 +22,16 @@
 #ifndef LIBHDR_MATRIX_H
 #define LIBHDR_MATRIX_H
 
+#include <iterator>
 #include <boost/shared_ptr.hpp>
+#include <libhdr/matrix_iterator.h>
 
 namespace LibHDR
 {
 
 // Forward declaration
 template <typename Type>
-class MatrixData;
+struct MatrixData;
 
 //! \class Matrix
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
@@ -38,7 +40,7 @@ class Matrix
 {
 public:
     //! \brief constructor
-    Matrix(int rows, int cols);
+    Matrix(size_t rows, size_t cols);
 
     //! \brief Virtual destructor.
     virtual ~Matrix();
@@ -51,18 +53,18 @@ public:
     //! \brief Swap
     void swap(Matrix<Type>& other);
 
-    Type& operator()(int pos);
-    const Type& operator()(int pos) const;
+    Type& operator()(size_t pos);
+    const Type& operator()(size_t pos) const;
 
-    Type& operator()(int row, int col);
-    const Type& operator()(int row, int col) const;
+    Type& operator()(size_t row, size_t col);
+    const Type& operator()(size_t row, size_t col) const;
 
     //! \brief returns the number of rows of the current Matrix
-    int getRows() const;
+    size_t getRows() const;
     //! \brief returns the number of cols of the current Matrix
-    int getCols() const;
+    size_t getCols() const;
     //! \brief returns the number of elements of the current Matrix
-    int getElems() const;
+    size_t getElems() const;
 
     //! \brief returns a pointer to the underlying buffer of data
     //! \note it performs a deep copy
@@ -81,11 +83,40 @@ protected:
 
 private:
     boost::shared_ptr< MatrixData<Type> > d;
+
+public:
+    // iterator section
+    typedef MatrixIterator<const Type> ConstIterator;
+    typedef MatrixIterator<Type> Iterator;
+
+    ConstIterator begin() const;
+    ConstIterator end() const;
+
+    Iterator begin();
+    Iterator end();
+
+    typedef MatrixIterator<const Type> ConstRowIterator;
+    typedef MatrixIterator<Type> RowIterator;
+
+    ConstRowIterator rowBegin(size_t row) const;
+    ConstRowIterator rowEnd(size_t row) const;
+
+    RowIterator rowBegin(size_t row);
+    RowIterator rowEnd(size_t row);
+
+    typedef MatrixIterator<const Type> ConstColIterator;
+    typedef MatrixIterator<Type> ColIterator;
+
+    ConstColIterator colBegin(size_t column) const;
+    ConstColIterator colEnd(size_t column) const;
+
+    ColIterator colBegin(size_t column);
+    ColIterator colEnd(size_t column);
 };
 
 } // end namespace LibHDR
 
 // Include template definition
-#include "libhdr/matrix.cpp"
+#include <libhdr/matrix.hpp>
 
 #endif // MATRIX_H

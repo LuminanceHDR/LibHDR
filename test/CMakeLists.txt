@@ -43,3 +43,6 @@ TARGET_LINK_LIBRARIES(test_io ${LIB_NAME})
 
 ADD_EXECUTABLE(test_merge test_merge.cpp)
 TARGET_LINK_LIBRARIES(test_merge ${LIB_NAME})
+
+ADD_EXECUTABLE(test_matrix_iterator test_matrix_iterator.cpp)
+TARGET_LINK_LIBRARIES(test_matrix_iterator ${LIB_NAME})

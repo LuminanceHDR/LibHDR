@@ -28,6 +28,7 @@
 
 #include <libhdr/merge/responses.h>
 #include <libhdr/merge/weights.h>
+#include <libhdr/details/misc.h>
 
 using namespace std;
 
@@ -77,10 +78,14 @@ Debevec97::Debevec97():
 Debevec97::~Debevec97()
 {}
 
-// Ideally at this stage, I have in image an Image ready to be filled, and in images
-// a right set of images
-void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, const Settings& /*settings*/)
+// Ideally at this stage, I have in image an Image ready to be filled, and
+// in images a right set of images
+void Debevec97::coreMerge(ImagePtr image,
+                          const std::vector<ImagePtr>& images,
+                          const Settings& settings)
 {
+    LIBHDR_POSSIBLY_UNUSED(settings);
+
     const float maxTrustWeight = m_impl->weights_->getMaximumTrustWeight();
     const float minTrustWeight = m_impl->weights_->getMinimunTrustWeight();
 
@@ -94,9 +99,9 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
     // set initial pointers
     Pixel* output_pixel = image->data();
 
-    for (int row = 0; row < image->getRows(); ++row)
+    for (size_t row = 0; row < image->getRows(); ++row)
     {
-        for (int col = 0; col < image->getCols(); ++col)
+        for (size_t col = 0; col < image->getCols(); ++col)
         {
             float sumR = 0.0f;
             float sumG = 0.0f;
@@ -119,15 +124,19 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
 
             for (size_t idx = 0; idx < images.size(); ++idx)
             {
-                const Pixel& current_image = *(images[idx]->constData() + (row*image->getCols()) + col);
+                const Pixel& current_image = *(images[idx]->constData()
+                                               + (row*image->getCols()) + col);
 
                 float red = current_image.f32[0];
                 float green = current_image.f32[1];
                 float blue = current_image.f32[2];
 
-                // if at least one of the color channel's values are in the bright "not-trusted zone"
-                // and we have min exposure time
-                if ( (red > maxTrustWeight || green > maxTrustWeight || blue > maxTrustWeight) && (ti[idx] < minti) )
+                // if at least one of the color channel's values are in the
+                // bright "not-trusted zone" and we have min exposure time
+                if ( (red > maxTrustWeight ||
+                      green > maxTrustWeight ||
+                      blue > maxTrustWeight) &&
+                     (ti[idx] < minti) )
                 {
                     //update the indexes_for_whiteRGB, minti
                     index_for_whiteR = red;
@@ -136,9 +145,12 @@ void Debevec97::coreMerge(ImagePtr image, const std::vector<ImagePtr>& images, c
                     minti = ti[idx];
                 }
 
-                // if at least one of the color channel's values are in the dim "not-trusted zone"
-                // and we have max exposure time
-                if ( (red < minTrustWeight || green < minTrustWeight || blue < minTrustWeight) && (ti[idx] > maxti) )
+                // if at least one of the color channel's values are in
+                // the dim "not-trusted zone" and we have max exposure time
+                if ( (red < minTrustWeight ||
+                      green < minTrustWeight ||
+                      blue < minTrustWeight) &&
+                     (ti[idx] > maxti) )
                 {
                     //update the indexes_for_blackRGB, maxti
                     index_for_blackR = red;
