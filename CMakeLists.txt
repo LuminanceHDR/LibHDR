@@ -2,7 +2,7 @@ PROJECT(LibHDR)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 # Allow the developer to select if Dynamic or Static libraries are built
-OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" OFF)
+OPTION (BUILD_SHARED_LIBS "Build Shared Libraries" ON)
 
 # Define project version
 SET(${PROJECT_NAME}_MAJOR_VERSION 0)
