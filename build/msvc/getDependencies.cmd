@@ -39,6 +39,7 @@ echo ERROR: Cygwin with
 echo    cvs
 echo    git 
 echo    gzip 
+echo    p7zip 
 echo    sed 
 echo    ssh 
 echo    svn 
@@ -145,6 +146,16 @@ IF NOT EXIST libjpeg (
 	copy makervcx.v10 rdjpgcom.vcxpr
 
 	nmake /f makefile.vc
+	popd
+)
+
+IF NOT EXIST lcms2-2.3 (
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
+	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+	
+	pushd lcms2-2.3
+	devenv Projects\VC2010\lcms2.sln /Upgrade
+	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
 	popd
 )
 
@@ -335,12 +346,18 @@ IF NOT EXIST libhdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
+	for %%v in ("libjpeg", "exiv2",  "lcms2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
 		mkdir libhdrStuff\DEPs\include\%%v
 		mkdir libhdrStuff\DEPs\lib\%%v
 		mkdir libhdrStuff\DEPs\bin\%%v
 	)
 	
+	copy lcms2-2.3\include\*.h libhdrStuff\DEPs\include\lcms2
+	copy lcms2-2.3\bin\*.lib libhdrStuff\DEPs\lib\lcms2
+	copy lcms2-2.3\bin\*.dll libhdrStuff\DEPs\bin\lcms2
+
+	copy libjpeg\*.h libhdrStuff\DEPs\include\libjpeg
+
 	copy exiv2-trunk\msvc64\include\* libhdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* libhdrStuff\DEPs\include\exiv2
 
@@ -383,9 +400,19 @@ pushd libhdrStuff\libhdr.build
 		devenv LibHDR.sln /Upgrade
 		REM Building everything, without running the tests
 		devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project ALL_BUILD
-		devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project doc
+		IF ERRORLEVEL 0 (
+			devenv LibHDR.sln /build "%Configuration%|%Platform%" /Project doc
+		)
+		copy /Y src\%Configuration%\*.dll test\%Configuration%
+		
 	)
-	IF EXIST test\Release\libhdr_stats.exe (
+	IF NOT EXIST test\%Configuration%\exiv2.dll (
+		for %%v in ("ImageMagick", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
+			copy ..\Deps\bin\%%v\*.dll test\%Configuration%
+		)
+	)
+
+	IF EXIST test\%Configuration%\libhdr_stats.exe (
 		%CMAKE_DIR%\bin\ctest.exe
 	)
 popd

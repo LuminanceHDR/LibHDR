@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
         {
             std::cout << subscribed[idx] << "\n";
         }
-        return 0;
+        return subscribed.size() == 0;
     }
     case 2:
     {

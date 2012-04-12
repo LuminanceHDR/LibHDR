@@ -46,7 +46,7 @@ class TIFFWriterImpl;
 //! \class TIFFWriter
 //! \brief Writes file with extension .tif or .tiff
 //!
-class TIFFWriter : public FrameWriter
+class LIBHDR_API TIFFWriter : public FrameWriter
 {
 public:
     //!
