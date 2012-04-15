@@ -28,7 +28,8 @@
 #define LIBHDR_SINGLETON_H
 
 #include <boost/utility.hpp>
-#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/circular_buffer.hpp>
 
 namespace LibHDR
 {
@@ -40,14 +41,14 @@ namespace Template
 //! (argument of the template). This class inherits boost::noncopyable: copy construction
 //! and assignment are then disabled.
 //! \param Type Specifies the type of the class that will be wrapped
-template<typename Type>
-class Singleton : public boost::noncopyable
+template<typename _Tp>
+class Singleton : boost::noncopyable
 {
 public:
-    typedef Type HoldType;
+    typedef _Tp HoldType;
 
     //! \brief Create an instance of the wrapped type
-    static Type& instance();
+    static _Tp& instance();
 
 protected:
     //! \note the constructor is NOT public
@@ -55,28 +56,34 @@ protected:
 
 private:
     //! \brief The actual object
-    static Type* m_instance;
-//    static boost::mutex m_mutex;
+    static _Tp* instance_;
+#ifdef WIN32
+    static boost::mutex mutex_;
+#endif
 };
 
-template<typename Type>
-Type* Singleton<Type>::m_instance = NULL;
+template<typename _Tp>
+_Tp* Singleton<_Tp>::instance_ = NULL;
 
-//template<typename Type>
-//boost::mutex Singleton<Type>::m_mutex;
+#ifdef WIN32
+template<typename _Tp>
+boost::mutex Singleton<_Tp>::mutex_;
+#endif
 
-template<typename Type>
-Type& Singleton<Type>::instance()
+template<typename _Tp>
+_Tp& Singleton<_Tp>::instance()
 {
-    if (!m_instance)
+    if (!instance_)
     {
-//        boost::unique_lock<boost::mutex> lock(m_mutex);
-        if (!m_instance)
+#ifdef WIN32
+        boost::unique_lock<boost::mutex> lock(mutex_);
+#endif
+        if (!instance_)
         {
-            m_instance = new Type();
+            instance_ = new _Tp();
         }
     }
-    return *m_instance;
+    return *instance_;
 }
 
 }   // namespace Template
