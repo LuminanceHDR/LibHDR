@@ -26,6 +26,8 @@
 #include <boost/shared_ptr.hpp>
 #include <libhdr/matrix_iterator.h>
 
+#include "libhdr_dlldefines.h"
+
 namespace LibHDR
 {
 
@@ -36,7 +38,7 @@ struct MatrixData;
 //! \class Matrix
 //! \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 template <typename Type>
-class Matrix
+class LIBHDR_API Matrix
 {
 public:
     //! \brief constructor
