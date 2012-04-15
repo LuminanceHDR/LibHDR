@@ -46,7 +46,7 @@ struct EXRWriterImpl;
 //! \class EXRWriter
 //! \brief Writes file with extension .exr
 //!
-class EXRWriter : public FrameWriter
+class LIBHDR_API EXRWriter : public FrameWriter
 {
 public:
     //!
