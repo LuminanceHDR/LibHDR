@@ -32,6 +32,10 @@ ELSE()
 ENDIF()
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/include")
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+# GIL contributions
+INCLUDE_DIRECTORIES("/Users/Davide/Luminance/gil-contributions-read-only/gil_2")
+
 
 SET(LIBHDR_HDRS )
 SET(LIBHDR_SRCS )
