@@ -1,3 +1,5 @@
+SET(LIBHDR_HDRS ${LIBHDR_HDRS} PARENT_SCOPE)
+
 INCLUDE_DIRECTORIES(${LibHDR_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
@@ -46,3 +48,6 @@ TARGET_LINK_LIBRARIES(test_merge ${LIB_NAME})
 
 ADD_EXECUTABLE(test_matrix_iterator test_matrix_iterator.cpp)
 TARGET_LINK_LIBRARIES(test_matrix_iterator ${LIB_NAME})
+
+ADD_EXECUTABLE(test_gil test_gil.cpp ${LIBHDR_HDRS})
+

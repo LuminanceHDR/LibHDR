@@ -23,7 +23,6 @@ ELSE()
     ADD_DEFINITIONS(-Wall -Wextra)
 ENDIF()
 
-
 ENABLE_TESTING()
 
 IF(WIN32)
@@ -32,6 +31,12 @@ ELSE()
     SET(LIB_NAME hdr)
 ENDIF()
 
+INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/include")
+
+SET(LIBHDR_HDRS )
+SET(LIBHDR_SRCS )
+
+add_subdirectory (include)
 add_subdirectory (src)
 add_subdirectory (test)
 add_subdirectory (doc)
