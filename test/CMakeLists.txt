@@ -56,6 +56,6 @@ LINK_DIRECTORIES(${JPEG_LIBRARY_DIRS})
 #ADD_EXECUTABLE(test_matrix_iterator test_matrix_iterator.cpp)
 #TARGET_LINK_LIBRARIES(test_matrix_iterator ${LIB_NAME})
 
-ADD_EXECUTABLE(test_gil test_gil.cpp ${LIBHDR_HDRS}
-        ${TIFF_LIBRARIES} ${JPEG_LIBRARIES})
+ADD_EXECUTABLE(test_gil test_gil.cpp ${LIBHDR_HDRS})
+TARGET_LINK_LIBRARIES(test_gil ${TIFF_LIBRARIES} ${JPEG_LIBRARIES})
 
