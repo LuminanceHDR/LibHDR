@@ -1,6 +1,5 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/extension/io_new/jpeg_all.hpp>
-// #include <boost/gil/extension/io_new/tiff_all.hpp>
 #include <string>
 
 using namespace boost::gil;
