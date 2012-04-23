@@ -31,8 +31,12 @@
 #define LIBHDR_COMPRESSOR_HPP
 
 #include <boost/gil/gil_all.hpp>
+#include <boost/gil/channel.hpp>
 #include <cmath>
 #include <cassert>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
 
 namespace libhdr
 {
@@ -44,68 +48,84 @@ struct compressor_params
         : black_point_(black_point),
           white_point_(white_point)
     {
-        // Todo: parameters check!
+        black_point_ = std::max(black_point_, 0.f);
+        white_point_ = std::min(white_point_, 1.f);
     }
 
+    inline
+    const float& black_point() const
+    {
+        return black_point_;
+    }
+
+    inline
+    const float& white_point() const
+    {
+        return white_point_;
+    }
+
+private:
     float black_point_;
     float white_point_;
 };
 
-template <typename Out>
-struct compressor_channels
+namespace detail
 {
-    compressor_channels(const compressor_params& params)
+
+template <typename Out>
+struct pixel_compressor
+{
+    pixel_compressor(const compressor_params& params)
         : params_(params),
-          compressor_factor_(1.f/(params.white_point_ -
-                                  params.black_point_))
+          compressor_factor_(params.white_point() -
+                             params.black_point())
     {}
 
-    template <typename T>
-    Out operator()(const T& in)
+    template <typename In>
+    Out operator()(const In& in)
     {
-        return Out( (in - params_.black_point_)*compressor_factor_ );
+        using namespace boost::gil;
+
+        return Out( rgb32f_pixel_t(
+                        (( channel_convert<bits32f>(
+                               get_color(in, red_t()))
+                           * compressor_factor_ )
+                         + params_.black_point()) * 255.f,
+                        (( channel_convert<bits32f>(
+                               get_color(in, green_t()))
+                           * compressor_factor_ )
+                         + params_.black_point()) * 255.f,
+                        (( channel_convert<bits32f>(
+                               get_color(in, blue_t()))
+                           * compressor_factor_ )
+                         + params_.black_point()) * 255.f
+                        ) );
     }
 private:
     const compressor_params& params_;
     float compressor_factor_;
 };
 
-//
-void compressor(const boost::gil::rgb32fc_view_t& src,
-                const boost::gil::rgb32f_view_t& dst,
-                const compressor_params& params)
-{
-    using namespace boost::gil;
-
-    typedef channel_type<rgb32f_view_t>::type dst_channel_t;
-
-    rgb32fc_view_t::iterator src_it = src.begin();
-    for (rgb32f_view_t::iterator dst_it = dst.begin();
-         dst_it != dst.end();
-         ++dst_it, ++src_it)
-    {
-        static_transform(*src_it, *dst_it,
-                         compressor_channels<dst_channel_t>(params));
-    }
 }
 
-
 template <typename SrcView, typename DstView>
-void compressor(const SrcView& src, const DstView& dst,
+void compressor(const SrcView& src,
+                const DstView& dst,
                 const compressor_params& params)
 {
     using namespace boost::gil;
-/*
+    using namespace std;
+
     gil_function_requires<ImageViewConcept<SrcView> >();
     gil_function_requires<MutableImageViewConcept<DstView> >();
     gil_function_requires<ColorSpacesCompatibleConcept<
             typename color_space_type<SrcView>::type,
             typename color_space_type<DstView>::type> >();
-*/
 
-    compressor(color_converted_view<rgb32fc_view_t>(src),
-               color_converted_view<rgb32f_view_t>(dst),
-               params);
+    ::std::transform(src.begin(), src.end(),
+                     dst.begin(),
+                     detail::pixel_compressor<
+                     typename DstView::value_type>(params));
 }
 
 }
