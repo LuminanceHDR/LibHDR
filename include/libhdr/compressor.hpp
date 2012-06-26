@@ -22,7 +22,7 @@
 
 /// \file compressor.h
 ///
-/// \brief Black-White point adjustment algorithm
+/// \brief Output black-white point adjustment algorithm
 /// \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 /// \date 2012-04-22
 /// \since 0.0.1
@@ -69,64 +69,101 @@ private:
     float white_point_;
 };
 
-namespace detail
+template <typename C1, typename C2>
+struct default_range_compressor_impl
 {
-
-template <typename Out>
-struct pixel_compressor
-{
-    pixel_compressor(const compressor_params& params)
-        : params_(params),
-          compressor_factor_(params.white_point() -
-                             params.black_point())
-    {}
-
-    template <typename In>
-    Out operator()(const In& in)
+    template <typename SrcP, typename DstP>
+    void operator()(const SrcP& src, DstP& dst,
+                    const compressor_params& params) const
     {
         using namespace boost::gil;
 
-        return Out( rgb32f_pixel_t(
-                        (( channel_convert<bits32f>(
-                               get_color(in, red_t()))
-                           * compressor_factor_ )
-                         + params_.black_point()) * 255.f,
-                        (( channel_convert<bits32f>(
-                               get_color(in, green_t()))
-                           * compressor_factor_ )
-                         + params_.black_point()) * 255.f,
-                        (( channel_convert<bits32f>(
-                               get_color(in, blue_t()))
-                           * compressor_factor_ )
-                         + params_.black_point()) * 255.f
-                        ) );
+        rgb32f_pixel_t rgb32f_pixel;                // create temporary pixel
+        color_convert(src, rgb32f_pixel);           // fill temporary pixel
+
+        float range = (params.white_point() - params.black_point());
+
+        get_color(rgb32f_pixel, red_t()) =
+                get_color(rgb32f_pixel, red_t())*range
+                + params.black_point();
+        get_color(rgb32f_pixel, green_t()) =
+                get_color(rgb32f_pixel, green_t())*range
+                + params.black_point();
+        get_color(rgb32f_pixel, blue_t()) =
+                get_color(rgb32f_pixel, blue_t())*range
+                + params.black_point();
+
+        color_convert(rgb32f_pixel, dst);           // fill final pixel
     }
-private:
-    const compressor_params& params_;
-    float compressor_factor_;
 };
 
-}
-
-template <typename SrcView, typename DstView>
-void compressor(const SrcView& src,
-                const DstView& dst,
-                const compressor_params& params)
+template <>
+struct default_range_compressor_impl<
+        boost::gil::rgb_t,
+        boost::gil::rgb_t
+        >
 {
-    using namespace boost::gil;
-    using namespace std;
+    template <typename SrcP, typename DstP>
+    void operator()(const SrcP& src, DstP& dst,
+                    const compressor_params& params) const
+    {
+        using namespace boost::gil;
 
-    gil_function_requires<ImageViewConcept<SrcView> >();
-    gil_function_requires<MutableImageViewConcept<DstView> >();
-    gil_function_requires<ColorSpacesCompatibleConcept<
-            typename color_space_type<SrcView>::type,
-            typename color_space_type<DstView>::type> >();
+        float range = (params.white_point() - params.black_point());
 
-    ::std::transform(src.begin(), src.end(),
-                     dst.begin(),
-                     detail::pixel_compressor<
-                     typename DstView::value_type>(params));
+        get_color(dst, red_t()) =
+                channel_convert<typename color_element_type<DstP, red_t>::type>(
+                    static_cast<bits32f>(
+                        channel_convert<bits32f>(
+                            get_color(src, red_t())
+                            ) * range
+                        + params.black_point()
+                        )
+                    );
+
+        get_color(dst, green_t()) =
+                channel_convert<typename color_element_type<DstP, green_t>::type>(
+                    static_cast<bits32f>(
+                        channel_convert<bits32f>(
+                            get_color(src, green_t())
+                            ) * range
+                        + params.black_point()
+                        )
+                    );
+
+        get_color(dst, blue_t()) =
+                channel_convert<typename color_element_type<DstP, blue_t>::type>(
+                    static_cast<bits32f>(
+                        channel_convert<bits32f>(
+                            get_color(src, blue_t())
+                            ) * range
+                        + params.black_point()
+                        )
+                    );
+    }
+};
+
+struct default_range_compressor
+{
+    template <typename SrcP, typename DstP>
+    void operator()(const SrcP& src, DstP& dst,
+                    const compressor_params& params) const
+    {
+        using namespace boost::gil;
+
+        typedef typename color_space_type<SrcP>::type SrcColorSpace;
+        typedef typename color_space_type<DstP>::type DstColorSpace;
+        default_range_compressor_impl<SrcColorSpace, DstColorSpace>()(src, dst, params);
+    }
+};
+
+template <typename SrcP, typename DstP>
+inline void range_compressor(const SrcP& src, DstP& dst,
+                          const compressor_params& params)
+{
+    default_range_compressor()(src, dst, params);
 }
+
 
 }
 

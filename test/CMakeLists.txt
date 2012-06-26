@@ -65,7 +65,7 @@ LINK_DIRECTORIES(${JPEG_LIBRARY_DIRS})
 ADD_EXECUTABLE(test_gamma test_gamma.cpp ${LIBHDR_HDRS})
 TARGET_LINK_LIBRARIES(test_gamma ${Boost_LIBRARIES})
 
-#ADD_EXECUTABLE(test_compressor test_compressor.cpp ${LIBHDR_HDRS})
-#TARGET_LINK_LIBRARIES(test_compressor ${JPEG_LIBRARIES})
+ADD_EXECUTABLE(test_compressor test_compressor.cpp ${LIBHDR_HDRS})
+TARGET_LINK_LIBRARIES(test_compressor ${Boost_LIBRARIES})
 
 #ADD_EXECUTABLE(test_gil_pixel test_gil_pixel.cpp ${LIBHDR_HDRS})
