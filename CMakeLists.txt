@@ -19,7 +19,7 @@ IF(WIN32)
     SET(Boost_USE_STATIC_LIBS   OFF)
     SET(Boost_USE_MULTITHREADED ON)
 ELSE()
-    FIND_PACKAGE(Boost COMPONENTS thread REQUIRED)
+    FIND_PACKAGE(Boost COMPONENTS thread unit_test_framework REQUIRED)
     ADD_DEFINITIONS(-Wall)
 ENDIF()
 
@@ -34,7 +34,7 @@ ENDIF()
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/include")
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 # GIL contributions
-INCLUDE_DIRECTORIES("/Users/Davide/Luminance/gil-contributions-read-only/gil_2")
+INCLUDE_DIRECTORIES("/Users/Davide/Luminance/gil-contributions/gil_2")
 
 
 SET(LIBHDR_HDRS )

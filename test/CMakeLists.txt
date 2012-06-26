@@ -56,11 +56,16 @@ LINK_DIRECTORIES(${JPEG_LIBRARY_DIRS})
 #ADD_EXECUTABLE(test_matrix_iterator test_matrix_iterator.cpp)
 #TARGET_LINK_LIBRARIES(test_matrix_iterator ${LIB_NAME})
 
-ADD_EXECUTABLE(test_gil test_gil.cpp ${LIBHDR_HDRS})
-TARGET_LINK_LIBRARIES(test_gil ${JPEG_LIBRARIES})
+###############################################################################
+
+
+#ADD_EXECUTABLE(test_gil test_gil.cpp ${LIBHDR_HDRS})
+#TARGET_LINK_LIBRARIES(test_gil ${JPEG_LIBRARIES})
 
 ADD_EXECUTABLE(test_gamma test_gamma.cpp ${LIBHDR_HDRS})
-TARGET_LINK_LIBRARIES(test_gamma ${JPEG_LIBRARIES})
+TARGET_LINK_LIBRARIES(test_gamma ${Boost_LIBRARIES})
 
-ADD_EXECUTABLE(test_compressor test_compressor.cpp ${LIBHDR_HDRS})
-TARGET_LINK_LIBRARIES(test_compressor ${JPEG_LIBRARIES})
+#ADD_EXECUTABLE(test_compressor test_compressor.cpp ${LIBHDR_HDRS})
+#TARGET_LINK_LIBRARIES(test_compressor ${JPEG_LIBRARIES})
+
+#ADD_EXECUTABLE(test_gil_pixel test_gil_pixel.cpp ${LIBHDR_HDRS})
