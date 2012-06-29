@@ -6,78 +6,78 @@ SET(LIBHDR_HDRS
     libhdr_version.h
     libhdr.h
 # LIBHDR CORE
-    libhdr/matrix.h
-    libhdr/matrix.hpp
-    libhdr/matrix_iterator.h
-    libhdr/matrix_iterator.hpp
-    libhdr/tag.h
-    libhdr/frame.h
-    libhdr/channel.h
-    libhdr/image.h
-    libhdr/pixel.h
+#    libhdr/matrix.h
+#    libhdr/matrix.hpp
+#    libhdr/matrix_iterator.h
+#    libhdr/matrix_iterator.hpp
+#    libhdr/tag.h
+#    libhdr/frame.h
+#    libhdr/channel.h
+#    libhdr/image.h
+#    libhdr/pixel.h
 #   libhdr/frameexceptions.h
-    libhdr/coreobject.h
-    libhdr/corecallback.h
-    libhdr/settings.h
+#    libhdr/coreobject.h
+#    libhdr/corecallback.h
+#    libhdr/settings.h
 # EXIF
     libhdr/exif/exifdata.h
 # TEMPLATE
-    libhdr/template/objectfactory.h
-    libhdr/template/singleton.h
-    libhdr/details/resourcehandler.h
-    libhdr/details/misc.h
+#    libhdr/template/objectfactory.h
+#    libhdr/template/singleton.h
+#    libhdr/details/resourcehandler.h
+#    libhdr/details/misc.h
 #LIBHDR IO
-    libhdr/io/framereader.h
-    libhdr/io/framereader.aux.h
+#    libhdr/io/framereader.h
+#    libhdr/io/framereader.aux.h
 #   libhdr/io/pfscommon.h
-    libhdr/io/pfsreader.h
-    libhdr/io/iocommon.h
-    libhdr/io/ioexceptions.h
-    libhdr/io/framewriter.h
-    libhdr/io/framewriter.aux.h
-    libhdr/io/tiffwriter.h
-    libhdr/io/tiffreader.h
-    libhdr/io/exrwriter.h
-    libhdr/io/jpegreader.h
+#    libhdr/io/pfsreader.h
+#    libhdr/io/iocommon.h
+#    libhdr/io/ioexceptions.h
+#    libhdr/io/framewriter.h
+#    libhdr/io/framewriter.aux.h
+#    libhdr/io/tiffwriter.h
+#    libhdr/io/tiffreader.h
+#    libhdr/io/exrwriter.h
+#    libhdr/io/jpegreader.h
 #LIBHDR MERGE
-    libhdr/merge/mergeexceptions.h
-    libhdr/merge/mergeoperator.h
-    libhdr/merge/debevec97.h
-    libhdr/merge/responses.h
-    libhdr/merge/weights.h
+#    libhdr/merge/mergeexceptions.h
+#    libhdr/merge/mergeoperator.h
+#    libhdr/merge/debevec97.h
+#    libhdr/merge/responses.h
+#    libhdr/merge/weights.h
 )
 
 SET(LIBHDR_SRCS
 #LIBHDR BASE
     ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp
 #LIBHDR CORE
-    libhdr/tag.cpp
-    libhdr/frame.cpp
-    libhdr/channel.cpp
-    libhdr/image.cpp
-    libhdr/pixel.cpp
+#    libhdr/tag.cpp
+#    libhdr/frame.cpp
+#    libhdr/channel.cpp
+#    libhdr/image.cpp
+#    libhdr/pixel.cpp
 #   libhdr/frameexceptions.cpp
-    libhdr/coreobject.cpp
-    libhdr/corecallback.cpp
+#    libhdr/coreobject.cpp
+#    libhdr/corecallback.cpp
 #   libhdr/rotate.cpp
 # EXIF
     libhdr/exif/exifdata.cpp
 #LIBHDR IO
-    libhdr/io/framereader.cpp
+#    libhdr/io/framereader.cpp
 #   libhdr/io/pfscommon.cpp
-    libhdr/io/pfsreader.cpp
-    libhdr/io/ioexceptions.cpp
-    libhdr/io/framewriter.cpp
-    libhdr/io/tiffwriter.cpp
-    libhdr/io/tiffreader.cpp
-    libhdr/io/exrwriter.cpp
-    libhdr/io/jpegreader.cpp
+#    libhdr/io/pfsreader.cpp
+#    libhdr/io/ioexceptions.cpp
+#    libhdr/io/framewriter.cpp
+#    libhdr/io/tiffwriter.cpp
+#    libhdr/io/tiffreader.cpp
+#    libhdr/io/exrwriter.cpp
+#    libhdr/io/jpegreader.cpp
 #LIBHDR MERGE
-    libhdr/merge/mergeexceptions.cpp
-    libhdr/merge/mergeoperator.cpp
-    libhdr/merge/debevec97.cpp
-    libhdr/merge/responses.cpp
-    libhdr/merge/weights.cpp
+#    libhdr/merge/mergeexceptions.cpp
+#    libhdr/merge/mergeoperator.cpp
+#    libhdr/merge/debevec97.cpp
+#    libhdr/merge/responses.cpp
+#    libhdr/merge/weights.cpp
 )
 
 IF(MSVC)
@@ -165,13 +165,14 @@ IF (BUILD_SHARED_LIBS)
   SET (LIB_TYPE SHARED)
 ENDIF (BUILD_SHARED_LIBS)
 
-#ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
-#TARGET_LINK_LIBRARIES(${LIB_NAME}
+ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+TARGET_LINK_LIBRARIES(${LIB_NAME}
 #    ${Boost_LIBRARIES}
 #    ${TIFF_LIBRARIES}
-#    ${EXIV2_LIBRARIES}
+    ${EXIV2_LIBRARIES}
 #    ${OPENEXR_LIBRARIES}
 #    ${JPEG_LIBRARIES}
-#    ${LCMS2_LIBRARIES})
+#    ${LCMS2_LIBRARIES}
+)
 
 
