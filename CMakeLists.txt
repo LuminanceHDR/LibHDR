@@ -13,6 +13,8 @@ SET(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_M
 # set include path for FindXXX.cmake files
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
+INCLUDE("${CMAKE_SOURCE_DIR}/cmake/FindLibHDRDeps.cmake")
+
 # Define
 IF(WIN32)
     FIND_PACKAGE(Boost REQUIRED)
@@ -31,12 +33,6 @@ ELSE()
     SET(LIB_NAME hdr)
 ENDIF()
 
-INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/include")
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-# GIL contributions
-INCLUDE_DIRECTORIES("/Users/Davide/Luminance/gil-contributions/gil_2")
-
-
 SET(LIBHDR_HDRS )
 SET(LIBHDR_SRCS )
 
@@ -44,3 +40,20 @@ add_subdirectory (include)
 add_subdirectory (src)
 add_subdirectory (test)
 add_subdirectory (doc)
+
+# Set the LIB_TYPE variable to STATIC
+SET (LIB_TYPE STATIC)
+IF (BUILD_SHARED_LIBS)
+  # User wants to build Dynamic Libraries, so change the LIB_TYPE variable to CMake keyword 'SHARED'
+  SET (LIB_TYPE SHARED)
+ENDIF (BUILD_SHARED_LIBS)
+
+ADD_LIBRARY(${LIB_NAME} ${LIB_TYPE} ${LIBHDR_HDRS} ${LIBHDR_SRCS})
+TARGET_LINK_LIBRARIES(${LIB_NAME}
+#    ${Boost_LIBRARIES}
+#    ${TIFF_LIBRARIES}
+    ${EXIV2_LIBRARIES}
+#    ${OPENEXR_LIBRARIES}
+#    ${JPEG_LIBRARIES}
+#    ${LCMS2_LIBRARIES}
+)
