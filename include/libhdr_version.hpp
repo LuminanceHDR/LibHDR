@@ -30,7 +30,7 @@
 #ifndef LIBHDR_VERSION_H
 #define LIBHDR_VERSION_H
 
-#include "libhdr_dlldefines.h"
+#include <libhdr_dlldefines.hpp>
 
 #include <string>
 

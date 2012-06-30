@@ -19,7 +19,7 @@
  * ----------------------------------------------------------------------
  */
 
-#include "exifdata.h"
+#include <libhdr/exif/exif_data.hpp>
 
 #include <exiv2/exiv2.hpp>
 #include <cmath>
@@ -27,7 +27,7 @@
 
 namespace LibHDR
 {
-namespace Exif
+namespace exif
 {
 
 namespace
@@ -50,18 +50,18 @@ float logBase(float value, float base)
 
 }
 
-ExifData::ExifData()
+exif_data::exif_data()
 {
     reset();
 }
 
-ExifData::ExifData(const std::string& filename)
+exif_data::exif_data(const std::string& filename)
 {
     reset();
     fromFile(filename);
 }
 
-void ExifData::fromFile(const std::string& filename)
+void exif_data::fromFile(const std::string& filename)
 {
     reset();
     try
@@ -127,46 +127,46 @@ void ExifData::fromFile(const std::string& filename)
     }
 }
 
-const float& ExifData::exposureTime() const
+const float& exif_data::exposureTime() const
 {
     return m_ExposureTime;
 }
-bool ExifData::isExposureTime() const
+bool exif_data::isExposureTime() const
 {
     return (m_ExposureTime != INVALID_VALUE);
 }
-void ExifData::exposureTime(float et)
+void exif_data::exposureTime(float et)
 {
     m_ExposureTime = et;
 }
 
-const float& ExifData::isoSpeed() const
+const float& exif_data::isoSpeed() const
 {
     return m_IsoSpeed;
 }
-bool ExifData::isIsoSpeed() const
+bool exif_data::isIsoSpeed() const
 {
     return true;
 }
-void ExifData::isoSpeed(float iso)
+void exif_data::isoSpeed(float iso)
 {
     m_IsoSpeed = iso;
 }
 
-const float& ExifData::fNumber() const
+const float& exif_data::fNumber() const
 {
     return m_F_Number;
 }
-bool ExifData::isFNumber() const
+bool exif_data::isFNumber() const
 {
     return (m_F_Number != INVALID_VALUE);
 }
-void ExifData::fNumber(float fnum)
+void exif_data::fNumber(float fnum)
 {
     m_F_Number = fnum;
 }
 
-float ExifData::exposureValue() const
+float exif_data::exposureValue() const
 {
     if ( isFNumber() && isExposureTime() )
     {
@@ -174,25 +174,25 @@ float ExifData::exposureValue() const
     }
     return INVALID_EV_VALUE;
 }
-bool ExifData::isExposureValue() const
+bool exif_data::isExposureValue() const
 {
     return (exposureValue() != INVALID_EV_VALUE);
 }
 
-const float& ExifData::exposureValueCompensation() const
+const float& exif_data::exposureValueCompensation() const
 {
     return m_EvCompensation;
 }
-bool ExifData::isExposureValueCompensation() const
+bool exif_data::isExposureValueCompensation() const
 {
     return (m_EvCompensation != 0.0f);
 }
-void ExifData::exposureValueCompensation(float evcomp)
+void exif_data::exposureValueCompensation(float evcomp)
 {
     m_EvCompensation = evcomp;
 }
 
-float ExifData::getAverageSceneLuminance() const
+float exif_data::getAverageSceneLuminance() const
 {
     if ( isIsoSpeed() && isFNumber() && isExposureTime() )
     {
@@ -201,7 +201,7 @@ float ExifData::getAverageSceneLuminance() const
     return INVALID_VALUE;
 }
 
-void ExifData::reset()
+void exif_data::reset()
 {
     // reset internal value
     m_ExposureTime = INVALID_VALUE;
@@ -210,18 +210,18 @@ void ExifData::reset()
     m_EvCompensation = DEFAULT_EVCOMP;
 }
 
-bool ExifData::isValid() const
+bool exif_data::isValid() const
 {
     return ( isIsoSpeed() && isFNumber() && isExposureTime() );
 }
 
-std::ostream& operator<<(std::ostream& out, const ExifData& exifdata)
+std::ostream& operator<<(std::ostream& out, const exif_data& exif_data)
 {
-    out << "Exposure time = " << exifdata.m_ExposureTime << ", ";
-    out << "F value = " << exifdata.m_F_Number << ", ";
-    out << "ISO = " << exifdata.m_IsoSpeed << ", ";
-    out << "Exposure value = " << exifdata.exposureValue() << " (" << exifdata.m_EvCompensation << "), ";
-    out << "Average Scene Luminance = " << exifdata.getAverageSceneLuminance();
+    out << "Exposure time = " << exif_data.m_ExposureTime << ", ";
+    out << "F value = " << exif_data.m_F_Number << ", ";
+    out << "ISO = " << exif_data.m_IsoSpeed << ", ";
+    out << "Exposure value = " << exif_data.exposureValue() << " (" << exif_data.m_EvCompensation << "), ";
+    out << "Average Scene Luminance = " << exif_data.getAverageSceneLuminance();
 
     return out;
 }

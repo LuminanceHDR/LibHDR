@@ -1,10 +1,13 @@
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libhdr_version.cpp.in ${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp)
+CONFIGURE_FILE(
+${CMAKE_CURRENT_SOURCE_DIR}/libhdr_version.cpp.in
+${CMAKE_CURRENT_BINARY_DIR}/libhdr_version.cpp
+)
 
 SET(LIBHDR_HDRS
 #LIBHDR BASE
-    libhdr_dlldefines.h
-    libhdr_version.h
-    libhdr.h
+#    libhdr_dlldefines.h
+#    libhdr_version.h
+#    libhdr.h
 # LIBHDR CORE
 #    libhdr/matrix.h
 #    libhdr/matrix.hpp
@@ -20,7 +23,7 @@ SET(LIBHDR_HDRS
 #    libhdr/corecallback.h
 #    libhdr/settings.h
 # EXIF
-    libhdr/exif/exifdata.h
+#    libhdr/exif/exifdata.h
 # TEMPLATE
 #    libhdr/template/objectfactory.h
 #    libhdr/template/singleton.h
@@ -61,7 +64,7 @@ SET(LIBHDR_SRCS
 #    libhdr/corecallback.cpp
 #   libhdr/rotate.cpp
 # EXIF
-    libhdr/exif/exifdata.cpp
+    libhdr/exif/exif_data.cpp
 #LIBHDR IO
 #    libhdr/io/framereader.cpp
 #   libhdr/io/pfscommon.cpp

@@ -23,25 +23,26 @@
 #include <stdexcept>
 #include <iosfwd>
 
-#include "libhdr_dlldefines.h"
+#include <libhdr_dlldefines.hpp>
 
 namespace LibHDR
 {
 //! \namespace Contains all the operations based on EXIF data
-namespace Exif
+namespace exif
 {
 
-//! \class ExifData
+//! \class exif_data
 //! \brief Holds Exif Data
 //!
-class LIBHDR_API ExifData
+class LIBHDR_API exif_data
 {
 public:
     //! \brief empty ctor
-    ExifData();
+    exif_data();
 
+    //!
     //! \param[in] filename Name of source file
-    ExifData(const std::string& filename);
+    explicit exif_data(const std::string& filename);
 
     //! \brief read exif data from file
     //! \param[in] filename Name of source file
@@ -66,14 +67,17 @@ public:
     bool isExposureValueCompensation() const;
     void exposureValueCompensation(float evcomp);
 
-    //! \brief This function obtains the "average scene luminance" (cd/m^2) from an image file.
+    //! \brief This function obtains the "average scene luminance" (cd/m^2) from
+    //! an image file.
     //! "average scene luminance" is the L (aka B) value mentioned in [1]
     //! You have to take a log2f of the returned value to get an EV value.
     //!
     //! We are using K=12.07488f and the exif-implied value of N=1/3.125 (see [1]).
-    //! K=12.07488f is the 1.0592f * 11.4f value in pfscalibration's pfshdrcalibrate.cpp file.
+    //! K=12.07488f is the 1.0592f * 11.4f value in pfscalibration's
+    //! pfshdrcalibrate.cpp file.
     //! Based on [3] we can say that the value can also be 12.5 or even 14.
-    //! Another reference for APEX is [4] where N is 0.3, closer to the APEX specification of 2^(-7/4)=0.2973.
+    //! Another reference for APEX is [4] where N is 0.3, closer to the APEX
+    //! specification of 2^(-7/4)=0.2973.
     //!
     //! [1] http://en.wikipedia.org/wiki/APEX_system
     //! [2] http://en.wikipedia.org/wiki/Exposure_value
@@ -85,7 +89,8 @@ public:
     //! ExposureTime or ShutterSpeedValue.
     //! Same thing for f-number: it can be found in FNumber or in ApertureValue.
     //!
-    //! F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
+    //! F-number and shutter speed are mandatory in exif data for EV
+    //! calculation, iso is not.
     //! \note This description is copied from the original source code in
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
     float getAverageSceneLuminance() const;
@@ -93,10 +98,12 @@ public:
     //! \brief reset Exif Data
     void reset();
 
-    //! \brief returns whether enough information are available to compute additional values
+    //! \brief returns whether enough information are available to compute
+    //! additional values
     bool isValid() const;
 
-    LIBHDR_API friend std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+    LIBHDR_API friend std::ostream& operator<<(std::ostream& out,
+                                               const exif_data& exif_data);
 private:
     float m_ExposureTime;
     float m_IsoSpeed;
@@ -104,7 +111,7 @@ private:
     float m_EvCompensation;
 };
 
-LIBHDR_API std::ostream& operator<<(std::ostream& out, const ExifData& exifdata);
+LIBHDR_API std::ostream& operator<<(std::ostream& out, const exif_data& exif_data);
 
 }
 }

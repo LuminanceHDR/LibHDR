@@ -20,7 +20,7 @@
  *  
  */
 
-#include "libhdr_version.h"
+#include <libhdr_version.hpp>
 
 //! \file libhdr_version.cpp
 //!
