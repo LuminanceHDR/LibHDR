@@ -46,26 +46,26 @@ public:
 
     //! \brief read exif data from file
     //! \param[in] filename Name of source file
-    void fromFile(const std::string& filename);
+    void from_file(const std::string& filename);
 
-    const float& exposureTime() const;
-    bool isExposureTime() const;
-    void exposureTime(float et);
+    const float& exposure_time() const;
+    bool is_exposure_time() const;
+    void exposure_time(float et);
 
-    const float& isoSpeed() const;
-    bool isIsoSpeed() const;
-    void isoSpeed(float iso);
+    const float& iso_speed() const;
+    bool is_iso_speed() const;
+    void iso_speed(float iso);
 
-    const float& fNumber() const;
-    bool isFNumber() const;
-    void fNumber(float fnum);
+    const float& f_number() const;
+    bool is_f_number() const;
+    void f_number(float fnum);
 
-    float exposureValue() const;
-    bool isExposureValue() const;
+    float exposure_value() const;
+    bool is_exposure_value() const;
 
-    const float& exposureValueCompensation() const;
-    bool isExposureValueCompensation() const;
-    void exposureValueCompensation(float evcomp);
+    const float& exposure_value_compensation() const;
+    bool is_exposure_value_compensation() const;
+    void exposure_value_compensation(float evcomp);
 
     //! \brief This function obtains the "average scene luminance" (cd/m^2) from
     //! an image file.
@@ -93,22 +93,22 @@ public:
     //! calculation, iso is not.
     //! \note This description is copied from the original source code in
     //! Luminance HDR http://qtpfsgui.sourceforge.net/
-    float getAverageSceneLuminance() const;
+    float average_scene_luminance() const;
 
     //! \brief reset Exif Data
     void reset();
 
     //! \brief returns whether enough information are available to compute
     //! additional values
-    bool isValid() const;
+    bool is_valid() const;
 
     LIBHDR_API friend std::ostream& operator<<(std::ostream& out,
                                                const exif_data& exif_data);
 private:
-    float m_ExposureTime;
-    float m_IsoSpeed;
-    float m_F_Number;
-    float m_EvCompensation;
+    float exposure_time_;
+    float iso_speed_;
+    float f_number_;
+    float ev_compensation_;
 };
 
 LIBHDR_API std::ostream& operator<<(std::ostream& out, const exif_data& exif_data);
